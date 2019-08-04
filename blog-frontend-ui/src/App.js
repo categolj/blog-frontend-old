@@ -9,6 +9,8 @@ import {Header} from "./components/Header";
 import {ByCategory} from "./entries/ByCategory";
 import {SearchBox} from "./components/SearchBox";
 import {NoMatch} from "./components/NoMatch";
+import {Links} from "./components/Links";
+import {Footer} from "./components/Footer";
 
 class App extends Component {
     render() {
@@ -33,6 +35,8 @@ class App extends Component {
                             </Switch>
                         </article>
                     </section>
+                    <Links/>
+                    <Footer/>
                 </div>
             </BrowserRouter>
         );
