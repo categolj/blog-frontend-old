@@ -7,6 +7,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.stereotype.Component;
 import reactor.cache.CacheMono;
 import reactor.core.publisher.Mono;
@@ -37,6 +38,7 @@ public class ChromeRenderer {
         .removalListener((key, value, cause) -> log.info("Removing cache({}) because of {}", key, cause))
         .build();
 
+    @NewSpan
     public Mono<String> render(String url) {
         return CacheMono.lookup(this.cache.asMap(), url)
             .onCacheMissResume(() -> this.getContent(url));
@@ -47,7 +49,7 @@ public class ChromeRenderer {
             log.info("Open {}", url);
             Selenide.open(new URL(url));
             // Wait until JavaScript is rendered.
-            Thread.sleep(500);
+            Thread.sleep(1000);
             final String title = Selenide.$("h2").innerText();
             if ("404 Not Found".equals(title)) {
                 return null;
