@@ -1,0 +1,17 @@
+apiVersion: gateway.cloud.ik.am/v1beta1
+kind: RouteDefinition
+metadata:
+  name: blog-frontend
+  namespace: blog
+spec:
+  serviceName: blog-frontend
+  route:
+    predicates:
+      - Host=blog.dev.ik.am
+    filters:
+      - RequestLogging=
+      - PreserveHostHeader
+      - name: Retry
+        args:
+          retries: "3"
+          statuses: BAD_GATEWAY
