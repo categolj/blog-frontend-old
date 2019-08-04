@@ -48,14 +48,14 @@ export class Entry extends React.Component {
             <h2>
                 <Link to={`/entries/${entry.entryId}`}>{`${entry.frontMatter.title}`}</Link>
             </h2>
-            < Category category={category}/>
+            <Category category={category}/>
             <br/><br/>
             {tags}
             <br/><br/>
             🗓 <span className={"visible-inline-on-wide"}>Updated at </span>{entry.updated.date} by {entry.updated.name}&nbsp;
             <span className={"visible-inline-on-wide"}>🗓 Created at {entry.created.date} by {entry.created.name}&nbsp;
-            {`{`}✒️️&nbsp;<a href={`https://github.com/making/blog.ik.am/edit/master/content/${Entry.format(entry.entryId)}.md`}>Edit</a>&nbsp;
-            ⏰&nbsp;<a href={`https://github.com/making/blog.ik.am/commits/master/content/${Entry.format(entry.entryId)}.md`}>History</a>{`}`}</span>
+                {`{`}✒️️&nbsp;<a href={`https://github.com/making/blog.ik.am/edit/master/content/${Entry.format(entry.entryId)}.md`}>Edit</a>&nbsp;
+                ⏰&nbsp;<a href={`https://github.com/making/blog.ik.am/commits/master/content/${Entry.format(entry.entryId)}.md`}>History</a>{`}`}</span>
             <hr/>
             <p dangerouslySetInnerHTML={Entry.content(entry)}>
             </p>

@@ -3,6 +3,9 @@ import {Link} from "react-router-dom";
 
 export class Category extends React.Component {
     render() {
+        if (this.props.category.length === 0) {
+            return null;
+        }
         const categories = [];
         const links = [<span key={'first'}>{`🗃 {`}</span>];
         this.props.category.forEach(c => {
