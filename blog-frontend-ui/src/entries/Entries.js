@@ -29,7 +29,7 @@ export class Entries extends React.Component {
 
     loadFromServer() {
         this.param.set("size", 50);
-        fetch(`https://blog-api.ik.am/entries?${this.param}`)
+        fetch(`${process.env.REACT_APP_BLOG_API}/entries?${this.param}`)
             .then(result => result.json())
             .then(entries => {
                 this.setState({

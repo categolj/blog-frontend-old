@@ -11,7 +11,7 @@ export class ByTag extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`https://blog-api.ik.am/tags/${this.props.match.params.id}/entries?size=100`)
+        fetch(`${process.env.REACT_APP_BLOG_API}/tags/${this.props.match.params.id}/entries?size=100`)
             .then(result => result.json())
             .then(entries => {
                 this.setState({

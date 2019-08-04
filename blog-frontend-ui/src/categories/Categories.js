@@ -10,7 +10,7 @@ export class Categories extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`https://blog-api.ik.am/categories`)
+        fetch(`${process.env.REACT_APP_BLOG_API}/categories`)
             .then(result => result.json())
             .then(categories => {
                 this.setState({

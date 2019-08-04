@@ -28,7 +28,7 @@ export class Entry extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`https://blog-api.ik.am/entries/${this.props.match.params.id}`)
+        fetch(`${process.env.REACT_APP_BLOG_API}/entries/${this.props.match.params.id}`)
             .then(result => result.json())
             .then(res => {
                 this.setState({

@@ -10,7 +10,7 @@ export class Tags extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`https://blog-api.ik.am/tags`)
+        fetch(`${process.env.REACT_APP_BLOG_API}/tags`)
             .then(result => result.json())
             .then(tags => {
                 this.setState({

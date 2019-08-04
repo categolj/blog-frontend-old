@@ -13,7 +13,7 @@ export class ByCategory extends React.Component {
 
     onLocationChange(location) {
         if (location.pathname.startsWith("/categories/")) {
-            fetch(`https://blog-api.ik.am/${location.pathname}?size=100`)
+            fetch(`${process.env.REACT_APP_BLOG_API}/${location.pathname}?size=100`)
                 .then(result => result.json())
                 .then(entries => {
                     this.setState({
@@ -24,7 +24,7 @@ export class ByCategory extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`https://blog-api.ik.am/categories/${this.props.match.params.id}/entries?size=100`)
+        fetch(`${process.env.REACT_APP_BLOG_API}/categories/${this.props.match.params.id}/entries?size=100`)
             .then(result => result.json())
             .then(entries => {
                 this.setState({
