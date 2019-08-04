@@ -1,6 +1,8 @@
 package am.ik.blog;
 
+import io.micrometer.core.instrument.config.MeterFilter;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -15,6 +17,15 @@ public class App {
     @Bean
     public RouterFunction<?> routes(BlogHandler blogHandler) {
         return blogHandler.routes();
+    }
+
+    @Bean
+    public MeterRegistryCustomizer meterRegistryCustomizer() {
+        return registry -> registry.config() //
+            .meterFilter(MeterFilter.deny(id -> {
+                String uri = id.getTag("uri");
+                return uri != null && uri.startsWith("/actuator");
+            }));
     }
 }
 

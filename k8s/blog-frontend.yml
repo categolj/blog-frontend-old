@@ -72,3 +72,29 @@ spec:
             memory: "300Mi"
           requests:
             memory: "300Mi"
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 10
+          timeoutSeconds: 3
+          periodSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 60
+          timeoutSeconds: 3
+          periodSeconds: 10
+          failureThreshold: 3
+      affinity:
+         podAntiAffinity:
+           requiredDuringSchedulingIgnoredDuringExecution:
+             - labelSelector:
+                 matchExpressions:
+                   - key: "app"
+                     operator: In
+                     values:
+                     - blog-frontend
+               topologyKey: "kubernetes.io/hostname"
