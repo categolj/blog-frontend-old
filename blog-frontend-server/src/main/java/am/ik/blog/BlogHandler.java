@@ -3,6 +3,7 @@ package am.ik.blog;
 import is.tagomor.woothee.Classifier;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.CacheControl;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
@@ -21,26 +22,26 @@ import static org.springframework.http.HttpHeaders.USER_AGENT;
 @Controller
 public class BlogHandler {
 
-    private final ChromeRenderer chromeRenderer;
+    private final PrerenderClient prerenderClient;
 
-    public BlogHandler(ChromeRenderer chromeRenderer) {
-        this.chromeRenderer = chromeRenderer;
+    public BlogHandler(PrerenderClient prerenderClient) {
+        this.prerenderClient = prerenderClient;
     }
 
     RouterFunction<ServerResponse> routes() {
         return RouterFunctions.route()
-            .route(ifNotHuman(), this::renderByChrome)
-            .GET("/", this::returnHtml)
-            .GET("/entries/**", this::returnHtml)
-            .GET("/tags/**", this::returnHtml)
-            .GET("/categories/**", this::returnHtml)
+            .route(forwardToPrerender(), this::prerender)
+            .GET("/", this::render)
+            .GET("/entries/**", this::render)
+            .GET("/tags/**", this::render)
+            .GET("/categories/**", this::render)
             .build();
     }
 
     @NonNull
-    private Mono<ServerResponse> renderByChrome(ServerRequest req) {
+    private Mono<ServerResponse> prerender(ServerRequest req) {
         final String url = req.uri().toString();
-        final Mono<String> content = this.chromeRenderer.render(url);
+        final Mono<String> content = this.prerenderClient.invoke(req.method(), url);
         return content
             .flatMap(html -> ServerResponse.ok()
                 .contentType(MediaType.TEXT_HTML)
@@ -51,18 +52,31 @@ public class BlogHandler {
     }
 
     @NonNull
-    private Mono<ServerResponse> returnHtml(ServerRequest req) {
+    private Mono<ServerResponse> render(ServerRequest req) {
         return ServerResponse.ok().syncBody(new ClassPathResource("META-INF/resources/index.html"));
     }
 
-    private static RequestPredicate ifNotHuman() {
+    private static RequestPredicate forwardToPrerender() {
         return req -> {
-            final String userAgent = req.headers().header(USER_AGENT).get(0);
-            return !isHuman(userAgent);
+            final String path = req.path();
+            if ("/".equals(path) || path.startsWith("/entries") || path.startsWith("/tags") || path.startsWith("/categories")) {
+                return isPrerenderedMethod(req) && !isPrerenderedRequest(req) && !isHuman(req);
+            }
+            return false;
         };
     }
 
-    static boolean isHuman(String userAgent) {
+    private static boolean isPrerenderedRequest(ServerRequest req) {
+        return !req.headers().header("X-Prerender").isEmpty();
+    }
+
+    private static boolean isPrerenderedMethod(ServerRequest req) {
+        final HttpMethod method = req.method();
+        return method == HttpMethod.GET || method == HttpMethod.HEAD;
+    }
+
+    private static boolean isHuman(ServerRequest req) {
+        final String userAgent = req.headers().header(USER_AGENT).get(0);
         final Map<String, String> result = Classifier.parse(userAgent);
         final String category = result.get("category");
         return "pc".equals(category) || "smartphone".equals(category) || "mobilephone".equals(category);
