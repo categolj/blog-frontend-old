@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {Category} from "../categories/Category";
 import {Tag} from "../tags/Tag";
 import {NoMatch} from "../components/NoMatch";
+import zipkinFetch from '../zipkin/zipkinFetch';
 
 marked.setOptions({
     gfm: true,
@@ -28,7 +29,7 @@ export class Entry extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`${process.env.REACT_APP_BLOG_API}/entries/${this.props.match.params.id}`)
+        zipkinFetch(`${process.env.REACT_APP_BLOG_API}/entries/${this.props.match.params.id}`)
             .then(result => result.json())
             .then(res => {
                 this.setState({

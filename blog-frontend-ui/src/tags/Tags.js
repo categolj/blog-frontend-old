@@ -1,5 +1,6 @@
 import React from "react";
 import {Tag} from "./Tag";
+import zipkinFetch from '../zipkin/zipkinFetch';
 
 export class Tags extends React.Component {
     constructor(props) {
@@ -10,7 +11,7 @@ export class Tags extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`${process.env.REACT_APP_BLOG_API}/tags`)
+        zipkinFetch(`${process.env.REACT_APP_BLOG_API}/tags`)
             .then(result => result.json())
             .then(tags => {
                 this.setState({

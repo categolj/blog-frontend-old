@@ -1,6 +1,7 @@
 import React from "react";
 import {Entries} from "./Entries";
 import {Tag} from "../tags/Tag";
+import zipkinFetch from '../zipkin/zipkinFetch';
 
 export class ByTag extends React.Component {
     constructor(props) {
@@ -11,7 +12,7 @@ export class ByTag extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`${process.env.REACT_APP_BLOG_API}/tags/${this.props.match.params.id}/entries?size=100`)
+        zipkinFetch(`${process.env.REACT_APP_BLOG_API}/tags/${this.props.match.params.id}/entries?size=100`)
             .then(result => result.json())
             .then(entries => {
                 this.setState({

@@ -1,5 +1,6 @@
 import React from "react";
 import {Category} from "./Category";
+import zipkinFetch from '../zipkin/zipkinFetch';
 
 export class Categories extends React.Component {
     constructor(props) {
@@ -10,7 +11,7 @@ export class Categories extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`${process.env.REACT_APP_BLOG_API}/categories`)
+        zipkinFetch(`${process.env.REACT_APP_BLOG_API}/categories`)
             .then(result => result.json())
             .then(categories => {
                 this.setState({
