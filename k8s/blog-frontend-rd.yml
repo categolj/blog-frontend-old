@@ -7,7 +7,7 @@ spec:
   serviceName: blog-frontend
   route:
     predicates:
-      - Host=blog.dev.ik.am
+      - Host=blog.ik.am
     filters:
       - RequestLogging=
       - PreserveHostHeader
