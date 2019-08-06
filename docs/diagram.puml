@@ -1,0 +1,21 @@
+@startuml
+node "frontend" {
+  [ui] -> [server]
+}
+
+node "api"  {
+}
+
+database "db" {
+}
+
+cloud "Prerender" {
+}
+
+
+[server] --> Prerender
+[ui] -> api
+api -> db
+
+Prerender -> ui
+@enduml
