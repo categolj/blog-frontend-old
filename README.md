@@ -1,5 +1,7 @@
 # Blog Frontend
 
+![image](https://user-images.githubusercontent.com/106908/62510285-706fa880-b849-11e9-8c84-0f60b0670ac6.png)
+
 
 ```
 kubectl create -n blog secret generic blog-frontend \
