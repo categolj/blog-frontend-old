@@ -1,6 +1,10 @@
 @startuml
+(Crawler)
+actor User
+
 node "frontend" {
-  [ui] -> [server]
+  [ui]
+  [server]
 }
 
 node "api"  {
@@ -14,8 +18,11 @@ cloud "Prerender" {
 
 
 [server] --> Prerender
-[ui] -> api
+[ui] --> api
 api -> db
 
 Prerender -> ui
+
+User -> ui
+Crawler -> [server]
 @enduml
