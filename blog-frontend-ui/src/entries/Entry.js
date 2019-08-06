@@ -44,7 +44,7 @@ export class Entry extends React.Component {
         }
         const category = entry.frontMatter.categories.map(x => x.name);
         const tags = entry.frontMatter.tags.map(x => <span key={x.name}><Tag name={x.name}/>&nbsp;</span>);
-        return (entry.title ? <div>
+        return (entry.frontMatter.title ? <div>
             <h2>
                 <Link to={`/entries/${entry.entryId}`}>{`${entry.frontMatter.title}`}</Link>
             </h2>
