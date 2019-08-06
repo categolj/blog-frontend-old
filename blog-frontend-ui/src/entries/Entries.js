@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {Category} from "../categories/Category";
+import {Loading} from "../components/Loading";
 
 export class Entries extends React.Component {
     constructor(props) {
@@ -56,7 +57,7 @@ export class Entries extends React.Component {
         return (<div>
             <h2>Entries {this.props.label ? <span>({this.props.label}: {this.props.info})</span> : <span/>}</h2>
             <ul className="entries">
-                {entries}
+                {entries.length > 0 ? entries : <Loading/>}
             </ul>
         </div>);
     }

@@ -1,5 +1,6 @@
 import React from "react";
 import {Tag} from "./Tag";
+import {Loading} from "../components/Loading";
 
 export class Tags extends React.Component {
     constructor(props) {
@@ -26,7 +27,7 @@ export class Tags extends React.Component {
             <div>
                 <h2>Tags</h2>
                 <ul className={'tags'}>
-                    {tags}
+                    {tags.length > 0 ? tags : <Loading/>}
                 </ul>
             </div>
         );

@@ -1,5 +1,6 @@
 import React from "react";
 import {Category} from "./Category";
+import {Loading} from "../components/Loading";
 
 export class Categories extends React.Component {
     constructor(props) {
@@ -32,7 +33,7 @@ export class Categories extends React.Component {
             <div>
                 <h2>Categories</h2>
                 <ul className={'categories'}>
-                    {categories}
+                    {categories.length > 0 ? categories : <Loading/>}
                 </ul>
             </div>
         );
