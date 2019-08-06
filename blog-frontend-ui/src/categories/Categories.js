@@ -1,6 +1,7 @@
 import React from "react";
 import {Category} from "./Category";
 import {Loading} from "../components/Loading";
+import {UnexpectedError} from "../components/UnexpectedError";
 
 export class Categories extends React.Component {
     constructor(props) {
@@ -17,10 +18,18 @@ export class Categories extends React.Component {
                 this.setState({
                     categories: categories
                 });
-            });
+            })
+            .catch(e => {
+                    console.log({e});
+                    this.setState({error: e});
+                }
+            );
     }
 
     render() {
+        if (this.state.error) {
+            return <UnexpectedError message={this.state.error.message}/>
+        }
         const categories = this.state.categories
             .map(category => {
                 const c = category.map(x => x.name);

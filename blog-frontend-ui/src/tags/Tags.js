@@ -1,6 +1,7 @@
 import React from "react";
 import {Tag} from "./Tag";
 import {Loading} from "../components/Loading";
+import {UnexpectedError} from "../components/UnexpectedError";
 
 export class Tags extends React.Component {
     constructor(props) {
@@ -18,9 +19,17 @@ export class Tags extends React.Component {
                     tags: tags
                 });
             })
+            .catch(e => {
+                    console.log({e});
+                    this.setState({error: e});
+                }
+            )
     }
 
     render() {
+        if (this.state.error) {
+            return <UnexpectedError message={this.state.error.message}/>
+        }
         const tags = this.state.tags
             .map(tag => <li key={tag.name}><Tag name={tag.name}/></li>);
         return (

@@ -6,7 +6,7 @@ export class NoMatch extends React.Component {
             <div>
                 <h2>404 Not Found</h2>
                 <p>
-                    ○|￣|＿
+                    ¯\_(ツ)_/¯
                 </p>
             </div>
         );

@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {Category} from "../categories/Category";
 import {Loading} from "../components/Loading";
+import {UnexpectedError} from "../components/UnexpectedError";
 
 export class Entries extends React.Component {
     constructor(props) {
@@ -36,7 +37,12 @@ export class Entries extends React.Component {
                 this.setState({
                     entries: entries.content
                 });
-            });
+            })
+            .catch(e => {
+                    console.log({e});
+                    this.setState({error: e});
+                }
+            );
     }
 
     entries() {
@@ -44,6 +50,9 @@ export class Entries extends React.Component {
     }
 
     render() {
+        if (this.state.error) {
+            return <UnexpectedError message={this.state.error.message}/>
+        }
         const entries = this.entries()
             .map(entry => {
                 const categories = entry.frontMatter.categories.map(x => x.name);

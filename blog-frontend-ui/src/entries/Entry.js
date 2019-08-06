@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {Category} from "../categories/Category";
 import {Tag} from "../tags/Tag";
 import {NoMatch} from "../components/NoMatch";
+import {UnexpectedError} from "../components/UnexpectedError";
 
 marked.setOptions({
     gfm: true,
@@ -34,10 +35,18 @@ export class Entry extends React.Component {
                 this.setState({
                     entry: res
                 });
-            });
+            })
+            .catch(e => {
+                    console.log({e});
+                    this.setState({error: e});
+                }
+            );
     }
 
     render() {
+        if (this.state.error) {
+            return <UnexpectedError message={this.state.error.message}/>
+        }
         const entry = this.state.entry;
         if (entry.status === 404) {
             return <NoMatch/>;
