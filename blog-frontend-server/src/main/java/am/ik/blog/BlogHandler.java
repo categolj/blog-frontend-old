@@ -1,6 +1,7 @@
 package am.ik.blog;
 
 import is.tagomor.woothee.Classifier;
+import is.tagomor.woothee.crawler.Google;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpMethod;
@@ -15,6 +16,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.springframework.http.HttpHeaders.USER_AGENT;
@@ -60,7 +62,7 @@ public class BlogHandler {
         return req -> {
             final String path = req.path();
             if ("/".equals(path) || path.startsWith("/entries") || path.startsWith("/tags") || path.startsWith("/categories")) {
-                return isPrerenderedMethod(req) && !isPrerenderedRequest(req) && !isHuman(req);
+                return isGoogle(req) && isPrerenderedMethod(req) && !isPrerenderedRequest(req);
             }
             return false;
         };
@@ -73,6 +75,11 @@ public class BlogHandler {
     private static boolean isPrerenderedMethod(ServerRequest req) {
         final HttpMethod method = req.method();
         return method == HttpMethod.GET || method == HttpMethod.HEAD;
+    }
+
+    private static boolean isGoogle(ServerRequest req) {
+        final String userAgent = req.headers().header(USER_AGENT).get(0);
+        return Google.challenge(userAgent, new HashMap<>());
     }
 
     private static boolean isHuman(ServerRequest req) {
