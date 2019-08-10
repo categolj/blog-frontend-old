@@ -1,5 +1,6 @@
 import React from "react";
 import {Redirect} from "react-router-dom";
+import {Input} from 'pivotal-ui/react/inputs';
 
 export class SearchBox extends React.Component {
     constructor(props) {
@@ -13,9 +14,9 @@ export class SearchBox extends React.Component {
 
     render() {
         return (
-            <form method="get" onSubmit={event => this.submit(event)}>
-                <label>{`🔎`}&nbsp;<input className="input" name="q" type="search" placeholder="Search..."
-                                          onChange={event => this.changeQ(event)}/></label>
+            <form method="get" className={"searchbox"} onSubmit={event => this.submit(event)}>
+                <label><Input icon="search" className="searchbox" name="q" type="search" placeholder="Search..."
+                              onChange={event => this.changeQ(event)}/></label>
                 <br/>
                 <br/>
                 {this.state.redirect &&

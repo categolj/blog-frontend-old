@@ -1,5 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'pivotal-ui/css/typography';
+// import 'pivotal-ui/css/forms';
+import 'pivotal-ui/css/iconography';
+
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';

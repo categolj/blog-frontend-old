@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {Category} from "../categories/Category";
 import {Loading} from "../components/Loading";
 import {UnexpectedError} from "../components/UnexpectedError";
+import {Panel} from 'pivotal-ui/react/panels';
 
 export class Entries extends React.Component {
     constructor(props) {
@@ -63,12 +64,13 @@ export class Entries extends React.Component {
                     🗓 <span className={"visible-inline-on-wide"}>Updated at </span>{entry.updated.date}
                 </li>;
             });
-        return (<div>
+        const isLoaded = entries.length > 0;
+        return (<Panel loading={!isLoaded}>
             <h2>Entries {this.props.label ? <span>({this.props.label}: {this.props.info})</span> : <span/>}</h2>
             <ul className="entries">
-                {entries.length > 0 ? entries : <Loading/>}
+                {isLoaded ? entries : <Loading/>}
             </ul>
-        </div>);
+        </Panel>);
     }
 
 }

@@ -2,6 +2,7 @@ import React from "react";
 import {Category} from "./Category";
 import {Loading} from "../components/Loading";
 import {UnexpectedError} from "../components/UnexpectedError";
+import {Panel} from 'pivotal-ui/react/panels';
 
 export class Categories extends React.Component {
     constructor(props) {
@@ -38,13 +39,14 @@ export class Categories extends React.Component {
                     <Category category={c}/>
                 </li>
             });
+        const isLoaded = categories.length > 0;
         return (
-            <div>
+            <Panel loading={!isLoaded}>
                 <h2>Categories</h2>
                 <ul className={'categories'}>
-                    {categories.length > 0 ? categories : <Loading/>}
+                    {isLoaded ? categories : <Loading/>}
                 </ul>
-            </div>
+            </Panel>
         );
     }
 }

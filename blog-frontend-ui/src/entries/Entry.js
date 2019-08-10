@@ -5,6 +5,9 @@ import {Category} from "../categories/Category";
 import {Tag} from "../tags/Tag";
 import {NoMatch} from "../components/NoMatch";
 import {UnexpectedError} from "../components/UnexpectedError";
+import {Divider} from 'pivotal-ui/react/dividers';
+import {Panel} from 'pivotal-ui/react/panels';
+import 'pivotal-ui/css/code';
 
 marked.setOptions({
     gfm: true,
@@ -53,10 +56,12 @@ export class Entry extends React.Component {
         }
         const category = entry.frontMatter.categories.map(x => x.name);
         const tags = entry.frontMatter.tags.map(x => <span key={x.name}><Tag name={x.name}/>&nbsp;</span>);
-        return (entry.frontMatter.title ? <div>
+        const isLoaded = !!entry.frontMatter.title;
+        return <Panel loading={!isLoaded}>{(isLoaded ? <div>
             <h2>
                 <Link to={`/entries/${entry.entryId}`}>{`${entry.frontMatter.title}`}</Link>
             </h2>
+            <br/>
             <Category category={category}/>
             <br/><br/>
             {tags}
@@ -65,10 +70,11 @@ export class Entry extends React.Component {
             <span className={"visible-inline-on-wide"}>🗓 Created at {entry.created.date} by {entry.created.name}&nbsp;
                 {`{`}✒️️&nbsp;<a href={`https://github.com/making/blog.ik.am/edit/master/content/${Entry.format(entry.entryId)}.md`}>Edit</a>&nbsp;
                 ⏰&nbsp;<a href={`https://github.com/making/blog.ik.am/commits/master/content/${Entry.format(entry.entryId)}.md`}>History</a>{`}`}</span>
-            <hr/>
+            <Divider/>
             <p dangerouslySetInnerHTML={Entry.content(entry)}>
             </p>
-        </div> : <h2>Loading...</h2>);
+        </div> : <h2>Loading...</h2>)}
+        </Panel>;
     }
 
 

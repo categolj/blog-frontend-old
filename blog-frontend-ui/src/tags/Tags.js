@@ -1,6 +1,7 @@
 import React from "react";
 import {Tag} from "./Tag";
 import {Loading} from "../components/Loading";
+import {Panel} from 'pivotal-ui/react/panels';
 import {UnexpectedError} from "../components/UnexpectedError";
 
 export class Tags extends React.Component {
@@ -32,13 +33,14 @@ export class Tags extends React.Component {
         }
         const tags = this.state.tags
             .map(tag => <li key={tag.name}><Tag name={tag.name}/></li>);
+        const isLoaded = tags.length > 0;
         return (
-            <div>
+            <Panel loading={!isLoaded}>
                 <h2>Tags</h2>
                 <ul className={'tags'}>
-                    {tags.length > 0 ? tags : <Loading/>}
+                    {isLoaded ? tags : <Loading/>}
                 </ul>
-            </div>
+            </Panel>
         );
     }
 }
