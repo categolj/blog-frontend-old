@@ -1,5 +1,5 @@
 import React from "react";
-import marked from "marked";
+import marked from "./Marked";
 import {Link} from "react-router-dom";
 import {Category} from "../categories/Category";
 import {Tag} from "../tags/Tag";
@@ -8,10 +8,6 @@ import {UnexpectedError} from "../components/UnexpectedError";
 import {Divider} from 'pivotal-ui/react/dividers';
 import {Panel} from 'pivotal-ui/react/panels';
 import 'pivotal-ui/css/code';
-
-marked.setOptions({
-    gfm: true,
-});
 
 export class Entry extends React.Component {
     constructor(props) {
@@ -80,7 +76,7 @@ export class Entry extends React.Component {
 
     static content(entry) {
         return {
-            __html: entry.content && marked(entry.content)
+            __html: entry.content && marked.render(entry.content)
         }
     }
 
