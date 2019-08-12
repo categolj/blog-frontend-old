@@ -45,6 +45,7 @@ blockquote {
 }
 
 p > pre > code {
+    word-wrap: normal;
     white-space: pre;
 }
 
@@ -66,6 +67,7 @@ details > code, pre {
 }
 
 details > code {
+    word-wrap: normal;
     white-space: pre;
 }
 
