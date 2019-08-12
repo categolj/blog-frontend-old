@@ -10,11 +10,13 @@ import {Panel} from 'pivotal-ui/react/panels';
 import 'pivotal-ui/css/code';
 import hljs from 'highlight.js/lib/highlight';
 import java from 'highlight.js/lib/languages/java';
+import bash from 'highlight.js/lib/languages/bash';
 import yaml from 'highlight.js/lib/languages/yaml';
 import xml from 'highlight.js/lib/languages/xml';
 import 'highlight.js/styles/monokai-sublime.css';
 
 hljs.registerLanguage('java', java);
+hljs.registerLanguage('bash', bash);
 hljs.registerLanguage('yaml', yaml);
 hljs.registerLanguage('xml', xml);
 
