@@ -6,31 +6,40 @@ export class ByCategory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            entries: []
+            entries: {
+                content: []
+            }
         };
+        this.param = props.location ? new URLSearchParams(props.location.search) : new URLSearchParams();
         props.history.listen((location) => this.onLocationChange(location));
     }
 
     onLocationChange(location) {
         if (location.pathname.startsWith("/categories/")) {
-            fetch(`${process.env.REACT_APP_BLOG_API}/${location.pathname}?size=100`)
-                .then(result => result.json())
-                .then(entries => {
-                    this.setState({
-                        entries: entries.content
-                    });
-                });
+            this.param.set("page", 0);
+            this.loadFromServer(location.pathname);
         }
     }
 
     componentDidMount() {
-        fetch(`${process.env.REACT_APP_BLOG_API}/categories/${this.props.match.params.id}/entries?size=100`)
+        this.loadFromServer(`/categories/${this.props.match.params.id}/entries`);
+    }
+
+    loadFromServer(path) {
+        !this.param.has('size') && this.param.set('size', 30);
+        fetch(`${process.env.REACT_APP_BLOG_API}${path}?${this.param}`)
             .then(result => result.json())
             .then(entries => {
                 this.setState({
-                    entries: entries.content
+                    entries: entries
                 });
             });
+    }
+
+    onSelect(event, selectedEvent) {
+        this.param.set('page', selectedEvent.newActivePage - 1);
+        this.loadFromServer(`/categories/${this.props.match.params.id}/entries`);
+        this.props.history.push(`?${this.param}`);
     }
 
     render() {
@@ -38,7 +47,10 @@ export class ByCategory extends React.Component {
         return (<Entries
             label={'Category'}
             info={<Category category={category}/>}
-            entries={this.state.entries}/>);
+            entries={this.state.entries}
+            onSelect={(event, selectedEvent) => this.onSelect(event, selectedEvent)}
+            history={this.props.history}
+        />);
     }
 
 }

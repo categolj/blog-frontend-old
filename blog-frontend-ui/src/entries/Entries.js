@@ -3,13 +3,16 @@ import {Link} from "react-router-dom";
 import {Category} from "../categories/Category";
 import {Loading} from "../components/Loading";
 import {UnexpectedError} from "../components/UnexpectedError";
+import {Pagination} from 'pivotal-ui/react/pagination';
 import {Panel} from 'pivotal-ui/react/panels';
 
 export class Entries extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            entries: []
+            entries: {
+                content: []
+            }
         };
         this.param = props.location ? new URLSearchParams(props.location.search) : new URLSearchParams();
         if (props.history) {
@@ -31,12 +34,12 @@ export class Entries extends React.Component {
     }
 
     loadFromServer() {
-        this.param.set("size", 50);
+        !this.param.has('size') && this.param.set('size', 30);
         fetch(`${process.env.REACT_APP_BLOG_API}/entries?${this.param}`)
             .then(result => result.json())
             .then(entries => {
                 this.setState({
-                    entries: entries.content
+                    entries: entries
                 });
             })
             .catch(e => {
@@ -46,8 +49,22 @@ export class Entries extends React.Component {
             );
     }
 
+    onSelect(event, selectedEvent) {
+        this.param.set('page', selectedEvent.newActivePage - 1);
+        this.loadFromServer();
+        this.props.history.push(`?${this.param}`);
+    }
+
     entries() {
-        return this.props.entries || this.state.entries;
+        return (this.props.entries && this.props.entries.content) || this.state.entries.content;
+    }
+
+    page() {
+        const entries = this.props.entries || this.state.entries;
+        return {
+            totalPages: entries.totalPages,
+            activePage: entries.number + 1,
+        }
     }
 
     render() {
@@ -65,12 +82,19 @@ export class Entries extends React.Component {
                 </li>;
             });
         const isLoaded = entries.length > 0;
+        const page = this.page();
+        const onSelect = this.props.onSelect || this.onSelect.bind(this);
         return (<Panel loading={!isLoaded}>
             <h2>Entries {this.props.label ? <span>({this.props.label}: {this.props.info})</span> : <span/>}</h2>
             <ul className="entries">
                 {isLoaded ? entries : <Loading/>}
             </ul>
+            {page.totalPages > 1 &&
+            <Pagination
+                items={page.totalPages || 0}
+                activePage={page.activePage || 0}
+                onSelect={onSelect}
+            />}
         </Panel>);
     }
-
 }
