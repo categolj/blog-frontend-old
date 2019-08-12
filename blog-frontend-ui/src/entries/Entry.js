@@ -8,6 +8,15 @@ import {UnexpectedError} from "../components/UnexpectedError";
 import {Divider} from 'pivotal-ui/react/dividers';
 import {Panel} from 'pivotal-ui/react/panels';
 import 'pivotal-ui/css/code';
+import hljs from 'highlight.js/lib/highlight';
+import java from 'highlight.js/lib/languages/java';
+import yaml from 'highlight.js/lib/languages/yaml';
+import xml from 'highlight.js/lib/languages/xml';
+import 'highlight.js/styles/monokai-sublime.css';
+
+hljs.registerLanguage('java', java);
+hljs.registerLanguage('yaml', yaml);
+hljs.registerLanguage('xml', xml);
 
 export class Entry extends React.Component {
     constructor(props) {
@@ -24,6 +33,17 @@ export class Entry extends React.Component {
                     created: {},
                 }
             }
+        };
+        this.ref = React.createRef();
+    }
+
+    highlight() {
+        if (this.ref && this.ref.current) {
+            const nodes = this.ref.current.querySelectorAll('pre, details > code');
+            nodes.forEach((node) => {
+                console.log({node});
+                hljs.highlightBlock(node);
+            });
         }
     }
 
@@ -40,6 +60,11 @@ export class Entry extends React.Component {
                     this.setState({error: e});
                 }
             );
+        this.highlight();
+    }
+
+    componentDidUpdate() {
+        this.highlight();
     }
 
     render() {
@@ -67,7 +92,7 @@ export class Entry extends React.Component {
                 {`{`}✒️️&nbsp;<a href={`https://github.com/making/blog.ik.am/edit/master/content/${Entry.format(entry.entryId)}.md`}>Edit</a>&nbsp;
                 ⏰&nbsp;<a href={`https://github.com/making/blog.ik.am/commits/master/content/${Entry.format(entry.entryId)}.md`}>History</a>{`}`}</span>
             <Divider/>
-            <p dangerouslySetInnerHTML={Entry.content(entry)}>
+            <p ref={this.ref} dangerouslySetInnerHTML={Entry.content(entry)}>
             </p>
         </div> : <h2>Loading...</h2>)}
         </Panel>;
