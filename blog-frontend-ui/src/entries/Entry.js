@@ -41,7 +41,6 @@ export class Entry extends React.Component {
         if (this.ref && this.ref.current) {
             const nodes = this.ref.current.querySelectorAll('pre, details > code');
             nodes.forEach((node) => {
-                console.log({node});
                 hljs.highlightBlock(node);
             });
         }
