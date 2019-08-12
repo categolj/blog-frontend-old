@@ -15,7 +15,7 @@ export class ByCategory extends React.Component {
     }
 
     onLocationChange(location) {
-        if (location.pathname.startsWith("/categories/")) {
+        if (location.pathname.startsWith("/categories/") && !location.search) {
             this.param.set("page", 0);
             this.loadFromServer(location.pathname);
         }
