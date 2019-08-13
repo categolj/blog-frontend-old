@@ -85,11 +85,10 @@ export class Entry extends React.Component {
             <h2>
                 <Link to={`/entries/${entry.entryId}`}>{`${entry.frontMatter.title}`}</Link>
             </h2>
-            <br/>
             <Category category={category}/>
-            <br/><br/>
+            <br/>
             {tags}
-            <br/><br/>
+            {tags.length > 0 && <br/>}
             {Entry.entryDate(entry)}&nbsp;&nbsp;
             {!Entry.isIgnoreUpdateDate(entry) && <span className={"visible-inline-on-wide"}>🗓 Created at {entry.created.date}</span>}&nbsp;
             <span className={"visible-inline-on-wide"}>
