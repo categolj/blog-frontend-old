@@ -2,6 +2,7 @@ import React from "react";
 import {Tag} from "./Tag";
 import {Loading} from "../components/Loading";
 import {Panel} from 'pivotal-ui/react/panels';
+import {BackToTop} from 'pivotal-ui/react/back-to-top';
 import {UnexpectedError} from "../components/UnexpectedError";
 
 export class Tags extends React.Component {
@@ -40,6 +41,7 @@ export class Tags extends React.Component {
                 <ul className={'tags'}>
                     {isLoaded ? tags : <Loading/>}
                 </ul>
+                <BackToTop/>
             </Panel>
         );
     }

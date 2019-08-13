@@ -3,6 +3,7 @@ import {Category} from "./Category";
 import {Loading} from "../components/Loading";
 import {UnexpectedError} from "../components/UnexpectedError";
 import {Panel} from 'pivotal-ui/react/panels';
+import {BackToTop} from 'pivotal-ui/react/back-to-top';
 
 export class Categories extends React.Component {
     constructor(props) {
@@ -46,6 +47,7 @@ export class Categories extends React.Component {
                 <ul className={'categories'}>
                     {isLoaded ? categories : <Loading/>}
                 </ul>
+                <BackToTop/>
             </Panel>
         );
     }
