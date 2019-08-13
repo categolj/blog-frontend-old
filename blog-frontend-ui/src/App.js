@@ -11,6 +11,8 @@ import {SearchBox} from "./components/SearchBox";
 import {NoMatch} from "./components/NoMatch";
 import {Links} from "./components/Links";
 import {Footer} from "./components/Footer";
+import {NavTab} from "react-router-tabs";
+import './App.css';
 
 class App extends Component {
     render() {
@@ -22,6 +24,9 @@ class App extends Component {
                     <SearchBox/>
                     <section id={"main"}>
                         <article>
+                            <NavTab exact to="/">{`📎 Entries`}</NavTab>
+                            <NavTab to="/categories">{`🗃 Categories`}</NavTab>
+                            <NavTab to="/tags">{`🏷 Tags`}</NavTab>
                             <Switch>
                                 <Route exact path="/" component={Entries}/>
                                 <Route path="/index.html" component={Entries}/>
