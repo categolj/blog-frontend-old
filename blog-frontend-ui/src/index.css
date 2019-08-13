@@ -9,7 +9,6 @@ article, details > code, pre {
 
 body {
     font-size: 1pc;
-    /*font-family: Georgia, "Times New Roman", Times, serif;*/
     margin: 2px
 }
 
@@ -24,6 +23,11 @@ img {
 article {
     padding: 0 5px 5px;
     margin: 0 0 10px;
+}
+
+article p a {
+    color: #647882;
+    text-decoration-line: underline;
 }
 
 hr {
