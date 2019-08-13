@@ -35,6 +35,7 @@ public class BlogHandler {
             .route(forwardToPrerender(), this::prerender)
             .GET("/", this::render)
             .GET("/entries/**", this::render)
+            .GET("/series/**", this::render)
             .GET("/tags/**", this::render)
             .GET("/categories/**", this::render)
             .GET("/info", this::render)
@@ -62,7 +63,7 @@ public class BlogHandler {
     private static RequestPredicate forwardToPrerender() {
         return req -> {
             final String path = req.path();
-            if ("/".equals(path) || path.startsWith("/entries") || path.startsWith("/tags") || path.startsWith("/categories")) {
+            if ("/".equals(path) || path.startsWith("/entries") || path.startsWith("/series") || path.startsWith("/tags") || path.startsWith("/categories")) {
                 return isGoogle(req) && isPrerenderedMethod(req) && !isPrerenderedRequest(req);
             }
             return false;

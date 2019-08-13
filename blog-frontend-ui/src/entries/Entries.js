@@ -6,6 +6,7 @@ import {UnexpectedError} from "../components/UnexpectedError";
 import {Pagination} from 'pivotal-ui/react/pagination';
 import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
+import {Entry} from "./Entry";
 
 export class Entries extends React.Component {
     constructor(props) {
@@ -79,7 +80,7 @@ export class Entries extends React.Component {
                     <span className={"visible-inline-on-wide"}><Category category={categories}/>&nbsp;</span>
                     <Link to={`/entries/${entry.entryId}`}>{entry.frontMatter.title}</Link>&nbsp;
                     <br className="invisible-inline-on-wide"/>
-                    🗓 <span className={"visible-inline-on-wide"}>Updated at </span>{entry.updated.date}
+                    {Entry.entryDate(entry)}
                 </li>;
             });
         const isLoaded = entries.length > 0;

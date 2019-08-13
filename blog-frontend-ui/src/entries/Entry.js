@@ -90,8 +90,9 @@ export class Entry extends React.Component {
             <br/><br/>
             {tags}
             <br/><br/>
-            🗓 <span className={"visible-inline-on-wide"}>Updated at </span>{entry.updated.date}&nbsp;&nbsp;
-            <span className={"visible-inline-on-wide"}>🗓 Created at {entry.created.date}&nbsp;
+            {Entry.entryDate(entry)}&nbsp;&nbsp;
+            {!Entry.isIgnoreUpdateDate(entry) && <span className={"visible-inline-on-wide"}>🗓 Created at {entry.created.date}</span>}&nbsp;
+            <span className={"visible-inline-on-wide"}>
                 {`{`}✒️️&nbsp;<a href={`https://github.com/making/blog.ik.am/edit/master/content/${Entry.format(entry.entryId)}.md`}>Edit</a>&nbsp;
                 ⏰&nbsp;<a href={`https://github.com/making/blog.ik.am/commits/master/content/${Entry.format(entry.entryId)}.md`}>History</a>{`}`}</span>
             <Divider/>
@@ -111,6 +112,18 @@ export class Entry extends React.Component {
 
     static format(id) {
         return ("0000" + id).substr(-5);
+    }
+
+    static isIgnoreUpdateDate(entry) {
+        return new Date(entry.updated.date).getTime() === 0;
+    }
+
+    static entryDate(entry) {
+        if (Entry.isIgnoreUpdateDate(entry)) {
+            return <span>🗓 <span className={"visible-inline-on-wide"}>Created at </span>{entry.created.date}</span>;
+        } else {
+            return <span>🗓 <span className={"visible-inline-on-wide"}>Updated at </span>{entry.updated.date}</span>;
+        }
     }
 
 }

@@ -92,6 +92,10 @@ h2 {
     font-weight: bold;
 }
 
+h2 + ul {
+    margin-top: 10px;
+}
+
 h3 {
     margin-top: 5px;
 }
@@ -100,8 +104,22 @@ h3:before {
     content: "☕️ "
 }
 
-h2 + ul {
-    margin-top: 10px;
+h3.home {
+    width: 90%;
+    border-bottom: #eaedef solid 1px;
+    margin-bottom: 5px;
+}
+
+h3#series:before {
+    content: "📚️️ "
+}
+
+h3#presentations:before {
+    content: "🗣️️ "
+}
+
+h3#latest-entries:before {
+    content: "📣 "
 }
 
 h3 + ul {
@@ -128,6 +146,11 @@ h6:before {
     content: "☁️ "
 }
 
+
+ul {
+    padding: 0 0 0 25px;
+}
+
 ul.entries {
     padding: 0 0 0 15px
 }
@@ -136,12 +159,20 @@ ul.links {
     padding: 0 0 0 20px
 }
 
-ul.categories > li, ul.tags > li {
-    list-style: none
+ul.series {
+    padding: 0 0 0 0px;
+}
+
+ul.categories > li, ul.tags > li, ul.series > li {
+    list-style: none;
 }
 
 ul.categories, ul.tags {
     padding: 0
+}
+
+ul.series > li:before {
+    content: "📌 ";
 }
 
 img.emoji {

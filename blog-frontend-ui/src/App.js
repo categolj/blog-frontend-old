@@ -10,10 +10,12 @@ import {Header} from "./components/Header";
 import {ByCategory} from "./entries/ByCategory";
 import {SearchBox} from "./components/SearchBox";
 import {NoMatch} from "./components/NoMatch";
-import {Links} from "./components/Links";
 import {Footer} from "./components/Footer";
 import {NavTab} from "react-router-tabs";
 import './App.css';
+import {Home} from "./home/Home";
+import {Links} from "./components/Links";
+import {Series} from "./series/Series";
 
 class App extends Component {
     render() {
@@ -25,12 +27,13 @@ class App extends Component {
                     <SearchBox/>
                     <section id={"main"}>
                         <article>
-                            <NavTab exact to="/">{`Entries`}</NavTab>
+                            <NavTab exact to="/">{`Home`}</NavTab>
+                            <NavTab exact to="/entries">{`Entries`}</NavTab>
                             <NavTab to="/categories">{`Categories`}</NavTab>
                             <NavTab to="/tags">{`Tags`}</NavTab>
                             <NavTab to="/info" className={"nav-tab can-be-invisible"}>{`Info`}</NavTab>
                             <Switch>
-                                <Route exact path="/" component={Entries}/>
+                                <Route exact path="/" component={Home}/>
                                 <Route path="/index.html" component={Entries}/>
                                 <Route exact path="/entries" component={Entries}/>
                                 <Route path="/entries/:id" component={Entry}/>
@@ -39,6 +42,7 @@ class App extends Component {
                                 <Route exact path="/tags" component={Tags}/>
                                 <Route path="/tags/:id/entries" component={ByTag}/>
                                 <Route exact path="/info" component={Info}/>
+                                <Route path="/series/:id/entries" component={Series}/>
                                 <Route component={NoMatch}/>
                             </Switch>
                         </article>
