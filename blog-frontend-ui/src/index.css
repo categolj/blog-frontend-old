@@ -45,8 +45,13 @@ blockquote {
     border: 1px dotted #a9a9a9;
     border-radius: 5px;
     margin: 5px 0;
-    padding-left: 10px;
     max-width: 90%
+}
+
+blockquote p {
+    margin: 10px;
+    white-space: nowrap;
+    overflow-x: auto;
 }
 
 p code {
