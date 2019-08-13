@@ -49,6 +49,11 @@ blockquote {
     max-width: 90%
 }
 
+p code {
+    color: #f8f8f2;
+    background-color: #23241f;
+}
+
 p > pre > code {
     word-wrap: normal;
     white-space: pre;
