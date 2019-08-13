@@ -37,6 +37,7 @@ public class BlogHandler {
             .GET("/entries/**", this::render)
             .GET("/tags/**", this::render)
             .GET("/categories/**", this::render)
+            .GET("/info", this::render)
             .build();
     }
 
