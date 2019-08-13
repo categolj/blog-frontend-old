@@ -3,7 +3,8 @@ import {Link} from "react-router-dom";
 
 export class SeriesList extends React.Component {
     static content = [
-        {name: 'Spring WebFlux.fnハンズオン資料', tag: 'Spring WebFlux.fn Handson'}
+        {name: 'Spring WebFlux.fnハンズオン資料', tag: 'Spring WebFlux.fn Handson'},
+        {name: 'Concourseハンズオン資料', tag: 'Concourse Handson'},
     ];
 
     render() {
