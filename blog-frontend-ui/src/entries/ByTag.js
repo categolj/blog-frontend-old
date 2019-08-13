@@ -18,8 +18,8 @@ export class ByTag extends React.Component {
     }
 
     loadFromServer() {
-
-        !this.param.has('size') && this.param.set('size', 30);        fetch(`${process.env.REACT_APP_BLOG_API}/tags/${this.props.match.params.id}/entries?${this.param}`)
+        !this.param.has('size') && this.param.set('size', 30);
+        fetch(`${process.env.REACT_APP_BLOG_API}/tags/${this.props.match.params.id}/entries?${this.param}`)
             .then(result => result.json())
             .then(entries => {
                 this.setState({
