@@ -16,7 +16,8 @@ export class Block extends React.Component {
                 },
                 git: {
                     commit: {
-                        id: {}
+                        id: {},
+                        message: {}
                     },
                     remote: {
                         origin: {
@@ -59,10 +60,11 @@ export class Block extends React.Component {
                     </tr>
                     <tr>
                         <th>Source Code</th>
-                        <td><a href={info.git.remote.origin.url
+                        <td>{info.git.commit.message.short} (<a href={info.git.remote.origin.url
                             .replace('git@github.com:', 'https://github.com/')
                             .replace('.git', `/tree/${rev}`)}
-                               target={'_blank'}><code>{rev}</code></a></td>
+                                                               target={'_blank'}><code>{rev}</code></a>)
+                        </td>
                     </tr>
                     <tr>
                         <th>Spring Framework</th>
