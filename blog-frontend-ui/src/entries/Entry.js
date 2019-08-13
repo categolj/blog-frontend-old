@@ -94,7 +94,9 @@ export class Entry extends React.Component {
             {!Entry.isIgnoreUpdateDate(entry) && <span className={"visible-inline-on-wide"}>🗓 Created at {entry.created.date}</span>}&nbsp;
             <span className={"visible-inline-on-wide"}>
                 {`{`}✒️️&nbsp;<a href={`https://github.com/making/blog.ik.am/edit/master/content/${Entry.format(entry.entryId)}.md`}>Edit</a>&nbsp;
-                ⏰&nbsp;<a href={`https://github.com/making/blog.ik.am/commits/master/content/${Entry.format(entry.entryId)}.md`}>History</a>{`}`}</span>
+                ⏰&nbsp;<a href={`https://github.com/making/blog.ik.am/commits/master/content/${Entry.format(entry.entryId)}.md`}>History</a>&nbsp;
+                🗑&nbsp;<a href={`https://github.com/making/blog.ik.am/delete/master/content/${Entry.format(entry.entryId)}.md`}>Delete</a>{`}`}
+            </span>
             <Divider/>
             <p ref={this.ref} dangerouslySetInnerHTML={Entry.content(entry)}>
             </p>
