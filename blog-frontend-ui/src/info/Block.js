@@ -1,4 +1,5 @@
 import React from "react";
+import 'pivotal-ui/css/tables';
 
 export class Block extends React.Component {
     constructor(props) {
@@ -44,7 +45,7 @@ export class Block extends React.Component {
         return (
             <div>
                 <h3><a href={this.url}>{header}</a></h3>
-                <table>
+                <table className="table">
                     <thead>
                     <tr>
                         <th>Version</th>

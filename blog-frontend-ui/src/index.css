@@ -25,7 +25,7 @@ article {
     margin: 0 0 10px;
 }
 
-article p a {
+article p a, td a {
     color: #647882;
     text-decoration-line: underline;
 }
