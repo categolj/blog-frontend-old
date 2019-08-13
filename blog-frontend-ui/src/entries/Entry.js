@@ -7,6 +7,8 @@ import {NoMatch} from "../components/NoMatch";
 import {UnexpectedError} from "../components/UnexpectedError";
 import {Divider} from 'pivotal-ui/react/dividers';
 import {Panel} from 'pivotal-ui/react/panels';
+import {BackToTop} from 'pivotal-ui/react/back-to-top';
+
 import 'pivotal-ui/css/code';
 import hljs from 'highlight.js/lib/highlight';
 import java from 'highlight.js/lib/languages/java';
@@ -95,6 +97,7 @@ export class Entry extends React.Component {
             <Divider/>
             <p ref={this.ref} dangerouslySetInnerHTML={Entry.content(entry)}>
             </p>
+            <BackToTop/>
         </div> : <h2>Loading...</h2>)}
         </Panel>;
     }

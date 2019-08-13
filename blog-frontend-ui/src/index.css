@@ -12,8 +12,9 @@ body {
     margin: 2px
 }
 
-a {
-    color: #2f4f4f
+div a, div a:hover {
+    color: #2f4f4f;
+    transition: none;
 }
 
 img {

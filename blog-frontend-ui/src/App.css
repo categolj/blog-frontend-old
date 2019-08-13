@@ -24,3 +24,7 @@
     margin-left: 5px;
     margin-right: 10px;
 }
+
+div .pui-back-to-top, div .pui-back-to-top:hover {
+    background-color: #647882;
+}

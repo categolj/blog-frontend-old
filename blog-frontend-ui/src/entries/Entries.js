@@ -5,6 +5,7 @@ import {Loading} from "../components/Loading";
 import {UnexpectedError} from "../components/UnexpectedError";
 import {Pagination} from 'pivotal-ui/react/pagination';
 import {Panel} from 'pivotal-ui/react/panels';
+import {BackToTop} from 'pivotal-ui/react/back-to-top';
 
 export class Entries extends React.Component {
     constructor(props) {
@@ -95,6 +96,7 @@ export class Entries extends React.Component {
                 activePage={page.activePage || 0}
                 onSelect={onSelect}
             />}
+            <BackToTop/>
         </Panel>);
     }
 }
