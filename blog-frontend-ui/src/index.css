@@ -92,12 +92,32 @@ h2 {
     font-weight: bold;
 }
 
+h3 {
+    margin-top: 5px;
+}
+
 h3:before {
     content: "☕️ "
 }
 
+h2 + ul {
+    margin-top: 10px;
+}
+
+h3 + ul {
+    margin-top: 0px;
+}
+
+h4 {
+    margin-top: 10px;
+}
+
 h4:before {
     content: "🍃 "
+}
+
+h5 {
+    margin-top: 10px;
 }
 
 h5:before {

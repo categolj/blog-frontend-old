@@ -28,7 +28,7 @@ class App extends Component {
                             <NavTab exact to="/">{`Entries`}</NavTab>
                             <NavTab to="/categories">{`Categories`}</NavTab>
                             <NavTab to="/tags">{`Tags`}</NavTab>
-                            <NavTab to="/info">{`Info`}</NavTab>
+                            <NavTab to="/info" className={"nav-tab can-be-invisible"}>{`Info`}</NavTab>
                             <Switch>
                                 <Route exact path="/" component={Entries}/>
                                 <Route path="/index.html" component={Entries}/>
