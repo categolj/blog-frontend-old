@@ -5,6 +5,7 @@ import {Categories} from "./categories/Categories";
 import {Entries} from "./entries/Entries";
 import {Entry} from "./entries/Entry";
 import {ByTag} from "./entries/ByTag";
+import {Info} from "./info/Info";
 import {Header} from "./components/Header";
 import {ByCategory} from "./entries/ByCategory";
 import {SearchBox} from "./components/SearchBox";
@@ -24,9 +25,10 @@ class App extends Component {
                     <SearchBox/>
                     <section id={"main"}>
                         <article>
-                            <NavTab exact to="/">{`📎 Entries`}</NavTab>
-                            <NavTab to="/categories">{`🗃 Categories`}</NavTab>
-                            <NavTab to="/tags">{`🏷 Tags`}</NavTab>
+                            <NavTab exact to="/">{`Entries`}</NavTab>
+                            <NavTab to="/categories">{`Categories`}</NavTab>
+                            <NavTab to="/tags">{`Tags`}</NavTab>
+                            <NavTab to="/info">{`Info`}</NavTab>
                             <Switch>
                                 <Route exact path="/" component={Entries}/>
                                 <Route path="/index.html" component={Entries}/>
@@ -36,6 +38,7 @@ class App extends Component {
                                 <Route path="/categories/:id/entries" component={ByCategory}/>
                                 <Route exact path="/tags" component={Tags}/>
                                 <Route path="/tags/:id/entries" component={ByTag}/>
+                                <Route exact path="/info" component={Info}/>
                                 <Route component={NoMatch}/>
                             </Switch>
                         </article>
