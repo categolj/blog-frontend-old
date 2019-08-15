@@ -87,4 +87,9 @@ function repeat(text, n) {
 marked.setOptions({
     gfm: true,
 });
-export default new Marked(marked);
+
+export default (function () {
+    const md = new Marked(marked);
+    md.enableHeadingIdUriEncoding();
+    return md;
+})();
