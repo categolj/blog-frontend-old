@@ -22,7 +22,7 @@ export class SearchBox extends React.Component {
                 {this.state.redirect &&
                 <Redirect
                     to={{
-                        pathname: "/",
+                        pathname: "/entries",
                         search: this.params.toString(),
                     }}
                 />
