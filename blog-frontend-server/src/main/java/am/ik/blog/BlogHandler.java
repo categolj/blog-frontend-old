@@ -64,7 +64,7 @@ public class BlogHandler {
         return req -> {
             final String path = req.path();
             if ("/".equals(path) || path.startsWith("/entries") || path.startsWith("/series") || path.startsWith("/tags") || path.startsWith("/categories")) {
-                return isGoogle(req) && isPrerenderedMethod(req) && !isPrerenderedRequest(req);
+                return isPrerenderedMethod(req) && !isPrerenderedRequest(req) && isGoogle(req);
             }
             return false;
         };
