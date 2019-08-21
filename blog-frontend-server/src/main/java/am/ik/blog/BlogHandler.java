@@ -4,6 +4,7 @@ import is.tagomor.woothee.Classifier;
 import is.tagomor.woothee.crawler.Google;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.CacheControl;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
@@ -80,6 +81,10 @@ public class BlogHandler {
     }
 
     private static boolean isGoogle(ServerRequest req) {
+        final String referer = req.headers().header(HttpHeaders.REFERER).get(0);
+        if (referer != null && referer.startsWith("https://translate.googleusercontent.com")) {
+            return true;
+        }
         final String userAgent = req.headers().header(USER_AGENT).get(0);
         return Google.challenge(userAgent, new HashMap<>());
     }
