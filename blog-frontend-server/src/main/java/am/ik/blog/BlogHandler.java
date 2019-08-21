@@ -18,6 +18,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.HttpHeaders.USER_AGENT;
@@ -81,8 +82,8 @@ public class BlogHandler {
     }
 
     private static boolean isGoogle(ServerRequest req) {
-        final String referer = req.headers().header(HttpHeaders.REFERER).get(0);
-        if (referer != null && referer.startsWith("https://translate.googleusercontent.com")) {
+        final List<String> headers = req.headers().header(HttpHeaders.REFERER);
+        if (headers != null && !headers.isEmpty() && headers.get(0).startsWith("https://translate.googleusercontent.com")) {
             return true;
         }
         final String userAgent = req.headers().header(USER_AGENT).get(0);
