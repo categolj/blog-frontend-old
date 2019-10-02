@@ -15,8 +15,11 @@ public class App {
     }
 
     @Bean
-    public RouterFunction<?> routes(BlogHandler blogHandler) {
-        return blogHandler.routes();
+    public RouterFunction<?> routes(
+        DashboardHandler dashboardHandler,
+        BlogHandler blogHandler) {
+        return dashboardHandler.routes()
+            .and(blogHandler.routes());
     }
 
     @Bean

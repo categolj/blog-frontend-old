@@ -41,6 +41,7 @@ public class BlogHandler {
             .GET("/tags/**", this::render)
             .GET("/categories/**", this::render)
             .GET("/info", this::render)
+            .GET("/dashboard", this::render)
             .build();
     }
 

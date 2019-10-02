@@ -39,6 +39,8 @@ spec:
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: kubernetes
+        - name: PROMETHEUS_URL
+          value: https://prometheus.k8s.bosh.tokyo
         - name: JAVA_OPTS
           value: " -XX:ReservedCodeCacheSize=32M -Xss512k -Duser.timezone=Asia/Tokyo -Duser.language=ja -Duser.country=JP"
         - name: BPL_THREAD_COUNT

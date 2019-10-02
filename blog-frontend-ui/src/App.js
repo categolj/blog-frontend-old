@@ -16,6 +16,7 @@ import './App.css';
 import {Home} from "./home/Home";
 import {Links} from "./components/Links";
 import {Series} from "./series/Series";
+import {Dashboard} from "./dashboard/Dashboard";
 
 class App extends Component {
     render() {
@@ -32,6 +33,7 @@ class App extends Component {
                             <NavTab to="/categories">{`Categories`}</NavTab>
                             <NavTab to="/tags">{`Tags`}</NavTab>
                             <NavTab to="/info" className={"nav-tab can-be-invisible"}>{`Info`}</NavTab>
+                            <NavTab to="/dashboard" className={"nav-tab can-be-invisible"}>{`Dashboard`}</NavTab>
                             <Switch>
                                 <Route exact path="/" component={Home}/>
                                 <Route path="/index.html" component={Entries}/>
@@ -42,6 +44,7 @@ class App extends Component {
                                 <Route exact path="/tags" component={Tags}/>
                                 <Route path="/tags/:id/entries" component={ByTag}/>
                                 <Route exact path="/info" component={Info}/>
+                                <Route exact path="/dashboard" component={Dashboard}/>
                                 <Route path="/series/:id/entries" component={Series}/>
                                 <Route component={NoMatch}/>
                             </Switch>
