@@ -16,13 +16,17 @@ export class Tags extends React.Component {
     componentDidMount() {
         fetch(`${process.env.REACT_APP_BLOG_API}/tags`)
             .then(result => result.json())
-            .then(tags => {
+            .then(body => {
+                if (body.error) {
+                    console.error(body);
+                    throw new Error(body.message);
+                }
                 this.setState({
-                    tags: tags
+                    tags: body
                 });
             })
             .catch(e => {
-                    console.log({e});
+                    console.error({e});
                     this.setState({error: e});
                 }
             )

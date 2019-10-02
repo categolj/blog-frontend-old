@@ -16,13 +16,17 @@ export class Categories extends React.Component {
     componentDidMount() {
         fetch(`${process.env.REACT_APP_BLOG_API}/categories`)
             .then(result => result.json())
-            .then(categories => {
+            .then(body => {
+                if (body.error) {
+                    console.error(body);
+                    throw new Error(body.message);
+                }
                 this.setState({
-                    categories: categories
+                    categories: body
                 });
             })
             .catch(e => {
-                    console.log({e});
+                    console.error({e});
                     this.setState({error: e});
                 }
             );

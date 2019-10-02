@@ -39,13 +39,17 @@ export class Entries extends React.Component {
         !this.param.has('size') && this.param.set('size', 30);
         fetch(`${process.env.REACT_APP_BLOG_API}/entries?${this.param}`)
             .then(result => result.json())
-            .then(entries => {
+            .then(body => {
+                if (body.error) {
+                    console.error(body);
+                    throw new Error(body.message);
+                }
                 this.setState({
-                    entries: entries
+                    entries: body
                 });
             })
             .catch(e => {
-                    console.log({e});
+                    console.error({e});
                     this.setState({error: e});
                 }
             );

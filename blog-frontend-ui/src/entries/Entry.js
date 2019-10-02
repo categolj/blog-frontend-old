@@ -53,13 +53,17 @@ export class Entry extends React.Component {
     componentDidMount() {
         fetch(`${process.env.REACT_APP_BLOG_API}/entries/${this.props.match.params.id}`)
             .then(result => result.json())
-            .then(res => {
+            .then(body => {
+                if (body.error && body.status !== 404) {
+                    console.error(body);
+                    throw new Error(body.message);
+                }
                 this.setState({
-                    entry: res
+                    entry: body
                 });
             })
             .catch(e => {
-                    console.log({e});
+                    console.error({e});
                     this.setState({error: e});
                 }
             );

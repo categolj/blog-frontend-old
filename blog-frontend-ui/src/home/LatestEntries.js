@@ -16,13 +16,17 @@ export class LatestEntries extends React.Component {
     componentDidMount() {
         fetch(`${process.env.REACT_APP_BLOG_API}/entries?size=5`)
             .then(result => result.json())
-            .then(entries => {
+            .then(body => {
+                if (body.error) {
+                    console.error(body);
+                    throw new Error(body.message);
+                }
                 this.setState({
-                    entries: entries
+                    entries: body
                 });
             })
             .catch(e => {
-                    console.log({e});
+                    console.error({e});
                     this.setState({error: e});
                 }
             );
