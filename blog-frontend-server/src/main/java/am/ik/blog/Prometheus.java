@@ -1,8 +1,8 @@
 package am.ik.blog;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ImmutableConfigurationProperties;
 
-@ConfigurationProperties(prefix = "prometheus")
+@ImmutableConfigurationProperties(prefix = "prometheus")
 public class Prometheus {
 
     private final String url;

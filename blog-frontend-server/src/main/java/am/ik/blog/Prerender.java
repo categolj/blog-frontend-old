@@ -1,9 +1,9 @@
 package am.ik.blog;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ImmutableConfigurationProperties;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
-@ConfigurationProperties(prefix = "prerender")
+@ImmutableConfigurationProperties(prefix = "prerender")
 public class Prerender {
 
     private final String url;
