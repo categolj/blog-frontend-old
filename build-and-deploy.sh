@@ -7,5 +7,4 @@ BOOT_VERSION=$(grep '<version>' pom.xml | head -n 1 | sed -e 's|<version>||g' -e
 ./mvnw clean package -Dspring-boot.version=${BOOT_VERSION} -DskipTests=true  && ./build-image.sh
 
 #kbld -f k8s | kubectl apply -f -
-./
-deploy.sh
+./deploy.sh
