@@ -4,6 +4,8 @@ import io.micrometer.core.instrument.config.MeterFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.embedded.netty.NettyReactiveWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.reactive.function.server.RouterFunction;
 
@@ -29,6 +31,11 @@ public class App {
                 String uri = id.getTag("uri");
                 return uri != null && uri.startsWith("/actuator");
             }));
+    }
+
+    @Bean
+    public WebServerFactoryCustomizer<NettyReactiveWebServerFactory> customizer() {
+        return factory -> factory.addServerCustomizers(builder -> builder.metrics(true));
     }
 }
 
