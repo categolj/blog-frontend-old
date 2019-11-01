@@ -93,7 +93,7 @@ spec:
           failureThreshold: 3
         livenessProbe:
           httpGet:
-            path: /actuator/health
+            path: /actuator/info
             port: 8080
           initialDelaySeconds: 60
           timeoutSeconds: 3
