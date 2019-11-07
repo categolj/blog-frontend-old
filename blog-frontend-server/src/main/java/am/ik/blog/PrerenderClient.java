@@ -46,10 +46,10 @@ public class PrerenderClient {
     }
 
     private Mono<String> prerender(HttpMethod method, String url) {
-        final URI uri = URI.create(prerender.url() + "/" + url);
+        final URI uri = URI.create(prerender.getUrl() + "/" + url);
         return this.webClient.method(method)
             .uri(uri)
-            .header("X-Prerender-Token", this.prerender.token())
+            .header("X-Prerender-Token", this.prerender.getToken())
             .retrieve()
             .bodyToMono(String.class);
     }
