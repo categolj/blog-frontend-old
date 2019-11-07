@@ -3,9 +3,11 @@ package am.ik.blog;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.stereotype.Component;
 
 @ConstructorBinding
 @ConfigurationProperties(prefix = "prerender")
+@Component
 public class Prerender {
 
     private final String url;
