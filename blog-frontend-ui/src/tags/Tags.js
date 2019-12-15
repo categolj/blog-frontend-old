@@ -5,7 +5,6 @@ import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
 import {UnexpectedError} from "../components/UnexpectedError";
 import rsocketFactory from "../RSocketFactory";
-import cbor from "cbor";
 
 export class Tags extends React.Component {
     constructor(props) {
