@@ -8,7 +8,7 @@ class RSocketFactory {
 
     _initClient() {
         this.client = new RSocketClient({
-            transport: new RSocketWebSocketClient({url: `${process.env.REACT_APP_BLOG_API.replace('http', 'ws')}/rsocket`}),
+            transport: new RSocketWebSocketClient({url: `${process.env.REACT_APP_BLOG_UI.replace('http', 'ws')}/rsocket`}),
             serializers: {
                 data: JsonSerializer,
                 metadata: IdentitySerializer
