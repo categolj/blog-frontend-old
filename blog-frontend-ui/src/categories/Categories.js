@@ -4,6 +4,8 @@ import {Loading} from "../components/Loading";
 import {UnexpectedError} from "../components/UnexpectedError";
 import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
+import rsocketFactory from "../RSocketFactory";
+import cbor from "cbor";
 
 export class Categories extends React.Component {
     constructor(props) {
@@ -13,23 +15,19 @@ export class Categories extends React.Component {
         };
     }
 
-    componentDidMount() {
-        fetch(`${process.env.REACT_APP_BLOG_API}/categories`)
-            .then(result => result.json())
-            .then(body => {
-                if (body.error) {
-                    console.error(body);
-                    throw new Error(body.message);
-                }
-                this.setState({
-                    categories: body
-                });
-            })
-            .catch(e => {
-                    console.error({e});
-                    this.setState({error: e});
-                }
-            );
+    async componentDidMount() {
+        try {
+            const rsocket = await rsocketFactory.getRSocket();
+            const response = await rsocket.requestResponse({
+                metadata: rsocketFactory.routingMetadata('categories')
+            });
+            this.setState({
+                categories: cbor.decode(response.data)
+            });
+        } catch (e) {
+            console.error({e});
+            this.setState({error: e});
+        }
     }
 
     render() {

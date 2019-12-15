@@ -3,6 +3,8 @@ import {Panel} from 'pivotal-ui/react/panels';
 import {SeriesList} from "./SeriesList";
 import {Entry} from "../entries/Entry";
 import {Link} from "react-router-dom";
+import rsocketFactory from "../RSocketFactory";
+import cbor from "cbor";
 
 export class Series extends React.Component {
     state = {
@@ -11,14 +13,20 @@ export class Series extends React.Component {
         }
     };
 
-    componentDidMount() {
-        fetch(`${process.env.REACT_APP_BLOG_API}/tags/${this.props.match.params.id}/entries?size=200`)
-            .then(result => result.json())
-            .then(entries => {
-                this.setState({
-                    entries: entries
-                });
+    async componentDidMount() {
+        try {
+            const rsocket = await rsocketFactory.getRSocket();
+            const response = await rsocket.requestResponse({
+                data: cbor.encode({tag: this.props.match.params.id, size: 200}),
+                metadata: rsocketFactory.routingMetadata('entries')
             });
+            this.setState({
+                entries: cbor.decode(response.data)
+            });
+        } catch (e) {
+            console.error({e});
+            this.setState({error: e});
+        }
     }
 
     render() {

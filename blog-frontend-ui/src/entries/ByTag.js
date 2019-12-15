@@ -1,6 +1,8 @@
 import React from "react";
 import {Entries} from "./Entries";
 import {Tag} from "../tags/Tag";
+import rsocketFactory from "../RSocketFactory";
+import cbor from "cbor";
 
 export class ByTag extends React.Component {
     constructor(props) {
@@ -13,22 +15,29 @@ export class ByTag extends React.Component {
         this.param = props.location ? new URLSearchParams(props.location.search) : new URLSearchParams();
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.loadFromServer();
     }
 
-    loadFromServer() {
+    async loadFromServer() {
         !this.param.has('size') && this.param.set('size', 30);
-        fetch(`${process.env.REACT_APP_BLOG_API}/tags/${this.props.match.params.id}/entries?${this.param}`)
-            .then(result => result.json())
-            .then(entries => {
-                this.setState({
-                    entries: entries
-                });
+        this.param.set('tag', this.props.match.params.id);
+        try {
+            const rsocket = await rsocketFactory.getRSocket();
+            const response = await rsocket.requestResponse({
+                data: cbor.encode(Object.fromEntries(this.param)),
+                metadata: rsocketFactory.routingMetadata('entries')
             });
+            this.setState({
+                entries: cbor.decode(response.data)
+            });
+        } catch (e) {
+            console.error({e});
+            this.setState({error: e});
+        }
     }
 
-    onSelect(event, selectedEvent) {
+    async onSelect(event, selectedEvent) {
         this.param.set('page', selectedEvent.newActivePage - 1);
         this.loadFromServer();
         this.props.history.push(`?${this.param}`);

@@ -2,6 +2,8 @@ import React from "react";
 import {UnexpectedError} from "../components/UnexpectedError";
 import {Link} from "react-router-dom";
 import {Loading} from "../components/Loading";
+import rsocketFactory from "../RSocketFactory";
+import cbor from "cbor";
 
 export class LatestEntries extends React.Component {
     constructor(props) {
@@ -13,23 +15,20 @@ export class LatestEntries extends React.Component {
         };
     }
 
-    componentDidMount() {
-        fetch(`${process.env.REACT_APP_BLOG_API}/entries?size=5`)
-            .then(result => result.json())
-            .then(body => {
-                if (body.error) {
-                    console.error(body);
-                    throw new Error(body.message);
-                }
-                this.setState({
-                    entries: body
-                });
-            })
-            .catch(e => {
-                    console.error({e});
-                    this.setState({error: e});
-                }
-            );
+    async componentDidMount() {
+        try {
+            const rsocket = await rsocketFactory.getRSocket();
+            const response = await rsocket.requestResponse({
+                data: cbor.encode({size: 5}),
+                metadata: rsocketFactory.routingMetadata('entries')
+            });
+            this.setState({
+                entries: cbor.decode(response.data)
+            });
+        } catch (e) {
+            console.error({e});
+            this.setState({error: e});
+        }
     }
 
     render() {
