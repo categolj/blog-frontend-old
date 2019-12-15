@@ -1,6 +1,5 @@
 import React from "react";
 import {Panel} from 'pivotal-ui/react/panels';
-import {SeriesList} from "./SeriesList";
 import {Entry} from "../entries/Entry";
 import {Link} from "react-router-dom";
 import rsocketFactory from "../RSocketFactory";
@@ -9,7 +8,8 @@ export class Series extends React.Component {
     state = {
         entries: {
             content: []
-        }
+        },
+        series: []
     };
 
     async componentDidMount() {
@@ -19,8 +19,11 @@ export class Series extends React.Component {
                 data: {tag: this.props.match.params.id, size: 200},
                 metadata: rsocketFactory.routingMetadata('entries')
             });
+            const series = await fetch('https://raw.githubusercontent.com/categolj/misc/master/series.json')
+                .then(data => data.json());
             this.setState({
-                entries: response.data
+                entries: response.data,
+                series: series
             });
         } catch (e) {
             console.error({e});
@@ -29,7 +32,6 @@ export class Series extends React.Component {
     }
 
     render() {
-        const series = SeriesList.content.find(x => x.tag === this.props.match.params.id);
         const entries = this.state.entries.content
             .sort((x, y) => x.entryId - y.entryId)
             .map(entry => <li key={entry.entryId}>
@@ -38,6 +40,7 @@ export class Series extends React.Component {
                     {Entry.entryDate(entry)}
                 </span>
             </li>);
+        const series = this.state.series.find(x => x.tag === this.props.match.params.id);
         return (<Panel>
             <h2>{(series && series.name) || this.props.match.params.id}</h2>
             <ul className={"series"}>
