@@ -5,7 +5,6 @@ import {UnexpectedError} from "../components/UnexpectedError";
 import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
 import rsocketFactory from "../RSocketFactory";
-import cbor from "cbor";
 
 export class Categories extends React.Component {
     constructor(props) {
@@ -22,7 +21,7 @@ export class Categories extends React.Component {
                 metadata: rsocketFactory.routingMetadata('categories')
             });
             this.setState({
-                categories: cbor.decode(response.data)
+                categories: response.data
             });
         } catch (e) {
             console.error({e});

@@ -22,7 +22,7 @@ export class Tags extends React.Component {
                 metadata: rsocketFactory.routingMetadata('tags')
             });
             this.setState({
-                tags: cbor.decode(response.data)
+                tags: response.data
             });
         } catch (e) {
             console.error({e});

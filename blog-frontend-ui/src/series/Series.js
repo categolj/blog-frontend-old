@@ -4,7 +4,6 @@ import {SeriesList} from "./SeriesList";
 import {Entry} from "../entries/Entry";
 import {Link} from "react-router-dom";
 import rsocketFactory from "../RSocketFactory";
-import cbor from "cbor";
 
 export class Series extends React.Component {
     state = {
@@ -17,11 +16,11 @@ export class Series extends React.Component {
         try {
             const rsocket = await rsocketFactory.getRSocket();
             const response = await rsocket.requestResponse({
-                data: cbor.encode({tag: this.props.match.params.id, size: 200}),
+                data: {tag: this.props.match.params.id, size: 200},
                 metadata: rsocketFactory.routingMetadata('entries')
             });
             this.setState({
-                entries: cbor.decode(response.data)
+                entries: response.data
             });
         } catch (e) {
             console.error({e});

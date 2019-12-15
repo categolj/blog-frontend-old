@@ -2,7 +2,6 @@ import React from "react";
 import {Entries} from "./Entries";
 import {Category} from "../categories/Category";
 import rsocketFactory from "../RSocketFactory";
-import cbor from "cbor";
 
 export class ByCategory extends React.Component {
     constructor(props) {
@@ -34,11 +33,11 @@ export class ByCategory extends React.Component {
         try {
             const rsocket = await rsocketFactory.getRSocket();
             const response = await rsocket.requestResponse({
-                data: cbor.encode(message),
+                data: message,
                 metadata: rsocketFactory.routingMetadata('entries')
             });
             this.setState({
-                entries: cbor.decode(response.data)
+                entries: response.data
             });
         } catch (e) {
             console.error({e});

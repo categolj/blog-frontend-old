@@ -3,7 +3,6 @@ import {UnexpectedError} from "../components/UnexpectedError";
 import {Link} from "react-router-dom";
 import {Loading} from "../components/Loading";
 import rsocketFactory from "../RSocketFactory";
-import cbor from "cbor";
 
 export class LatestEntries extends React.Component {
     constructor(props) {
@@ -19,11 +18,11 @@ export class LatestEntries extends React.Component {
         try {
             const rsocket = await rsocketFactory.getRSocket();
             const response = await rsocket.requestResponse({
-                data: cbor.encode({size: 5}),
+                data: {size: 5},
                 metadata: rsocketFactory.routingMetadata('entries')
             });
             this.setState({
-                entries: cbor.decode(response.data)
+                entries: response.data
             });
         } catch (e) {
             console.error({e});

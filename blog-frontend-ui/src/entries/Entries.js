@@ -7,7 +7,6 @@ import {Pagination} from 'pivotal-ui/react/pagination';
 import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
 import {Entry} from "./Entry";
-import cbor from 'cbor';
 import rsocketFactory from '../RSocketFactory';
 
 export class Entries extends React.Component {
@@ -42,11 +41,11 @@ export class Entries extends React.Component {
         try {
             const rsocket = await rsocketFactory.getRSocket();
             const response = await rsocket.requestResponse({
-                data: cbor.encode(Object.fromEntries(this.param)),
+                data: Object.fromEntries(this.param),
                 metadata: rsocketFactory.routingMetadata('entries')
             });
             this.setState({
-                entries: cbor.decode(response.data)
+                entries: response.data
             });
         } catch (e) {
             console.error({e});

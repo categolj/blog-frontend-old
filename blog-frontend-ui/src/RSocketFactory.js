@@ -1,4 +1,4 @@
-import {BufferEncoders, RSocketClient} from "rsocket-core";
+import {IdentitySerializer, JsonSerializer, RSocketClient} from "rsocket-core";
 import RSocketWebSocketClient from "rsocket-websocket-client";
 
 class RSocketFactory {
@@ -8,9 +8,13 @@ class RSocketFactory {
 
     _initClient() {
         this.client = new RSocketClient({
-            transport: new RSocketWebSocketClient({url: `${process.env.REACT_APP_BLOG_API.replace('http', 'ws')}/rsocket`}, BufferEncoders),
+            transport: new RSocketWebSocketClient({url: `${process.env.REACT_APP_BLOG_API.replace('http', 'ws')}/rsocket`}),
+            serializers: {
+                data: JsonSerializer,
+                metadata: IdentitySerializer
+            },
             setup: {
-                dataMimeType: 'application/cbor',
+                dataMimeType: 'application/json',
                 metadataMimeType: 'message/x.rsocket.routing.v0',
                 keepAlive: 10000,
                 lifetime: 20000
@@ -19,7 +23,7 @@ class RSocketFactory {
     }
 
     routingMetadata(route) {
-        return Buffer.from(String.fromCharCode(route.length) + route);
+        return String.fromCharCode(route.length) + route;
     };
 
     async getRSocket() {

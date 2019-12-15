@@ -8,7 +8,6 @@ import {UnexpectedError} from "../components/UnexpectedError";
 import {Divider} from 'pivotal-ui/react/dividers';
 import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
-import cbor from 'cbor';
 import rsocketFactory from '../RSocketFactory';
 
 import 'pivotal-ui/css/code';
@@ -59,7 +58,7 @@ export class Entry extends React.Component {
         });
         try {
             this.setState({
-                entry: cbor.decode(response.data)
+                entry: response.data
             });
         } catch (e) {
             console.error({e});

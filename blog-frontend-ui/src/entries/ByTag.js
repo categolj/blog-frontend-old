@@ -2,7 +2,6 @@ import React from "react";
 import {Entries} from "./Entries";
 import {Tag} from "../tags/Tag";
 import rsocketFactory from "../RSocketFactory";
-import cbor from "cbor";
 
 export class ByTag extends React.Component {
     constructor(props) {
@@ -25,11 +24,11 @@ export class ByTag extends React.Component {
         try {
             const rsocket = await rsocketFactory.getRSocket();
             const response = await rsocket.requestResponse({
-                data: cbor.encode(Object.fromEntries(this.param)),
+                data: Object.fromEntries(this.param),
                 metadata: rsocketFactory.routingMetadata('entries')
             });
             this.setState({
-                entries: cbor.decode(response.data)
+                entries: response.data
             });
         } catch (e) {
             console.error({e});
