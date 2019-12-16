@@ -1,6 +1,7 @@
 import React from "react";
 import {Entries} from "./Entries";
 import {Category} from "../categories/Category";
+import rsocketFactory from "../RSocketFactory";
 
 export class ByCategory extends React.Component {
     constructor(props) {
@@ -14,31 +15,39 @@ export class ByCategory extends React.Component {
         props.history.listen((location) => this.onLocationChange(location));
     }
 
-    onLocationChange(location) {
+    async onLocationChange(location) {
         if (location.pathname.startsWith("/categories/") && !location.search) {
             this.param.set("page", 0);
-            this.loadFromServer(location.pathname);
+            this.loadFromServer(location.pathname.replace('/categories/', '').replace('/entries', ''));
         }
     }
 
-    componentDidMount() {
-        this.loadFromServer(`/categories/${this.props.match.params.id}/entries`);
+    async componentDidMount() {
+        this.loadFromServer(this.props.match.params.id);
     }
 
-    loadFromServer(path) {
+    async loadFromServer(categories) {
         !this.param.has('size') && this.param.set('size', 30);
-        fetch(`${process.env.REACT_APP_BLOG_API}${path}?${this.param}`)
-            .then(result => result.json())
-            .then(entries => {
-                this.setState({
-                    entries: entries
-                });
+        const message = Object.fromEntries(this.param);
+        message.categories = categories.split(',');
+        try {
+            const rsocket = await rsocketFactory.getRSocket();
+            const response = await rsocket.requestResponse({
+                data: message,
+                metadata: rsocketFactory.routingMetadata('entries')
             });
+            this.setState({
+                entries: response.data
+            });
+        } catch (e) {
+            console.error({e});
+            this.setState({error: e});
+        }
     }
 
-    onSelect(event, selectedEvent) {
+    async onSelect(event, selectedEvent) {
         this.param.set('page', selectedEvent.newActivePage - 1);
-        this.loadFromServer(`/categories/${this.props.match.params.id}/entries`);
+        this.loadFromServer(this.props.match.params.id);
         this.props.history.push(`?${this.param}`);
     }
 

@@ -7,6 +7,7 @@ import {Pagination} from 'pivotal-ui/react/pagination';
 import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
 import {Entry} from "./Entry";
+import rsocketFactory from '../RSocketFactory';
 
 export class Entries extends React.Component {
     constructor(props) {
@@ -22,40 +23,37 @@ export class Entries extends React.Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         if (!this.props.entries) {
             this.loadFromServer();
         }
     }
 
-    onLocationChange(location) {
+    async onLocationChange(location) {
         this.param = new URLSearchParams(location.search);
         if (this.param.has('q')) {
             this.loadFromServer();
         }
     }
 
-    loadFromServer() {
+    async loadFromServer() {
         !this.param.has('size') && this.param.set('size', 30);
-        fetch(`${process.env.REACT_APP_BLOG_API}/entries?${this.param}`)
-            .then(result => result.json())
-            .then(body => {
-                if (body.error) {
-                    console.error(body);
-                    throw new Error(body.message);
-                }
-                this.setState({
-                    entries: body
-                });
-            })
-            .catch(e => {
-                    console.error({e});
-                    this.setState({error: e});
-                }
-            );
+        try {
+            const rsocket = await rsocketFactory.getRSocket();
+            const response = await rsocket.requestResponse({
+                data: Object.fromEntries(this.param),
+                metadata: rsocketFactory.routingMetadata('entries')
+            });
+            this.setState({
+                entries: response.data
+            });
+        } catch (e) {
+            console.error({e});
+            this.setState({error: e});
+        }
     }
 
-    onSelect(event, selectedEvent) {
+    async onSelect(event, selectedEvent) {
         this.param.set('page', selectedEvent.newActivePage - 1);
         this.loadFromServer();
         this.props.history.push(`?${this.param}`);

@@ -4,6 +4,7 @@ import {Loading} from "../components/Loading";
 import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
 import {UnexpectedError} from "../components/UnexpectedError";
+import rsocketFactory from "../RSocketFactory";
 
 export class Tags extends React.Component {
     constructor(props) {
@@ -13,23 +14,19 @@ export class Tags extends React.Component {
         };
     }
 
-    componentDidMount() {
-        fetch(`${process.env.REACT_APP_BLOG_API}/tags`)
-            .then(result => result.json())
-            .then(body => {
-                if (body.error) {
-                    console.error(body);
-                    throw new Error(body.message);
-                }
-                this.setState({
-                    tags: body
-                });
-            })
-            .catch(e => {
-                    console.error({e});
-                    this.setState({error: e});
-                }
-            )
+    async componentDidMount() {
+        try {
+            const rsocket = await rsocketFactory.getRSocket();
+            const response = await rsocket.requestResponse({
+                metadata: rsocketFactory.routingMetadata('tags')
+            });
+            this.setState({
+                tags: response.data
+            });
+        } catch (e) {
+            console.error({e});
+            this.setState({error: e});
+        }
     }
 
     render() {

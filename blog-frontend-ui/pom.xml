@@ -49,6 +49,7 @@
                             <arguments>run build</arguments>
                         </configuration>
                     </execution>
+                    <!--
                     <execution>
                         <id>yarn run test</id>
                         <goals>
@@ -59,6 +60,7 @@
                             <arguments>run test</arguments>
                         </configuration>
                     </execution>
+                    -->
                 </executions>
             </plugin>
             <plugin>

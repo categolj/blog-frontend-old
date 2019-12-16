@@ -8,6 +8,7 @@ import {UnexpectedError} from "../components/UnexpectedError";
 import {Divider} from 'pivotal-ui/react/dividers';
 import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
+import rsocketFactory from '../RSocketFactory';
 
 import 'pivotal-ui/css/code';
 import hljs from 'highlight.js/lib/highlight';
@@ -50,23 +51,19 @@ export class Entry extends React.Component {
         }
     }
 
-    componentDidMount() {
-        fetch(`${process.env.REACT_APP_BLOG_API}/entries/${this.props.match.params.id}`)
-            .then(result => result.json())
-            .then(body => {
-                if (body.error && body.status !== 404) {
-                    console.error(body);
-                    throw new Error(body.message);
-                }
-                this.setState({
-                    entry: body
-                });
-            })
-            .catch(e => {
-                    console.error({e});
-                    this.setState({error: e});
-                }
-            );
+    async componentDidMount() {
+        const rsocket = await rsocketFactory.getRSocket();
+        const response = await rsocket.requestResponse({
+            metadata: rsocketFactory.routingMetadata(`entries.${this.props.match.params.id}`)
+        });
+        try {
+            this.setState({
+                entry: response.data
+            });
+        } catch (e) {
+            console.error({e});
+            this.setState({error: e});
+        }
         this.highlight();
     }
 
