@@ -48,7 +48,7 @@ spec:
         - name: SPRING_ZIPKIN_SERVICE_NAME
           value: "${INFO_K8S_NAMESPACE}:blog-frontend"
         - name: SPRING_ZIPKIN_BASE_URL
-          value: http://10.0.8.4:9411
+          value: https://zipkin.dev.ik.am
         - name: LOGGING_EXCEPTION_CONVERSION_WORD
           value: "\t%replace(%replace(%xEx){'\n','@n@'}){'\t','    '}%nopex"
         - name: LOGGING_PATTERN_CONSOLE
