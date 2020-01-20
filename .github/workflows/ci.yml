@@ -59,12 +59,9 @@ jobs:
       if: github.ref == 'refs/heads/master'
       env:
         KBLD_VERSION: 0.13.0
-        WAIT_UNTIL_READY_SELECTOR: app=blog-frontend
       run: |
         set -e
         wget -q https://github.com/k14s/kbld/releases/download/v${KBLD_VERSION}/kbld-linux-amd64 -O kbld
         chmod +x kbld
         ./kbld -f k8s | kubectl apply -f -
-        wget -q https://raw.githubusercontent.com/zlabjp/kubernetes-resource/master/assets/common.sh
-        source common.sh
-        wait_until_pods_ready 120 5 ${WAIT_UNTIL_READY_SELECTOR}
+        kubectl wait -n blog deploy/blog-frontend --for=condition=available --timeout=2m
