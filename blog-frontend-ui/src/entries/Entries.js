@@ -31,7 +31,7 @@ export class Entries extends React.Component {
 
     async onLocationChange(location) {
         this.param = new URLSearchParams(location.search);
-        if (this.param.has('q')) {
+        if (this.param.has('query')) {
             this.loadFromServer();
         }
     }

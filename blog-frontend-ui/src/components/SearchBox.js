@@ -15,7 +15,7 @@ export class SearchBox extends React.Component {
     render() {
         return (
             <form method="get" className={"searchbox"} onSubmit={event => this.submit(event)}>
-                <label><Input icon="search" className="searchbox" name="q" type="search" placeholder="Search..."
+                <label><Input icon="search" className="searchbox" name="query" type="search" placeholder="Search..."
                               onChange={event => this.changeQ(event)}/></label>
                 <br/>
                 <br/>
