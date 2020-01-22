@@ -37,6 +37,6 @@ export class SearchBox extends React.Component {
     }
 
     changeQ(event) {
-        this.params.set('q', event.target.value);
+        this.params.set('query', event.target.value);
     }
 }
