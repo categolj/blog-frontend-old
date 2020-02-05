@@ -24,7 +24,7 @@ export class ErrorBudget extends Component {
 
     loadFromServer() {
         this.setState({loading: true});
-        fetch(`${this.ui}/dashboard/error_budget?instance=https://blog.ik.am,https://blog-api.ik.am/actuator/health&slo=0.995`)
+        fetch(`${this.ui}/dashboard/error_budget?instance=https://blog.ik.am,https://blog-rsocket.ik.am/actuator/health,https://blog-api.ik.am/actuator/health&slo=0.995`)
             .then(result => result.json())
             .then(response => {
                 this.setState({
