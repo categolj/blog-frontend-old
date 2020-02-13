@@ -24,7 +24,7 @@ export class SLI extends Component {
 
     loadFromServer() {
         this.setState({loading: true});
-        fetch(`${this.ui}/dashboard/sli?instance=https://blog.ik.am,https://blog-rsocket.ik.am/actuator/health,https://blog-api.ik.am/actuator/health`)
+        fetch(`${this.ui}/dashboard/sli?instance=https://blog.ik.am,https://blog-rsocket.ik.am/actuator/health`)
             .then(result => result.json())
             .then(response => {
                 this.setState({
@@ -37,7 +37,7 @@ export class SLI extends Component {
     }
 
     render() {
-        return <Container title={{text: "Uptime SLI (%) | SLO = 99.5% for last 7 days"}} loading={this.state.loading}>
+        return <Container title={{text: "Uptime SLI / ErrorBudget (SLO = 99.5% for last 7 days)"}} loading={this.state.loading}>
             <LineChart
                 isPromQL={true}
                 zoomEnabled={true}
@@ -45,7 +45,7 @@ export class SLI extends Component {
                 promQLSeriesKey={'instance'}
                 thresholds={[{label: 'critical', value: 99.5}]}
                 xAxisTooltipFormat={x => `${new Date(x).toLocaleString()}`}
-                yAxisTooltipFormat={y => `${y} %`}
+                yAxisTooltipFormat={y => `SLI: ${Math.round(y * 1000) / 1000} %, Error Budget: ${Math.round((y / 100 - 0.995) * (7 * 24 * 60) * 10) / 10} min`}
                 height={300}/>
         </Container>;
     }
