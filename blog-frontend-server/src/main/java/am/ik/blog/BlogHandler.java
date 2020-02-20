@@ -1,5 +1,7 @@
 package am.ik.blog;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import is.tagomor.woothee.Classifier;
 import is.tagomor.woothee.crawler.Google;
 import org.springframework.core.io.ClassPathResource;
@@ -27,9 +29,11 @@ import static org.springframework.http.HttpHeaders.USER_AGENT;
 public class BlogHandler {
 
     private final PrerenderClient prerenderClient;
+    private final Counter prerenderCounter;
 
-    public BlogHandler(PrerenderClient prerenderClient) {
+    public BlogHandler(PrerenderClient prerenderClient, MeterRegistry meterRegistry) {
         this.prerenderClient = prerenderClient;
+        this.prerenderCounter = Counter.builder("prerender").register(meterRegistry);
     }
 
     RouterFunction<ServerResponse> routes() {
@@ -48,6 +52,7 @@ public class BlogHandler {
     @NonNull
     private Mono<ServerResponse> prerender(ServerRequest req) {
         final String url = req.uri().toString();
+        this.prerenderCounter.increment();
         final Mono<String> content = this.prerenderClient.invoke(req.method(), url);
         return content
             .flatMap(html -> ServerResponse.ok()
