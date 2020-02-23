@@ -16,7 +16,7 @@ export class SeriesList extends React.Component {
 
     render() {
         const list = this.state.content.map(s =>
-            <li key={s.name}>(s.tag ? <Link to={`/series/${s.tag}/entries`}>{s.name}</Link> : <a href={s.href}>{s.name}</a>)</li>);
+            <li key={s.name}>{(s.tag ? <Link to={`/series/${s.tag}/entries`}>{s.name}</Link> : <a href={s.href}>{s.name}</a>)}</li>);
         return (<div>
             <h3 id="series" className={"home"}>Series</h3>
             <ul>
