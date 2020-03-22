@@ -5,7 +5,6 @@ export function Links() {
         <section id="links">
             <h5>Links</h5>
             <ul className="links">
-                <li>{`📑`}&nbsp;<a href="https://blog-api.ik.am/docs/index.html">API Document</a></li>
                 <li>{`📖`}&nbsp;<a href="https://bit.ly/hajiboot2">はじめてのSpring Boot [改訂版] (拙著)</a></li>
                 <li>{`📖`}&nbsp;<a href="https://bit.ly/spring-book">Spring徹底入門 Spring FrameworkによるJavaアプリケーション開発 (共著)</a></li>
                 <li>{`📖`}&nbsp;<a href="https://bit.ly/perfect-javaee">パーフェクト Java EE (共著)</a></li>
