@@ -30,7 +30,7 @@ export class Block extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`${this.url}/actuator/info`)
+        fetch(`${this.url}`)
             .then(result => result.json())
             .then(info => {
                 this.setState({
