@@ -62,8 +62,8 @@ export class Block extends React.Component {
                         <th>Source Code</th>
                         <td>{info.git.commit.message.short} (<a href={info.git.remote.origin.url
                             .replace('git@github.com:', 'https://github.com/')
-                            .replace('.git', `/tree/${rev}`)}
-                                                               target={'_blank'}><code>{rev}</code></a>)
+                            .replace('.git', '') + `/tree/${rev}`}
+                                                                target={'_blank'}><code>{rev}</code></a>)
                         </td>
                     </tr>
                     <tr>
