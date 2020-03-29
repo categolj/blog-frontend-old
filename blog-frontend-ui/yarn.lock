@@ -6775,6 +6775,31 @@ pivotal-ui@^18.1.1:
     through "^2.3.8"
     trie-search "1.1.0"
 
+pivotal-ui@^19.2.3:
+  version "19.2.3"
+  resolved "https://registry.yarnpkg.com/pivotal-ui/-/pivotal-ui-19.2.3.tgz#52d5c8bc13da0648ab7e3677a2805ca5531898ab"
+  dependencies:
+    classnames "^2.1.2"
+    deep-equal "^1.0.1"
+    fbjs "^1.0.0"
+    from "^0.1.3"
+    lodash.clonedeep "^4.5.0"
+    lodash.flow "^3.5.0"
+    lodash.sortby "^3.1.1"
+    lodash.throttle "^3.0.2"
+    lodash.uniqueid "^3.0.0"
+    pretty-format "^24.8.0"
+    prop-types "^15.5.6"
+    pui-react-animation "^1.0.2"
+    raf "^3.1.0"
+    react "^16.10.0"
+    react-dom "^16.10.0"
+    scroll-into-view "^1.3.0"
+    smoothscroll-polyfill "^0.4.4"
+    tether "1.4.3"
+    through "^2.3.8"
+    trie-search "1.1.0"
+
 pkg-dir@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-1.0.0.tgz#7a4b508a8d5bb2d629d447056ff4e9c9314cf3d4"
@@ -7684,7 +7709,7 @@ react-dev-utils@^9.0.1:
     strip-ansi "5.2.0"
     text-table "0.2.0"
 
-react-dom@16.8.6, react-dom@^16.8.3, react-dom@^16.8.6:
+react-dom@16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.6.tgz#71d6303f631e8b0097f56165ef608f051ff6e10f"
   dependencies:
@@ -7692,6 +7717,15 @@ react-dom@16.8.6, react-dom@^16.8.3, react-dom@^16.8.6:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.13.6"
+
+react-dom@^16.10.0, react-dom@^16.8.3, react-dom@^16.8.6:
+  version "16.13.1"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.1.tgz#c1bd37331a0486c078ee54c4740720993b2e0e7f"
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.19.1"
 
 react-error-overlay@^5.1.6:
   version "5.1.6"
@@ -7890,7 +7924,7 @@ react-with-styles@^3.2.3:
     prop-types "^15.6.2"
     react-with-direction "^1.3.0"
 
-react@16.8.6, react@>=0.13.3, react@^16.8.3, react@^16.8.6:
+react@16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.6.tgz#ad6c3a9614fd3a4e9ef51117f54d888da01f2bbe"
   dependencies:
@@ -7898,6 +7932,14 @@ react@16.8.6, react@>=0.13.3, react@^16.8.3, react@^16.8.6:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.13.6"
+
+react@>=0.13.3, react@^16.10.0, react@^16.8.3, react@^16.8.6:
+  version "16.13.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
 
 read-pkg-up@^2.0.0:
   version "2.0.0"
@@ -8315,6 +8357,13 @@ saxes@^3.1.9:
 scheduler@^0.13.6:
   version "0.13.6"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.13.6.tgz#466a4ec332467b31a91b9bf74e5347072e4cd889"
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
+scheduler@^0.19.1:
+  version "0.19.1"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.19.1.tgz#4f3e2ed2c1a7d65681f4c854fa8c5a1ccb40f196"
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
