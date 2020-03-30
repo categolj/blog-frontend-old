@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "davi-js": "^5.1.0",
+    "davi-js": "^6.4.1",
     "highlight.js": "^9.18.1",
     "marked": "^0.3.17",
     "pivotal-ui": "^19.2.3",
