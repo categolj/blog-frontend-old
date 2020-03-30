@@ -8225,9 +8225,9 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
-rsocket-core@^0.0.18:
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/rsocket-core/-/rsocket-core-0.0.18.tgz#195cb45f301a5962f9702e7d634957aecd2788ce"
+rsocket-core@^0.0.19:
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/rsocket-core/-/rsocket-core-0.0.19.tgz#0b4fb1bb1f4c86f747426c310ed1557cdd3145d1"
   dependencies:
     fbjs "^1.0.0"
     rsocket-flowable "^0.0.14"
@@ -8247,12 +8247,12 @@ rsocket-types@^0.0.16:
     fbjs "^1.0.0"
     rsocket-flowable "^0.0.14"
 
-rsocket-websocket-client@^0.0.18:
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/rsocket-websocket-client/-/rsocket-websocket-client-0.0.18.tgz#a2b507d05085d40b723311c9f82a2a5bc3b0013a"
+rsocket-websocket-client@^0.0.19:
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/rsocket-websocket-client/-/rsocket-websocket-client-0.0.19.tgz#6cb7f7e798266b25ebebc3dc52c7f1d0c8a62d3a"
   dependencies:
     fbjs "^1.0.0"
-    rsocket-core "^0.0.18"
+    rsocket-core "^0.0.19"
     rsocket-flowable "^0.0.14"
     rsocket-types "^0.0.16"
 
