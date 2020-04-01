@@ -23,6 +23,7 @@ public class DashboardHandler {
         return RouterFunctions.route()
             .GET("/dashboard/sli", this::sli)
             .GET("/dashboard/error_budget", this::errorBudget)
+            .GET("/dashboard/jvm_memory_used_bytes", this::jvmMemoryUsedBytes)
             .build();
     }
 
@@ -45,5 +46,15 @@ public class DashboardHandler {
         return ServerResponse.ok()
             .header("Access-Control-Allow-Origin", "*")
             .body(result, JsonNode.class);
+    }
+
+    private Mono<ServerResponse> jvmMemoryUsedBytes(ServerRequest req) {
+        final String instance = req.queryParam("application").map(s -> s.replace(',', '|')).orElse("null");
+        final Duration duration = Duration.ofDays(1);
+        final String promql = String.format("sum(jvm_memory_used_bytes{application=\"%s\"}) by (instance_id, area)", instance);
+        final Mono<JsonNode> result = this.prometheusClient.queryRange(promql, duration);
+        return ServerResponse.ok()
+                .header("Access-Control-Allow-Origin", "*")
+                .body(result, JsonNode.class);
     }
 }
