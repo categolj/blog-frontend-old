@@ -56,4 +56,4 @@ export class JvmMemoryUsedBytes extends Component {
     }
 }
 
-const toMegaByte = y => `${Math.round((y / 1024 / 1024) * 1000) / 1000} MB`;
+const toMegaByte = y => `${Math.round((y / 1024 / 1024) * 10) / 10} MB`;
