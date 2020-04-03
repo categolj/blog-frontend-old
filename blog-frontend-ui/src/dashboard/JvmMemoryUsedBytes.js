@@ -49,9 +49,11 @@ export class JvmMemoryUsedBytes extends Component {
                     return `${metrics.instance_id}/${metrics.area}`;
                 }}
                 xAxisTooltipFormat={x => `${new Date(x).toLocaleString()}`}
-                yAxisTooltipFormat={y => `${Math.round((y / 1024 / 1024) * 1000) / 1000} MB`}
+                yAxisTooltipFormat={toMegaByte}
+                yAxisTickFormat={toMegaByte}
                 height={300}/>
         </Container>;
     }
 }
 
+const toMegaByte = y => `${Math.round((y / 1024 / 1024) * 1000) / 1000} MB`;

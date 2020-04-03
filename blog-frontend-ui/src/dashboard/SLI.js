@@ -37,7 +37,8 @@ export class SLI extends Component {
     }
 
     render() {
-        return <Container title={{text: "Uptime SLI / ErrorBudget (SLO = 95% for last 7 days)"}} loading={this.state.loading}>
+        return <Container title={{text: "Uptime SLI / ErrorBudget (SLO = 95% for last 7 days)"}}
+                          loading={this.state.loading}>
             <LineChart
                 isPromQL={true}
                 zoomEnabled={true}
@@ -46,6 +47,7 @@ export class SLI extends Component {
                 thresholds={[{label: 'critical', value: 95}]}
                 xAxisTooltipFormat={x => `${new Date(x).toLocaleString()}`}
                 yAxisTooltipFormat={y => `SLI: ${Math.round(y * 1000) / 1000} %, Error Budget: ${Math.round((y / 100 - 0.95) * (7 * 24 * 60) * 10) / 10} min`}
+                yAxisTickFormat={y => `${Math.round(y * 1000) / 1000} %`}
                 height={300}/>
         </Container>;
     }
