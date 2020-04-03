@@ -78,6 +78,10 @@ export class Block extends React.Component {
                         <th>Spring Cloud</th>
                         <td>{info.maven.versions['spring-cloud']}</td>
                     </tr>
+                    <tr>
+                        <th>Spring Security</th>
+                        <td>{info.maven.versions['spring-security']}</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>);
