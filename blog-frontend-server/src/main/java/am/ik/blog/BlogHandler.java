@@ -11,11 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.reactive.function.server.RequestPredicate;
-import org.springframework.web.reactive.function.server.RouterFunction;
-import org.springframework.web.reactive.function.server.RouterFunctions;
-import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
+import org.springframework.web.reactive.function.server.*;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
@@ -58,14 +54,14 @@ public class BlogHandler {
             .flatMap(html -> ServerResponse.ok()
                 .contentType(MediaType.TEXT_HTML)
                 .cacheControl(CacheControl.maxAge(Duration.ofDays(3)))
-                .syncBody(html))
+                .bodyValue(html))
             .switchIfEmpty(ServerResponse.notFound()
                 .build());
     }
 
     @NonNull
     private Mono<ServerResponse> render(ServerRequest req) {
-        return ServerResponse.ok().syncBody(new ClassPathResource("META-INF/resources/index.html"));
+        return ServerResponse.ok().bodyValue(new ClassPathResource("META-INF/resources/index.html"));
     }
 
     private static RequestPredicate forwardToPrerender() {
@@ -89,7 +85,7 @@ public class BlogHandler {
 
     private static boolean isGoogle(ServerRequest req) {
         final List<String> headers = req.headers().header(HttpHeaders.REFERER);
-        if (headers != null && !headers.isEmpty() && headers.get(0).startsWith("https://translate.googleusercontent.com")) {
+        if (!headers.isEmpty() && headers.get(0).startsWith("https://translate.googleusercontent.com")) {
             return true;
         }
         final String userAgent = req.headers().header(USER_AGENT).get(0);
