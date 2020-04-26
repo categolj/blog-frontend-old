@@ -82,6 +82,7 @@ export class Entry extends React.Component {
         const category = entry.frontMatter.categories.map(x => x.name);
         const tags = entry.frontMatter.tags.map(x => <span key={x.name}><Tag name={x.name}/>&nbsp;</span>);
         const isLoaded = !!entry.frontMatter.title;
+        const fallbackUrl = `https://github.com/making/blog.ik.am/blob/master/content/${Entry.format(this.props.match.params.id)}.md`;
         return <Panel loading={!isLoaded}>{(isLoaded ? <div>
             <h2>
                 <Link to={`/entries/${entry.entryId}`}>{`${entry.frontMatter.title}`}</Link>
@@ -91,17 +92,24 @@ export class Entry extends React.Component {
             {tags}
             {tags.length > 0 && <br/>}
             {Entry.entryDate(entry)}&nbsp;&nbsp;
-            {!Entry.isIgnoreUpdateDate(entry) && <span className={"visible-inline-on-wide"}>🗓 Created at {entry.created.date}</span>}&nbsp;
+            {!Entry.isIgnoreUpdateDate(entry) &&
+            <span className={"visible-inline-on-wide"}>🗓 Created at {entry.created.date}</span>}&nbsp;
             <span className={"visible-inline-on-wide"}>
-                {`{`}✒️️&nbsp;<a href={`https://github.com/making/blog.ik.am/edit/master/content/${Entry.format(entry.entryId)}.md`}>Edit</a>&nbsp;
-                ⏰&nbsp;<a href={`https://github.com/making/blog.ik.am/commits/master/content/${Entry.format(entry.entryId)}.md`}>History</a>&nbsp;
-                🗑&nbsp;<a href={`https://github.com/making/blog.ik.am/delete/master/content/${Entry.format(entry.entryId)}.md`}>Delete</a>{`}`}
+                {`{`}✒️️&nbsp;<a
+                href={`https://github.com/making/blog.ik.am/edit/master/content/${Entry.format(entry.entryId)}.md`}>Edit</a>&nbsp;
+                ⏰&nbsp;<a
+                href={`https://github.com/making/blog.ik.am/commits/master/content/${Entry.format(entry.entryId)}.md`}>History</a>&nbsp;
+                🗑&nbsp;<a
+                href={`https://github.com/making/blog.ik.am/delete/master/content/${Entry.format(entry.entryId)}.md`}>Delete</a>{`}`}
             </span>
             <Divider/>
             <p ref={this.ref} dangerouslySetInnerHTML={Entry.content(entry)}>
             </p>
             <BackToTop/>
-        </div> : <h2>Loading...</h2>)}
+        </div> : <React.Fragment>
+            <h2>Loading...</h2>
+            <p>If the content doesn't load, go to <a href={fallbackUrl}>{fallbackUrl}</a> instead.</p>
+        </React.Fragment>)}
         </Panel>;
     }
 
