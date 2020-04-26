@@ -18,7 +18,7 @@ export class LatestEntries extends React.Component {
         try {
             const rsocket = await rsocketFactory.getRSocket();
             const response = await rsocket.requestResponse({
-                data: {size: 5},
+                data: {size: 10},
                 metadata: rsocketFactory.routingMetadata('entries')
             });
             this.setState({
