@@ -18,7 +18,8 @@ export class GitHub extends React.Component {
     render() {
         const list = this.state.items.map(item =>
             <li key={item.id}><a href={item.html_url}
-                                 target={'_blank'}>{item.full_name}</a>{item.description && ` (${item.description})`}
+                                 target="_blank"
+                                 rel="noopener noreferrer">{item.full_name}</a>{item.description && ` (${item.description})`}
             </li>);
         return (<div>
             <h3 id="github" className={"home"}>Recent GitHub Updates</h3>
