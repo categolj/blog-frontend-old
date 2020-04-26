@@ -17,6 +17,8 @@ import {Home} from "./home/Home";
 import {Links} from "./components/Links";
 import {Series} from "./series/Series";
 import {Dashboard} from "./dashboard/Dashboard";
+import {Login} from './note/Login';
+import {Signup} from "./note/Signup";
 
 class App extends Component {
     render() {
@@ -43,6 +45,8 @@ class App extends Component {
                                 <Route path="/categories/:id/entries" component={ByCategory}/>
                                 <Route exact path="/tags" component={Tags}/>
                                 <Route path="/tags/:id/entries" component={ByTag}/>
+                                <Route path="/note/login" component={Login}/>
+                                <Route path="/note/signup" component={Signup}/>
                                 <Route exact path="/info" component={Info}/>
                                 <Route exact path="/dashboard" component={Dashboard}/>
                                 <Route path="/series/:id/entries" component={Series}/>
