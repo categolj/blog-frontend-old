@@ -127,7 +127,9 @@ h3#presentations:before {
 h3#latest-entries:before {
     content: "📣 "
 }
-
+h3#github:before {
+    content: "🐙 "
+}
 h3 + ul {
     margin-top: 0px;
 }
