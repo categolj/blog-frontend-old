@@ -40,6 +40,8 @@ public class BlogHandler {
             .GET("/series/**", this::render)
             .GET("/tags/**", this::render)
             .GET("/categories/**", this::render)
+            .GET("/note/**", this::render)
+            .GET("/aboutme", this::render)
             .GET("/info", this::render)
             .GET("/dashboard", this::render)
             .build();
