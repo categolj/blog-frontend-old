@@ -20,6 +20,7 @@ import {Dashboard} from "./dashboard/Dashboard";
 import {Login} from './note/Login';
 import {Signup} from "./note/Signup";
 import {AboutMe} from "./aboutme/AboutMe";
+import {Notes} from "./note/Notes";
 
 class App extends Component {
     render() {
@@ -35,6 +36,7 @@ class App extends Component {
                             <NavTab exact to="/entries">{`Entries`}</NavTab>
                             <NavTab to="/categories">{`Categories`}</NavTab>
                             <NavTab to="/tags">{`Tags`}</NavTab>
+                            {/*<NavTab to="/note" className={"nav-tab can-be-invisible"}>{`Note`}</NavTab>*/}
                             <NavTab to="/aboutme">{`About`}</NavTab>
                             <NavTab to="/info" className={"nav-tab can-be-invisible"}>{`Info`}</NavTab>
                             <NavTab to="/dashboard" className={"nav-tab can-be-invisible"}>{`Dashboard`}</NavTab>
@@ -50,6 +52,7 @@ class App extends Component {
                                 <Route path="/aboutme" component={AboutMe}/>
                                 <Route path="/note/login" component={Login}/>
                                 <Route path="/note/signup" component={Signup}/>
+                                <Route path="/note" component={Notes}/>
                                 <Route exact path="/info" component={Info}/>
                                 <Route exact path="/dashboard" component={Dashboard}/>
                                 <Route path="/series/:id/entries" component={Series}/>
