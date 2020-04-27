@@ -18,6 +18,7 @@ export class Dashboard extends Component {
                 <SLI/>
                 <JvmMemoryUsedBytes application={'blog-frontend-server'}/>
                 <JvmMemoryUsedBytes application={'blog-api'}/>
+                <JvmMemoryUsedBytes application={'like'}/>
                 <JvmMemoryUsedBytes application={'gateway'}/>
             </Panel>
         );
