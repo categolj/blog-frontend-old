@@ -8,6 +8,7 @@ import {UnexpectedError} from "../components/UnexpectedError";
 import {Divider} from 'pivotal-ui/react/dividers';
 import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
+import {DefaultButton} from 'pivotal-ui/react/buttons';
 import rsocketFactory from '../RSocketFactory';
 
 import 'pivotal-ui/css/code';
@@ -37,6 +38,10 @@ export class Entry extends React.Component {
                     updated: {},
                     created: {},
                 }
+            },
+            likes: {
+                exists: true,
+                count: 0
             }
         };
         this.ref = React.createRef();
@@ -65,6 +70,21 @@ export class Entry extends React.Component {
             this.setState({error: e});
         }
         this.highlight();
+        await this.loadLikes(this.props.match.params.id);
+    }
+
+    async loadLikes(entryId) {
+        const likes = await fetch(`https://like.dev.ik.am/likes/${entryId}`)
+            .then(res => res.json());
+        this.setState({likes});
+    }
+
+    async postLikes(entryId) {
+        const current = this.state.likes;
+        current.exists = true;
+        this.setState({likes: current});
+        await fetch(`https://like.dev.ik.am/likes/${entryId}`, {method: 'POST'});
+        await this.loadLikes(entryId);
     }
 
     componentDidUpdate() {
@@ -105,6 +125,9 @@ export class Entry extends React.Component {
             <Divider/>
             <p ref={this.ref} dangerouslySetInnerHTML={Entry.content(entry)}>
             </p>
+            <Divider/>
+            <DefaultButton onClick={() => this.postLikes(entry.entryId)}
+                           disabled={this.state.likes.exists}>{`👍 ${this.state.likes.count}`}</DefaultButton>
             <BackToTop/>
         </div> : <React.Fragment>
             <h2>Loading...</h2>
