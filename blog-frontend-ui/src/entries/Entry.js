@@ -127,7 +127,7 @@ export class Entry extends React.Component {
             </p>
             <Divider/>
             <DefaultButton onClick={() => this.postLikes(entry.entryId)}
-                           disabled={this.state.likes.exists}>{`👍 ${this.state.likes.count}`}</DefaultButton>
+                           disabled={this.state.likes.exists}>{`❤️ ${this.state.likes.count}`}</DefaultButton>
             <BackToTop/>
         </div> : <React.Fragment>
             <h2>Loading...</h2>
