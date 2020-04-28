@@ -105,7 +105,7 @@ export class Entry extends React.Component {
         const fallbackUrl = `https://github.com/making/blog.ik.am/blob/master/content/${Entry.format(this.props.match.params.id)}.md`;
         return <Panel loading={!isLoaded}>{(isLoaded ? <div>
             <h2>
-                <Link to={`/entries/${entry.entryId}`}>{`${entry.frontMatter.title}`}</Link>
+                <Link to={`/entries/${entry.entryId}`}>{`${Entry.cleanTitle(entry.frontMatter.title)}`}</Link>
             </h2>
             <Category category={category}/>
             <br/>
@@ -159,4 +159,7 @@ export class Entry extends React.Component {
         }
     }
 
+    static cleanTitle(title) {
+        return title.replace(/[┗┝]/g, '');
+    }
 }

@@ -80,7 +80,7 @@ export class Entries extends React.Component {
                 const categories = entry.frontMatter.categories.map(x => x.name);
                 return <li key={entry.entryId}>
                     <span className={"visible-inline-on-wide"}><Category category={categories}/>&nbsp;</span>
-                    <Link to={`/entries/${entry.entryId}`}>{entry.frontMatter.title}</Link>&nbsp;
+                    <Link to={`/entries/${entry.entryId}`}>{Entry.cleanTitle(entry.frontMatter.title)}</Link>&nbsp;
                     <br className="invisible-inline-on-wide"/>
                     {Entry.entryDate(entry)}
                 </li>;

@@ -3,6 +3,7 @@ import {UnexpectedError} from "../components/UnexpectedError";
 import {Link} from "react-router-dom";
 import {Loading} from "../components/Loading";
 import rsocketFactory from "../RSocketFactory";
+import {Entry} from "../entries/Entry";
 
 export class LatestEntries extends React.Component {
     constructor(props) {
@@ -37,7 +38,7 @@ export class LatestEntries extends React.Component {
         const entries = this.state.entries.content
             .map(entry => {
                 return <li key={entry.entryId}>
-                    <Link to={`/entries/${entry.entryId}`}>{entry.frontMatter.title}</Link>&nbsp;
+                    <Link to={`/entries/${entry.entryId}`}>{Entry.cleanTitle(entry.frontMatter.title)}</Link>&nbsp;
                     <br className="invisible-inline-on-wide"/>
                     🗓 <span className={"visible-inline-on-wide"}>Updated at </span>{entry.updated.date}
                 </li>;
