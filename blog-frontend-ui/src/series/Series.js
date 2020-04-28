@@ -33,7 +33,7 @@ export class Series extends React.Component {
 
     render() {
         const entries = this.state.entries.content
-            .sort((x, y) => x.entryId - y.entryId)
+            .sort((a, b) => a.title.localeCompare(b.title))
             .map(entry => <li key={entry.entryId}>
                 <Link to={`/entries/${entry.entryId}`}>{entry.frontMatter.title}</Link>
                 <span className="visible-inline-on-wide">
