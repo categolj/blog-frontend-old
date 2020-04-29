@@ -35,7 +35,7 @@ export class Series extends React.Component {
         const entries = this.state.entries.content
             .sort((a, b) => a.frontMatter.title.localeCompare(b.frontMatter.title))
             .map(entry => <li key={entry.entryId}>
-                <Link to={`/entries/${entry.entryId}`}>{entry.frontMatter.title}</Link>
+                <Link to={`/entries/${entry.entryId}`}>{Series.cleanTile(entry.frontMatter.title)}</Link>
                 <span className="visible-inline-on-wide">
                     {Entry.entryDate(entry)}
                 </span>
@@ -49,4 +49,7 @@ export class Series extends React.Component {
         </Panel>);
     }
 
+    static cleanTile(title) {
+        return title.split('-').slice(1).join('-').trim();
+    }
 }
