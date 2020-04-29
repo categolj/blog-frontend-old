@@ -17,7 +17,7 @@ export class AboutMe extends React.Component {
             <h2 id="abountme" className={"home"}>About Me</h2>
             <Media image={<Image src={'https://avatars2.githubusercontent.com/u/106908?s=200'}/>}>
                 <h3>Name</h3>
-                <p>Toshiaki Maki</p>
+                <p>Toshiaki Maki / 槙 俊明</p>
                 <h3>Email</h3>
                 <p>makingx@gmail.com</p>
             </Media>
