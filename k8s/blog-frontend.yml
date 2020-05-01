@@ -46,7 +46,7 @@ spec:
         - name: BPL_THREAD_COUNT
           value: "20"
         - name: SPRING_ZIPKIN_SERVICE_NAME
-          value: "${INFO_K8S_NAMESPACE}:blog-frontend"
+          value: "${INFO_K8S_NAMESPACE}:frontend"
         - name: SPRING_ZIPKIN_BASE_URL
           value: https://zipkin.dev.ik.am
         - name: LOGGING_EXCEPTION_CONVERSION_WORD
