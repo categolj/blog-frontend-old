@@ -10,6 +10,7 @@ import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
 import {DefaultButton} from 'pivotal-ui/react/buttons';
 import rsocketFactory from '../RSocketFactory';
+import likeService from "./LikeService";
 
 import 'pivotal-ui/css/code';
 import hljs from 'highlight.js/lib/highlight';
@@ -74,8 +75,7 @@ export class Entry extends React.Component {
     }
 
     async loadLikes(entryId) {
-        const likes = await fetch(`https://like.dev.ik.am/likes/${entryId}`)
-            .then(res => res.json());
+        const likes = await likeService.loadLikes(entryId);
         this.setState({likes});
     }
 
@@ -83,7 +83,7 @@ export class Entry extends React.Component {
         const current = this.state.likes;
         current.exists = true;
         this.setState({likes: current});
-        await fetch(`https://like.dev.ik.am/likes/${entryId}`, {method: 'POST'});
+        await likeService.postLikes(entryId);
         await this.loadLikes(entryId);
     }
 
