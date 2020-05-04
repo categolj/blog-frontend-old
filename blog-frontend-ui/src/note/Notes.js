@@ -1,6 +1,7 @@
 import React from "react";
 import 'pivotal-ui/css/ellipsis';
 import {Panel} from "pivotal-ui/react/panels";
+import {Table, Tbody, Td, Th, Thead, Tr} from 'pivotal-ui/react/table';
 import tokenRepository from "./CompositeTokenRepository";
 import {Redirect} from "react-router-dom";
 import Jwt from "./Jwt";
@@ -34,7 +35,27 @@ export class Notes extends React.Component {
             {this.state.redirect && <Redirect to={{pathname: "/note/login"}}/>}
             <h2 id="notes" className={"home"}>Note一覧</h2>
             <p>{decoded && `ようこそ、${decoded.preferred_username}さん`}</p>
-            <pre><code>{JSON.stringify(this.state.content, null, '  ')}</code></pre>
+            <Table className="pui-table--tr-hover">
+                <Thead>
+                    <Tr>
+                        <Th>ID</Th>
+                        <Th>Title</Th>
+                        <Th>Created Date</Th>
+                        <Th>Updated Date</Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
+                    {
+                        this.state.content.map(note =>
+                            <Tr>
+                                <Td>{note.entryId}</Td>
+                                <Td>{note.title}</Td>
+                                <Td>{note.createdDate}</Td>
+                                <Td>{note.updatedDate}</Td>
+                            </Tr>)
+                    }
+                </Tbody>
+            </Table>
         </Panel>);
     }
 
