@@ -17,8 +17,8 @@ export class PasswordReset extends React.Component {
 
     async resetPassword(newPassword) {
         const resetId = this.props.match.params.id;
-        await noteService.resetPassword(resetId, newPassword);
         try {
+            await noteService.resetPassword(resetId, newPassword);
             this.setState({
                 successMessage: <React.Fragment>パスワードがリセットされました。<Link
                     to={`/note/login`}>こちら</Link>からログインしてください。</React.Fragment>
