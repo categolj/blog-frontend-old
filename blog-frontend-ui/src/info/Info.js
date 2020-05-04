@@ -11,6 +11,7 @@ export function Info() {
             <Block header={"UI"} url={ui}/>
             <Block header={"API"} url={api}/>
             <Block header={"LIKE"} url={'https://like.dev.ik.am/actuator/info'}/>
+            <Block header={"NOTE"} url={'https://note.dev.ik.am/actuator/info'}/>
             <Block header={"GATEWAY"} url={'https://blog.ik.am/management/info'}/>
         </Panel>
     );
