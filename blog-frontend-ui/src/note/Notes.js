@@ -1,9 +1,10 @@
 import React from "react";
 import 'pivotal-ui/css/ellipsis';
 import {Panel} from "pivotal-ui/react/panels";
-import tokenRepository from "./InMemoryTokenRepository";
+import tokenRepository from "./CompositeTokenRepository";
 import {Redirect} from "react-router-dom";
 import Jwt from "./Jwt";
+import noteService from "./NoteService";
 
 export class Notes extends React.Component {
     state = {
@@ -18,13 +19,8 @@ export class Notes extends React.Component {
             if (expiresIn > 0) {
                 console.log(`Expires in ${expiresIn} sec.`);
                 this.token = token;
-                const todos = await fetch('https://demo-jwt.apps.pcfone.io/todos', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                })
-                    .then(res => res.json());
-                this.setState({content: todos});
+                const notes = await noteService.loadNotes(token);
+                this.setState({content: notes});
             }
         }
         if (!this.token) {
