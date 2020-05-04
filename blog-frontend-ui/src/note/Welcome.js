@@ -12,7 +12,7 @@ export class Welcome extends React.Component {
     }
 
     render() {
-        return (<p>{this.decoded && `ようこそ、${this.decoded.preferred_username}さん`} <Logout/></p>);
+        return (this.decoded && <p>{`ようこそ、${this.decoded.preferred_username}さん`}&nbsp;<Logout/></p>);
     }
 
 }
