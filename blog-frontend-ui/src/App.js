@@ -36,7 +36,7 @@ class App extends Component {
                             <NavTab exact to="/entries">{`Entries`}</NavTab>
                             <NavTab to="/categories">{`Categories`}</NavTab>
                             <NavTab to="/tags">{`Tags`}</NavTab>
-                            <NavTab to="/note" className={"nav-tab can-be-invisible"}>{`Note`}</NavTab>
+                            {/*<NavTab to="/note" className={"nav-tab can-be-invisible"}>{`Note`}</NavTab>*/}
                             <NavTab to="/aboutme">{`About`}</NavTab>
                             <NavTab to="/info" className={"nav-tab can-be-invisible"}>{`Info`}</NavTab>
                             <NavTab to="/dashboard" className={"nav-tab can-be-invisible"}>{`Dashboard`}</NavTab>
