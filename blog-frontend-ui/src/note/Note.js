@@ -13,6 +13,7 @@ import java from 'highlight.js/lib/languages/java';
 import xml from 'highlight.js/lib/languages/xml';
 import 'highlight.js/styles/monokai-sublime.css';
 import {BackToTop} from "pivotal-ui/react/back-to-top";
+import {Icon} from 'pivotal-ui/react/iconography';
 
 hljs.registerLanguage('java', java);
 hljs.registerLanguage('xml', xml);
@@ -73,7 +74,8 @@ export class Note extends TokenAwareComponent {
                 <WarningAlert withIcon><span dangerouslySetInnerHTML={this.state.warningMessage}/></WarningAlert>
                 <br/>
             </React.Fragment>}
-            {this.note(this.state.content)}
+            {this.state.isLoaded ? <Icon style={{'fontSize': '48px'}} src="spinner-md"/>
+                : this.note(this.state.content)}
         </Panel>);
     }
 
