@@ -79,7 +79,7 @@ class NoteService {
         } else if (res.status === 403) {
             throw new Error(JSON.stringify({
                 error: 'forbidden',
-                message: `購読されていません。`
+                message: `記事が未購入または未アクティベートです。<br/>購入済みの場合は、<a href="https://note.com/makingx/m/m2dc6f318899c">note.com</a>の該当ページからアクティベートリンクをクリックしてください。`
             }));
         } else {
             this.handleUnExpectedError();

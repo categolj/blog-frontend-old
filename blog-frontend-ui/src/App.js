@@ -21,6 +21,7 @@ import {Login} from './note/Login';
 import {Signup} from "./note/Signup";
 import {AboutMe} from "./aboutme/AboutMe";
 import {Notes} from "./note/Notes";
+import {Note} from "./note/Note";
 import {PasswordReset} from "./note/PasswordReset";
 
 class App extends Component {
@@ -37,8 +38,8 @@ class App extends Component {
                             <NavTab exact to="/entries">{`Entries`}</NavTab>
                             <NavTab to="/categories">{`Categories`}</NavTab>
                             <NavTab to="/tags">{`Tags`}</NavTab>
-                            {/*<NavTab to="/note" className={"nav-tab can-be-invisible"}>{`Note`}</NavTab>*/}
-                            <NavTab to="/aboutme">{`About`}</NavTab>
+                            {/*<NavTab exact to="/notes">{`Note`}</NavTab>*/}
+                            <NavTab to="/aboutme" className={"nav-tab can-be-invisible"}>{`About`}</NavTab>
                             <NavTab to="/info" className={"nav-tab can-be-invisible"}>{`Info`}</NavTab>
                             <NavTab to="/dashboard" className={"nav-tab can-be-invisible"}>{`Dashboard`}</NavTab>
                             <Switch>
@@ -54,7 +55,8 @@ class App extends Component {
                                 <Route path="/note/login" component={Login}/>
                                 <Route path="/note/signup" component={Signup}/>
                                 <Route path="/note/password_reset/:id" component={PasswordReset}/>
-                                <Route path="/note" component={Notes}/>
+                                <Route path="/notes/:id" component={Note}/>
+                                <Route path="/notes" component={Notes}/>
                                 <Route exact path="/info" component={Info}/>
                                 <Route exact path="/dashboard" component={Dashboard}/>
                                 <Route path="/series/:id/entries" component={Series}/>

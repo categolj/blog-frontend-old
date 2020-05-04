@@ -5,6 +5,7 @@ import {Table, Tbody, Td, Th, Thead, Tr} from 'pivotal-ui/react/table';
 import {Logout} from './Logout';
 import noteService from "./NoteService";
 import {TokenAwareComponent} from "./TokenAwareComponent";
+import {Link} from "react-router-dom";
 
 export class Notes extends TokenAwareComponent {
     async componentDidMount() {
@@ -13,7 +14,7 @@ export class Notes extends TokenAwareComponent {
 
     render() {
         const decoded = this.decodeToken();
-        return (<Panel>
+        return (<Panel loading={this.state.isLoaded}>
             {this.redirect()}
             <h2 id="notes" className={"home"}>Notes</h2>
             <p>{decoded && `ようこそ、${decoded.preferred_username}さん`} <Logout/></p>
@@ -29,7 +30,7 @@ export class Notes extends TokenAwareComponent {
                     {
                         this.state.content && this.state.content.map(note =>
                             <Tr key={note.entryId}>
-                                <Td>{note.title}</Td>
+                                <Td><Link to={`/notes/${note.entryId}`}>{note.title}</Link></Td>
                                 <Td>{note.createdDate}</Td>
                                 <Td>{note.updatedDate}</Td>
                             </Tr>)

@@ -8,6 +8,7 @@ export class TokenAwareComponent extends React.Component {
     state = {
         content: null,
         redirect: false,
+        isLoaded: false,
     };
 
     async loadToken(loadContent) {
@@ -16,8 +17,17 @@ export class TokenAwareComponent extends React.Component {
             const expiresIn = Jwt.decoded(token).exp - new Date().getTime() / 1000;
             if (expiresIn > 0) {
                 this.token = token;
-                const content = await loadContent(token);
-                this.setState({content: content});
+                this.setState({
+                    isLoaded: true
+                })
+                try {
+                    const content = await loadContent(token);
+                    this.setState({content: content});
+                } finally {
+                    this.setState({
+                        isLoaded: false
+                    });
+                }
             }
         }
         if (!this.token) {
