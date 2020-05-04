@@ -65,7 +65,6 @@ export class Note extends TokenAwareComponent {
     }
 
     render() {
-        const token = this.getToken();
         return (<Panel loading={this.state.isLoaded}>
             {this.redirect()}
             <h2 id="notes" className={"home"}>Notes {this.state.content && `- ${this.state.content.title}`}</h2>
