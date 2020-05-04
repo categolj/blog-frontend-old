@@ -79,14 +79,14 @@ class NoteService {
         } else if (res.status === 403) {
             throw new Error(JSON.stringify({
                 error: 'forbidden',
-                message: `記事が未購入または未アクティベートです。<br/>購入済みの場合は、<a href="https://note.com/makingx/m/m2dc6f318899c">note.com</a>の該当ページからアクティベートリンクをクリックしてください。`
+                message: `記事が購読状態になっていません。<br/>note.comで記事を購入済みの場合は、<a href="https://note.com/makingx/m/m2dc6f318899c">note.com</a>の該当ページから購読化リンクをクリックしてください。`
             }));
         } else {
             this.handleUnExpectedError();
         }
     }
 
-    async activateNote(noteId, token) {
+    async subscribeNote(noteId, token) {
         const res = await fetch(`${process.env.REACT_APP_NOTE_API}/notes/${noteId}/activate`,
             {
                 method: 'POST',

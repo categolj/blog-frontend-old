@@ -10,7 +10,7 @@ import {ErrorAlert, InfoAlert, SuccessAlert} from "pivotal-ui/react/alerts";
 import {Link} from "react-router-dom";
 import {Welcome} from "./Welcome";
 
-export class NoteActivate extends React.Component {
+export class SubscribeNote extends React.Component {
     state = {
         redirect: false,
         errorMessage: null,
@@ -26,18 +26,18 @@ export class NoteActivate extends React.Component {
     async componentDidMount() {
     }
 
-    async activate() {
+    async subscribe() {
         const noteId = this.props.match.params.id;
         try {
-            const {entryId, activated} = await noteService.activateNote(noteId, this.token);
+            const {entryId, activated} = await noteService.subscribeNote(noteId, this.token);
             if (activated) {
                 this.setState({
-                    infoMessage: <React.Fragment>既にアクティベート済みです。<Link
+                    infoMessage: <React.Fragment>既に購読状態になっています。<Link
                         to={`/notes/${entryId}`}>記事</Link>にアクセスしてください。</React.Fragment>
                 });
             } else {
                 this.setState({
-                    successMessage: <React.Fragment>記事がアクティベートされました。<Link
+                    successMessage: <React.Fragment>記事が購読状態になりました。<Link
                         to={`/notes/${entryId}`}>記事</Link>にアクセスしてください。</React.Fragment>
                 });
             }
@@ -55,7 +55,7 @@ export class NoteActivate extends React.Component {
 
     render() {
         return (<Panel>
-            <h2 id="login" className={"home"}>Activate</h2>
+            <h2 id="login" className={"home"}>Subscribe</h2>
             <Welcome/>
             {this.state.errorMessage && <React.Fragment>
                 <ErrorAlert withIcon>{this.state.errorMessage}</ErrorAlert>
@@ -70,10 +70,10 @@ export class NoteActivate extends React.Component {
                 <br/>
             </React.Fragment>}
             <p>
-                ボタンをクリックして、記事をアクティベートしてください。
+                ボタンをクリックして、記事を購読状態にしてください。
             </p>
             <Form {...{
-                onSubmit: ({initial, current}) => this.activate(),
+                onSubmit: ({initial, current}) => this.subscribe(),
                 fields: {}
             }}>
                 {({fields, canSubmit, onSubmit}) => {
@@ -81,7 +81,7 @@ export class NoteActivate extends React.Component {
                         <div>
                             <Grid>
                                 <FlexCol>
-                                    <PrimaryButton type="submit">Activate</PrimaryButton>
+                                    <PrimaryButton type="submit">Subscribe</PrimaryButton>
                                 </FlexCol>
                             </Grid>
                         </div>
