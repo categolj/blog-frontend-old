@@ -9,6 +9,8 @@ import noteService from "./NoteService";
 import {ErrorAlert, InfoAlert, SuccessAlert} from "pivotal-ui/react/alerts";
 import {Link} from "react-router-dom";
 import {Welcome} from "./Welcome";
+import {Input} from "pivotal-ui/react/inputs";
+import inMemoryTokenRepository from "./InMemoryTokenRepository";
 
 export class SubscribeNote extends React.Component {
     state = {
@@ -46,6 +48,18 @@ export class SubscribeNote extends React.Component {
         }
     }
 
+    async loginAndSubscribe({email, password}) {
+        this.setState({errorMessage: null});
+        try {
+            const token = await noteService.login(email, password);
+            inMemoryTokenRepository.save(token);
+            this.token = token;
+            await this.subscribe();
+        } catch (e) {
+            this.handleError(e);
+        }
+    }
+
     handleError(e) {
         const error = JSON.parse(e.message);
         this.setState({
@@ -55,7 +69,7 @@ export class SubscribeNote extends React.Component {
 
     render() {
         return (<Panel>
-            <h2 id="login" className={"home"}>Subscribe</h2>
+            <h2 id="subscribe" className={"home"}>Subscribe</h2>
             <Welcome/>
             {this.state.errorMessage && <React.Fragment>
                 <ErrorAlert withIcon>{this.state.errorMessage}</ErrorAlert>
@@ -69,8 +83,14 @@ export class SubscribeNote extends React.Component {
                 <InfoAlert withIcon>{this.state.infoMessage}</InfoAlert>
                 <br/>
             </React.Fragment>}
+            {this.token ? this.showFormForLoggedInUser() : this.showFormForNotLoggedInUser()}
+        </Panel>);
+    }
+
+    showFormForLoggedInUser() {
+        return <React.Fragment>
             <p>
-                ボタンをクリックして、記事を購読状態にしてください。
+                Subscribeボタンをクリックし、記事を購読状態にしてください。
             </p>
             <Form {...{
                 onSubmit: ({initial, current}) => this.subscribe(),
@@ -88,7 +108,41 @@ export class SubscribeNote extends React.Component {
                     );
                 }}
             </Form>
-        </Panel>);
+        </React.Fragment>;
     }
 
+    showFormForNotLoggedInUser() {
+        return <React.Fragment>
+            <p>
+                アカウント情報を入力した上で、Subscribeボタンをクリックし、記事を購読状態にしてください。<br/>
+                <strong>note.comのアカウントではありません</strong>。note.comとは別に当システムにアカウントを作成する必要があります。<br/>
+                未登録の場合は<Link to={`/note/signup`}>こちら</Link>から登録してください。
+            </p>
+            <Form {...{
+                onSubmit: ({initial, current}) => this.loginAndSubscribe(current),
+                fields: {
+                    email: {
+                        children: <Input placeholder="Email" required/>
+                    },
+                    password: {
+                        children: <Input type={'password'} placeholder="Password (note.comのパスワードではありません)" required/>
+                    }
+                }
+            }}>
+                {({fields, canSubmit, onSubmit}) => {
+                    return (
+                        <div>
+                            <Grid>
+                                <FlexCol>{fields.email}</FlexCol>
+                                <FlexCol>{fields.password}</FlexCol>
+                                <FlexCol>
+                                    <PrimaryButton type="submit">Subscribe</PrimaryButton>
+                                </FlexCol>
+                            </Grid>
+                        </div>
+                    );
+                }}
+            </Form>
+        </React.Fragment>;
+    }
 }
