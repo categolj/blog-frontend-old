@@ -17,15 +17,11 @@ export class PasswordReset extends React.Component {
 
     async resetPassword(newPassword) {
         const resetId = this.props.match.params.id;
-        try {
-            await noteService.resetPassword(resetId, newPassword);
-            this.setState({
-                successMessage: <React.Fragment>パスワードがリセットされました。<Link
-                    to={`/note/login`}>こちら</Link>からログインしてください。</React.Fragment>
-            });
-        } catch (e) {
-            this.handleError(e);
-        }
+        await noteService.resetPassword(resetId, newPassword);
+        this.setState({
+            successMessage: <React.Fragment>パスワードがリセットされました。<Link
+                to={`/note/login`}>こちら</Link>からログインしてください。</React.Fragment>
+        });
     }
 
     handleError(e) {
@@ -48,6 +44,7 @@ export class PasswordReset extends React.Component {
             </React.Fragment>}
             <Form {...{
                 onSubmit: ({initial, current}) => this.resetPassword(current.password1),
+                onSubmitError: e => this.handleError(e),
                 fields: {
                     password1: {
                         label: 'Enter your password',

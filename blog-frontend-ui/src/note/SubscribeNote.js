@@ -30,46 +30,34 @@ export class SubscribeNote extends React.Component {
 
     async subscribe() {
         const noteId = this.props.match.params.id;
-        try {
-            const {entryId, subscribed} = await noteService.subscribeNote(noteId, this.token);
-            if (subscribed) {
-                this.setState({
-                    infoMessage: <React.Fragment>既に購読状態になっています。<Link
-                        to={`/notes/${entryId}`}>記事</Link>にアクセスしてください。</React.Fragment>
-                });
-            } else {
-                this.setState({
-                    successMessage: <React.Fragment>記事が購読状態になりました。<Link
-                        to={`/notes/${entryId}`}>記事</Link>にアクセスしてください。</React.Fragment>
-                });
-            }
-        } catch (e) {
-            this.handleError(e);
+        const {entryId, subscribed} = await noteService.subscribeNote(noteId, this.token);
+        if (subscribed) {
+            this.setState({
+                infoMessage: <React.Fragment>既に購読状態になっています。<Link
+                    to={`/notes/${entryId}`}>記事</Link>にアクセスしてください。</React.Fragment>
+            });
+        } else {
+            this.setState({
+                successMessage: <React.Fragment>記事が購読状態になりました。<Link
+                    to={`/notes/${entryId}`}>記事</Link>にアクセスしてください。</React.Fragment>
+            });
         }
     }
 
     async loginAndSubscribe({email, password}) {
         this.setState({errorMessage: null});
-        try {
-            const token = await noteService.login(email, password);
-            inMemoryTokenRepository.save(token);
-            this.token = token;
-            await this.subscribe();
-        } catch (e) {
-            this.handleError(e);
-        }
+        const token = await noteService.login(email, password);
+        inMemoryTokenRepository.save(token);
+        this.token = token;
+        await this.subscribe();
     }
 
     async sendResetLink({email}) {
         this.setState({errorMessage: null});
-        try {
-            await noteService.sendResetLink(email);
-            this.setState({
-                successMessage: `パスワードリセットリンクを${email}に送信しました。メールに記載されたリンクをクリックして下さい。`
-            })
-        } catch (e) {
-            this.handleError(e);
-        }
+        await noteService.sendResetLink(email);
+        this.setState({
+            successMessage: `パスワードリセットリンクを${email}に送信しました。メールに記載されたリンクをクリックして下さい。`
+        });
     }
 
     handleError(e) {
@@ -106,6 +94,7 @@ export class SubscribeNote extends React.Component {
             </p>
             <Form {...{
                 onSubmit: ({initial, current}) => this.subscribe(),
+                onSubmitError: e => this.handleError(e),
                 fields: {}
             }}>
                 {({fields, canSubmit, onSubmit}) => {
@@ -132,6 +121,7 @@ export class SubscribeNote extends React.Component {
             </p>
             <Form {...{
                 onSubmit: ({initial, current}) => this.loginAndSubscribe(current),
+                onSubmitError: e => this.handleError(e),
                 fields: {
                     email: {
                         children: <Input placeholder="Email" required/>
@@ -160,6 +150,7 @@ export class SubscribeNote extends React.Component {
             </p>
             <Form {...{
                 onSubmit: ({initial, current}) => this.sendResetLink(current),
+                onSubmitError: e => this.handleError(e),
                 fields: {
                     email: {
                         children: <Input type={'email'} placeholder="Email" required/>

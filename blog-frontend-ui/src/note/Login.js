@@ -21,29 +21,21 @@ export class Login extends React.Component {
 
     async login({email, password, useLocalStorage}) {
         this.setState({errorMessage: null});
-        try {
-            const token = await noteService.login(email, password);
-            if (useLocalStorage) {
-                localStorageTokenRepository.save(token);
-            } else {
-                inMemoryTokenRepository.save(token);
-            }
-            this.setState({redirect: true});
-        } catch (e) {
-            this.handleError(e);
+        const token = await noteService.login(email, password);
+        if (useLocalStorage) {
+            localStorageTokenRepository.save(token);
+        } else {
+            inMemoryTokenRepository.save(token);
         }
+        this.setState({redirect: true});
     }
 
     async sendResetLink({email}) {
         this.setState({errorMessage: null});
-        try {
-            await noteService.sendResetLink(email);
-            this.setState({
-                successMessage: `パスワードリセットリンクを${email}に送信しました。メールに記載されたリンクをクリックして下さい。`
-            })
-        } catch (e) {
-            this.handleError(e);
-        }
+        await noteService.sendResetLink(email);
+        this.setState({
+            successMessage: `パスワードリセットリンクを${email}に送信しました。メールに記載されたリンクをクリックして下さい。`
+        });
     }
 
     handleError(e) {
@@ -73,6 +65,7 @@ export class Login extends React.Component {
             </p>
             <Form {...{
                 onSubmit: ({initial, current}) => this.login(current),
+                onSubmitError: e => this.handleError(e),
                 fields: {
                     email: {
                         children: <Input placeholder="Email" required/>
@@ -110,6 +103,7 @@ export class Login extends React.Component {
             </p>
             <Form {...{
                 onSubmit: ({initial, current}) => this.sendResetLink(current),
+                onSubmitError: e => this.handleError(e),
                 fields: {
                     email: {
                         children: <Input type={'email'} placeholder="Email" required/>
