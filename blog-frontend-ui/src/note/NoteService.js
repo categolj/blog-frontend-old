@@ -11,7 +11,7 @@ class NoteService {
         if (res.ok) {
             return res.json().then(json => json.access_token);
         } else {
-            throw await res.json();
+            throw new Error(JSON.stringify(await res.json()));
         }
     }
 
@@ -27,15 +27,15 @@ class NoteService {
         if (res.ok) {
             return res.json();
         } else if (res.status === 404) {
-            throw {
+            throw new Error(JSON.stringify({
                 error: 'not found',
                 message: `${email}は登録されていません。`
-            };
+            }));
         } else {
-            throw {
+            throw new Error(JSON.stringify({
                 error: 'unexpected',
                 message: '予期せぬエラーが発生しました。'
-            }
+            }));
         }
     }
 

@@ -30,9 +30,7 @@ export class Login extends React.Component {
             }
             this.setState({redirect: true});
         } catch (e) {
-            this.setState({
-                errorMessage: `[${e.error}] ${e.message || e.error_description}`
-            });
+            this.handleError(e);
         }
     }
 
@@ -44,10 +42,15 @@ export class Login extends React.Component {
                 successMessage: `パスワードリセットリンクを${email}に送信しました。メールに記載されたリンクをクリックして下さい。`
             })
         } catch (e) {
-            this.setState({
-                errorMessage: `[${e.error}] ${e.message || e.error_description}`
-            });
+            this.handleError(e);
         }
+    }
+
+    handleError(e) {
+        const error = JSON.parse(e.message);
+        this.setState({
+            errorMessage: `[${error.error}] ${error.message || error.error_description}`
+        });
     }
 
     render() {
