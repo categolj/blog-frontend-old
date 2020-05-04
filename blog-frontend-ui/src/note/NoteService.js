@@ -87,7 +87,7 @@ class NoteService {
     }
 
     async subscribeNote(noteId, token) {
-        const res = await fetch(`${process.env.REACT_APP_NOTE_API}/notes/${noteId}/activate`,
+        const res = await fetch(`${process.env.REACT_APP_NOTE_API}/notes/${noteId}/subscribe`,
             {
                 method: 'POST',
                 headers: {

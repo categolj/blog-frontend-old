@@ -29,8 +29,8 @@ export class SubscribeNote extends React.Component {
     async subscribe() {
         const noteId = this.props.match.params.id;
         try {
-            const {entryId, activated} = await noteService.subscribeNote(noteId, this.token);
-            if (activated) {
+            const {entryId, subscribed} = await noteService.subscribeNote(noteId, this.token);
+            if (subscribed) {
                 this.setState({
                     infoMessage: <React.Fragment>既に購読状態になっています。<Link
                         to={`/notes/${entryId}`}>記事</Link>にアクセスしてください。</React.Fragment>
