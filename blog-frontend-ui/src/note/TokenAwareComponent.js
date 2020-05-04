@@ -15,7 +15,6 @@ export class TokenAwareComponent extends React.Component {
         if (token) {
             const expiresIn = Jwt.decoded(token).exp - new Date().getTime() / 1000;
             if (expiresIn > 0) {
-                console.log(`Expires in ${expiresIn} sec.`);
                 this.token = token;
                 const content = await loadContent(token);
                 this.setState({content: content});
