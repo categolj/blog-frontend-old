@@ -17,7 +17,7 @@ export class Signup extends React.Component {
 
     render() {
         return (<Panel>
-            <h2 id="login" className={"home"}>初期設定</h2>
+            <h2 id="login" className={"home"}>Sign up</h2>
             <p>
                 <a href="https://note.com">note.com</a>のEmailアドレスを登録して下さい。<br/>
                 登録後に確認メールが送信されます。メールに記載されているアクティベーションリンクをクリックしてください。<br/>

@@ -56,7 +56,7 @@ export class Login extends React.Component {
     render() {
         return (<Panel>
             {this.state.redirect && <Redirect to={{pathname: "/note"}}/>}
-            <h2 id="login" className={"home"}>ログイン</h2>
+            <h2 id="login" className={"home"}>Login</h2>
             {this.state.errorMessage && <React.Fragment>
                 <ErrorAlert withIcon>{this.state.errorMessage}</ErrorAlert>
                 <br/>

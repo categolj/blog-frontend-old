@@ -14,7 +14,7 @@ export class Notes extends TokenAwareComponent {
         const decoded = this.decodeToken();
         return (<Panel>
             {this.redirect()}
-            <h2 id="notes" className={"home"}>Note一覧</h2>
+            <h2 id="notes" className={"home"}>Notes</h2>
             <p>{decoded && `ようこそ、${decoded.preferred_username}さん`}</p>
             <Table className="pui-table--tr-hover">
                 <Thead>
