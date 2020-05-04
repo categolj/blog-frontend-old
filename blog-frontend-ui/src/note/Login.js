@@ -68,7 +68,7 @@ export class Login extends React.Component {
             <p>
                 当システムに登録済みのEmailアドレスをパスワード入力し、ログインして下さい。<br/>
                 <strong>note.comのアカウントではありません</strong>。"はじめるSpring Boot2"を読むには、<a
-                href={'https://note.com/makingx/m/m2dc6f318899c'}>note.com</a>でノートまたはマガジン購入後に一度当システムにアカウントを作成する必要があります。<br/>
+                href={'https://note.com/makingx/m/m2dc6f318899c'}>note.com</a>でノートまたはマガジン購入した上で、note.comとは別に当システムにアカウントを作成する必要があります。<br/>
                 未登録の場合は<Link to={`/note/signup`}>こちら</Link>から登録してください。
             </p>
             <Form {...{
