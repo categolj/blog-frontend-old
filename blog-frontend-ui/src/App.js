@@ -21,6 +21,7 @@ import {Login} from './note/Login';
 import {Signup} from "./note/Signup";
 import {AboutMe} from "./aboutme/AboutMe";
 import {Notes} from "./note/Notes";
+import {PasswordReset} from "./note/PasswordReset";
 
 class App extends Component {
     render() {
@@ -52,7 +53,7 @@ class App extends Component {
                                 <Route path="/aboutme" component={AboutMe}/>
                                 <Route path="/note/login" component={Login}/>
                                 <Route path="/note/signup" component={Signup}/>
-                                <Route path="/note/password_reset/:id" component={Signup}/>
+                                <Route path="/note/password_reset/:id" component={PasswordReset}/>
                                 <Route path="/note" component={Notes}/>
                                 <Route exact path="/info" component={Info}/>
                                 <Route exact path="/dashboard" component={Dashboard}/>

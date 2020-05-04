@@ -36,6 +36,29 @@ class NoteService {
         }
     }
 
+    async resetPassword(resetId, newPassword) {
+        const res = await fetch(`${process.env.REACT_APP_NOTE_API}/password_reset`,
+            {
+                method: 'POST',
+                body: JSON.stringify({resetId, newPassword}),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        if (res.ok) {
+            return res.json();
+        } else if (res.status === 400) {
+            throw new Error(JSON.stringify(await res.json()));
+        } else if (res.status === 404) {
+            throw new Error(JSON.stringify({
+                error: 'not found',
+                message: `存在しないパスワードリセットリンクです。`
+            }));
+        } else {
+            this.handleUnExpectedError();
+        }
+    }
+
     loadNotes(token) {
         return fetch(`${process.env.REACT_APP_NOTE_API}/notes`, {
             headers: {
