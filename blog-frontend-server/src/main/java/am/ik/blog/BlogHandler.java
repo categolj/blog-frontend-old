@@ -34,18 +34,18 @@ public class BlogHandler {
 
     RouterFunction<ServerResponse> routes() {
         return RouterFunctions.route()
-                .route(forwardToPrerender(), this::prerender)
-                .GET("/", this::render)
-                .GET("/entries/**", this::render)
-                .GET("/series/**", this::render)
-                .GET("/tags/**", this::render)
-                .GET("/categories/**", this::render)
-                .GET("/notes/**", this::render)
-                .GET("/note/**", this::render)
-                .GET("/aboutme", this::render)
-                .GET("/info", this::render)
-                .GET("/dashboard", this::render)
-                .build();
+            .route(forwardToPrerender(), this::prerender)
+            .GET("/", this::render)
+            .GET("/entries/**", this::render)
+            .GET("/series/**", this::render)
+            .GET("/tags/**", this::render)
+            .GET("/categories/**", this::render)
+            .GET("/notes/**", this::render)
+            .GET("/note/**", this::render)
+            .GET("/aboutme", this::render)
+            .GET("/info", this::render)
+            .GET("/dashboard", this::render)
+            .build();
     }
 
     @NonNull
@@ -54,12 +54,12 @@ public class BlogHandler {
         this.prerenderCounter.increment();
         final Mono<String> content = this.prerenderClient.invoke(req.method(), url);
         return content
-                .flatMap(html -> ServerResponse.ok()
-                        .contentType(MediaType.TEXT_HTML)
-                        .cacheControl(CacheControl.maxAge(Duration.ofDays(3)))
-                        .bodyValue(html))
-                .switchIfEmpty(ServerResponse.notFound()
-                        .build());
+            .flatMap(html -> ServerResponse.ok()
+                .contentType(MediaType.TEXT_HTML)
+                .cacheControl(CacheControl.maxAge(Duration.ofDays(3)))
+                .bodyValue(html))
+            .switchIfEmpty(ServerResponse.notFound()
+                .build());
     }
 
     @NonNull
@@ -71,9 +71,6 @@ public class BlogHandler {
         return req -> {
             final String path = req.path();
             if ("/".equals(path) || path.startsWith("/entries") || path.startsWith("/series") || path.startsWith("/tags") || path.startsWith("/categories")) {
-                if (req.queryParam("prerender").isPresent()) {
-                    return true;
-                }
                 return isPrerenderedMethod(req) && !isPrerenderedRequest(req) && isGoogle(req);
             }
             return false;
