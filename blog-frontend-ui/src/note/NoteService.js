@@ -32,10 +32,7 @@ class NoteService {
                 message: `${email}は登録されていません。`
             }));
         } else {
-            throw new Error(JSON.stringify({
-                error: 'unexpected',
-                message: '予期せぬエラーが発生しました。'
-            }));
+            this.handleUnExpectedError();
         }
     }
 
@@ -46,6 +43,33 @@ class NoteService {
             }
         })
             .then(res => res.json());
+    }
+
+    async loadNoteByEntryId(entryId, token) {
+        const res = await fetch(`${process.env.REACT_APP_NOTE_API}/notes/${entryId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (res.ok) {
+            return res.json();
+        } else if (res.status === 403) {
+            throw new Error(JSON.stringify({
+                error: 'forbidden',
+                message: `購読されていません。`
+            }));
+        } else {
+            this.handleUnExpectedError();
+        }
+        return res
+            .then(res => res.json());
+    }
+
+    handleUnExpectedError() {
+        throw new Error(JSON.stringify({
+            error: 'unexpected',
+            message: '予期せぬエラーが発生しました。'
+        }));
     }
 }
 

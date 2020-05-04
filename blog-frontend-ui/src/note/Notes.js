@@ -2,43 +2,23 @@ import React from "react";
 import 'pivotal-ui/css/ellipsis';
 import {Panel} from "pivotal-ui/react/panels";
 import {Table, Tbody, Td, Th, Thead, Tr} from 'pivotal-ui/react/table';
-import tokenRepository from "./CompositeTokenRepository";
-import {Redirect} from "react-router-dom";
-import Jwt from "./Jwt";
 import noteService from "./NoteService";
+import {TokenAwareComponent} from "./TokenAwareComponent";
 
-export class Notes extends React.Component {
-    state = {
-        content: [],
-        redirect: false,
-    };
-
+export class Notes extends TokenAwareComponent {
     async componentDidMount() {
-        let token = tokenRepository.loadToken();
-        if (token) {
-            const expiresIn = Jwt.decoded(token).exp - new Date().getTime() / 1000;
-            if (expiresIn > 0) {
-                console.log(`Expires in ${expiresIn} sec.`);
-                this.token = token;
-                const notes = await noteService.loadNotes(token);
-                this.setState({content: notes});
-            }
-        }
-        if (!this.token) {
-            this.setState({redirect: true});
-        }
+        await this.loadToken(token => noteService.loadNotes(token));
     }
 
     render() {
-        const decoded = this.token && Jwt.decoded(this.token);
+        const decoded = this.decodeToken();
         return (<Panel>
-            {this.state.redirect && <Redirect to={{pathname: "/note/login"}}/>}
+            {this.redirect()}
             <h2 id="notes" className={"home"}>Note一覧</h2>
             <p>{decoded && `ようこそ、${decoded.preferred_username}さん`}</p>
             <Table className="pui-table--tr-hover">
                 <Thead>
                     <Tr>
-                        <Th>ID</Th>
                         <Th>Title</Th>
                         <Th>Created Date</Th>
                         <Th>Updated Date</Th>
@@ -46,9 +26,8 @@ export class Notes extends React.Component {
                 </Thead>
                 <Tbody>
                     {
-                        this.state.content.map(note =>
-                            <Tr>
-                                <Td>{note.entryId}</Td>
+                        this.state.content && this.state.content.map(note =>
+                            <Tr key={note.entryId}>
                                 <Td>{note.title}</Td>
                                 <Td>{note.createdDate}</Td>
                                 <Td>{note.updatedDate}</Td>
