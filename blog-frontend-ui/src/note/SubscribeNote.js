@@ -3,7 +3,7 @@ import 'pivotal-ui/css/ellipsis';
 import {Panel} from "pivotal-ui/react/panels";
 import {Form} from 'pivotal-ui/react/forms';
 import {FlexCol, Grid} from 'pivotal-ui/react/flex-grids';
-import {PrimaryButton} from 'pivotal-ui/react/buttons';
+import {DefaultButton, PrimaryButton} from 'pivotal-ui/react/buttons';
 import compositeTokenRepository from "./CompositeTokenRepository";
 import noteService from "./NoteService";
 import {ErrorAlert, InfoAlert, SuccessAlert} from "pivotal-ui/react/alerts";
@@ -55,6 +55,18 @@ export class SubscribeNote extends React.Component {
             inMemoryTokenRepository.save(token);
             this.token = token;
             await this.subscribe();
+        } catch (e) {
+            this.handleError(e);
+        }
+    }
+
+    async sendResetLink({email}) {
+        this.setState({errorMessage: null});
+        try {
+            await noteService.sendResetLink(email);
+            this.setState({
+                successMessage: `パスワードリセットリンクを${email}に送信しました。メールに記載されたリンクをクリックして下さい。`
+            })
         } catch (e) {
             this.handleError(e);
         }
@@ -137,6 +149,30 @@ export class SubscribeNote extends React.Component {
                                 <FlexCol>{fields.password}</FlexCol>
                                 <FlexCol>
                                     <PrimaryButton type="submit">Subscribe</PrimaryButton>
+                                </FlexCol>
+                            </Grid>
+                        </div>
+                    );
+                }}
+            </Form>
+            <p>
+                パスワードをリセットしたい場合は、以下より登録済みのメールアドレスを入力してください。パスワードリセット用のリンクを送信します。
+            </p>
+            <Form {...{
+                onSubmit: ({initial, current}) => this.sendResetLink(current),
+                fields: {
+                    email: {
+                        children: <Input type={'email'} placeholder="Email" required/>
+                    }
+                }
+            }}>
+                {({fields, canSubmit, onSubmit}) => {
+                    return (
+                        <div>
+                            <Grid>
+                                <FlexCol>{fields.email}</FlexCol>
+                                <FlexCol>
+                                    <DefaultButton type="submit">Send Reset Link</DefaultButton>
                                 </FlexCol>
                             </Grid>
                         </div>
