@@ -84,8 +84,26 @@ class NoteService {
         } else {
             this.handleUnExpectedError();
         }
-        return res
-            .then(res => res.json());
+    }
+
+    async activateNote(noteId, token) {
+        const res = await fetch(`${process.env.REACT_APP_NOTE_API}/notes/${noteId}/activate`,
+            {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+        if (res.ok) {
+            return res.json();
+        } else if (res.status === 404) {
+            throw new Error(JSON.stringify({
+                error: 'not found',
+                message: `該当の記事は存在しません。`
+            }));
+        } else {
+            this.handleUnExpectedError();
+        }
     }
 
     handleUnExpectedError() {

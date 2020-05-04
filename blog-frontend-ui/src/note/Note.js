@@ -1,7 +1,6 @@
 import React from "react";
 import 'pivotal-ui/css/ellipsis';
 import {Panel} from "pivotal-ui/react/panels";
-import {Logout} from './Logout';
 import noteService from "./NoteService";
 import {TokenAwareComponent} from "./TokenAwareComponent";
 import {WarningAlert} from "pivotal-ui/react/alerts";
@@ -14,6 +13,7 @@ import xml from 'highlight.js/lib/languages/xml';
 import 'highlight.js/styles/monokai-sublime.css';
 import {BackToTop} from "pivotal-ui/react/back-to-top";
 import {Icon} from 'pivotal-ui/react/iconography';
+import {Welcome} from "./Welcome";
 
 hljs.registerLanguage('java', java);
 hljs.registerLanguage('xml', xml);
@@ -58,18 +58,18 @@ export class Note extends TokenAwareComponent {
                 if (th.innerText === '番号') {
                     th.style = 'width: 50px;'
                 } else {
-                    th.style = 'width: 30%;'
+                    th.style = 'width: 25%;'
                 }
             });
         }
     }
 
     render() {
-        const decoded = this.decodeToken();
+        const token = this.getToken();
         return (<Panel loading={this.state.isLoaded}>
             {this.redirect()}
             <h2 id="notes" className={"home"}>Notes {this.state.content && `- ${this.state.content.title}`}</h2>
-            <p>{decoded && `ようこそ、${decoded.preferred_username}さん`} <Logout/></p>
+            <Welcome/>
             {this.state.warningMessage && <React.Fragment>
                 <WarningAlert withIcon><span dangerouslySetInnerHTML={this.state.warningMessage}/></WarningAlert>
                 <br/>

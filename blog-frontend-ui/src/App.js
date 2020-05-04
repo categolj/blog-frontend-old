@@ -22,6 +22,7 @@ import {Signup} from "./note/Signup";
 import {AboutMe} from "./aboutme/AboutMe";
 import {Notes} from "./note/Notes";
 import {Note} from "./note/Note";
+import {NoteActivate} from "./note/NoteActivate";
 import {PasswordReset} from "./note/PasswordReset";
 
 class App extends Component {
@@ -55,6 +56,7 @@ class App extends Component {
                                 <Route path="/note/login" component={Login}/>
                                 <Route path="/note/signup" component={Signup}/>
                                 <Route path="/note/password_reset/:id" component={PasswordReset}/>
+                                <Route path="/notes/:id/activate" component={NoteActivate}/>
                                 <Route path="/notes/:id" component={Note}/>
                                 <Route path="/notes" component={Notes}/>
                                 <Route exact path="/info" component={Info}/>
