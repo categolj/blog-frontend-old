@@ -123,7 +123,7 @@ class NoteService {
             const error = await res.json();
             throw new Error(JSON.stringify({
                 error: 'forbidden',
-                message: `記事が購読状態になっていません。<br/>note.comで記事を購入済みの場合は、<a href="${error.noteUrl}" target="_blank" rel="noopener noreferrer">note.comの該当ページ</a>から購読化リンクをクリックしてください。`
+                message: `記事が購読状態になっていません。<br/>note.comで記事を購入済みの場合は、<a href="${error.noteUrl}">note.comの該当ページ</a>から購読化リンクをクリックしてください。`
             }));
         } else {
             this.handleUnExpectedError();
