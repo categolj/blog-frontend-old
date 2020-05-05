@@ -34,7 +34,10 @@ export class Notes extends TokenAwareComponent {
                         this.state.content && this.state.content.map(note =>
                             <Tr key={note.entryId}>
                                 <Td><Link to={`/notes/${note.entryId}`}>{note.title}</Link></Td>
-                                <Td>{note.subscribed ? `✅` : `⛔️`}</Td>
+                                <Td>{note.subscribed ? `✅` :
+                                    <React.Fragment>{`⛔️`} <a href={note.noteUrl}
+                                                              target={'_blank'}
+                                                              rel={'noopener noreferrer'}>note.comで購読</a></React.Fragment>}</Td>
                                 <Td>{note.updatedDate}</Td>
                             </Tr>)
                     }
