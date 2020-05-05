@@ -11,10 +11,6 @@ export class Activation extends React.Component {
         successMessage: null,
     };
 
-    constructor(props) {
-        super(props);
-    }
-
     async componentDidMount() {
         await this.activate();
     }
