@@ -146,7 +146,7 @@ export class SubscribeNote extends React.Component {
                 }}
             </Form>
             <p>
-                パスワードをリセットしたい場合は、以下より登録済みのメールアドレスを入力してください。パスワードリセット用のリンクを送信します。
+                パスワードが未設定の場合、またはパスワードをリセットしたい場合は、以下より登録済みのメールアドレスを入力してください。パスワードリセット用のリンクを送信します。
             </p>
             <Form {...{
                 onSubmit: ({initial, current}) => this.sendResetLink(current),
