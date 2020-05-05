@@ -37,7 +37,7 @@ export class Notes extends TokenAwareComponent {
                                 <Td>{note.subscribed ? `✅` :
                                     <React.Fragment>{`⛔️`} <a href={note.noteUrl}
                                                               target={'_blank'}
-                                                              rel={'noopener noreferrer'}>note.comで購読</a></React.Fragment>}</Td>
+                                                              rel={'noopener noreferrer'}>購読化リンクの確認</a> (要購入)</React.Fragment>}</Td>
                                 <Td>{note.updatedDate}</Td>
                             </Tr>)
                     }
