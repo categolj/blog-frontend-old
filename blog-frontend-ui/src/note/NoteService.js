@@ -70,6 +70,7 @@ class NoteService {
 
     async loadNoteByEntryId(entryId, token) {
         const res = await fetch(`${process.env.REACT_APP_NOTE_API}/notes/${entryId}`, {
+            credentials: 'same-origin',
             headers: {
                 'Authorization': `Bearer ${token}`
             }
