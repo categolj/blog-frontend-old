@@ -17,10 +17,15 @@ export class Notes extends TokenAwareComponent {
             {this.redirect()}
             <h2 id="notes" className={"home"}>Notes</h2>
             <Welcome/>
+            <p>
+                {`(*) ... ✅の場合は記事が購読状態です。⛔の場合は購読状態になっていません。`}
+                note.comで記事を購入済みの場合は<a href={`https://note.com/makingx/m/m2dc6f318899c`}>note.com</a>の該当ページから購読化リンクをクリックしてください。
+            </p>
             <Table className="pui-table--tr-hover">
                 <Thead>
                     <Tr>
-                        <Th>Title</Th>
+                        <Th style={{width: '50%'}}>Title</Th>
+                        <Th>Subscribed (*)</Th>
                         <Th>Created Date</Th>
                         <Th>Updated Date</Th>
                     </Tr>
@@ -30,6 +35,7 @@ export class Notes extends TokenAwareComponent {
                         this.state.content && this.state.content.map(note =>
                             <Tr key={note.entryId}>
                                 <Td><Link to={`/notes/${note.entryId}`}>{note.title}</Link></Td>
+                                <Td>{note.subscribed ? `✅` : `⛔️`}</Td>
                                 <Td>{note.createdDate}</Td>
                                 <Td>{note.updatedDate}</Td>
                             </Tr>)
