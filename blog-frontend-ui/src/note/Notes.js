@@ -26,7 +26,6 @@ export class Notes extends TokenAwareComponent {
                     <Tr>
                         <Th style={{width: '50%'}}>Title</Th>
                         <Th>Subscribed (*)</Th>
-                        <Th>Created Date</Th>
                         <Th>Updated Date</Th>
                     </Tr>
                 </Thead>
@@ -36,7 +35,6 @@ export class Notes extends TokenAwareComponent {
                             <Tr key={note.entryId}>
                                 <Td><Link to={`/notes/${note.entryId}`}>{note.title}</Link></Td>
                                 <Td>{note.subscribed ? `✅` : `⛔️`}</Td>
-                                <Td>{note.createdDate}</Td>
                                 <Td>{note.updatedDate}</Td>
                             </Tr>)
                     }
