@@ -1,3 +1,5 @@
+import trackerRepository from "./TrackerRepository";
+
 class NoteService {
     async login(email, password) {
         const formData = new FormData();
@@ -110,9 +112,9 @@ class NoteService {
 
     async loadNoteByEntryId(entryId, token) {
         const res = await fetch(`${process.env.REACT_APP_NOTE_API}/notes/${entryId}`, {
-            credentials: 'same-origin',
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'X-Reader': trackerRepository.loadTracker()
             }
         });
         if (res.ok) {
