@@ -15,6 +15,24 @@ class NoteService {
         }
     }
 
+    async createReader(email, password) {
+        const res = await fetch(`${process.env.REACT_APP_NOTE_API}/readers`, {
+            method: 'POST',
+            body: JSON.stringify({
+                email,
+                rawPassword: password
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        if (res.ok) {
+            return res.json();
+        } else {
+            this.handleUnExpectedError();
+        }
+    }
+
     async sendResetLink(email) {
         const res = await fetch(`${process.env.REACT_APP_NOTE_API}/password_reset/send_link`,
             {

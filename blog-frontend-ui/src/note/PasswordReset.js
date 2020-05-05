@@ -19,8 +19,10 @@ export class PasswordReset extends React.Component {
         const resetId = this.props.match.params.id;
         await noteService.resetPassword(resetId, newPassword);
         this.setState({
-            successMessage: <React.Fragment>パスワードがリセットされました。<Link
-                to={`/note/login`}>こちら</Link>からログインしてください。</React.Fragment>
+            successMessage: <p>パスワードがリセットされました。<br/>
+                <code>noreply@sendgrid.net</code>から<code>【はじめるSpring Boot 2】パスワードリセットリンク通知</code>という件名のメールです。<br/>
+                受診までに時間がかかる場合があります。届いていない場合は、お手数ですが迷惑メールボックスを確認して下さい。<br/>
+                <Link to={`/note/login`}>こちら</Link>からログインしてください。</p>
         });
     }
 
