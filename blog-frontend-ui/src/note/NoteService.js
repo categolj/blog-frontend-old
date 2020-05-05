@@ -33,6 +33,28 @@ class NoteService {
         }
     }
 
+    async activate(readerId, activationLinkId) {
+        const res = await fetch(`${process.env.REACT_APP_NOTE_API}/readers/${readerId}/activations/${activationLinkId}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        if (res.ok) {
+            return res.json();
+        } else if (res.status === 400) {
+            throw new Error(JSON.stringify(await res.json()));
+        } else if (res.status === 404) {
+            throw new Error(JSON.stringify({
+                error: 'not found',
+                message: `存在しないアクティベーションリンクです。`
+            }));
+        } else {
+            this.handleUnExpectedError();
+        }
+    }
+
     async sendResetLink(email) {
         const res = await fetch(`${process.env.REACT_APP_NOTE_API}/password_reset/send_link`,
             {

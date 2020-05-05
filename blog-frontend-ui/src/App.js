@@ -24,6 +24,7 @@ import {Notes} from "./note/Notes";
 import {Note} from "./note/Note";
 import {SubscribeNote} from "./note/SubscribeNote";
 import {PasswordReset} from "./note/PasswordReset";
+import {Activation} from "./note/Activation";
 
 class App extends Component {
     render() {
@@ -39,7 +40,7 @@ class App extends Component {
                             <NavTab exact to="/entries">{`Entries`}</NavTab>
                             <NavTab to="/categories">{`Categories`}</NavTab>
                             <NavTab to="/tags">{`Tags`}</NavTab>
-                            {/*<NavTab exact to="/notes">{`Note`}</NavTab>*/}
+                            <NavTab exact to="/notes">{`Note`}</NavTab>
                             <NavTab to="/aboutme" className={"nav-tab can-be-invisible"}>{`About`}</NavTab>
                             <NavTab to="/info" className={"nav-tab can-be-invisible"}>{`Info`}</NavTab>
                             <NavTab to="/dashboard" className={"nav-tab can-be-invisible"}>{`Dashboard`}</NavTab>
@@ -56,6 +57,8 @@ class App extends Component {
                                 <Route path="/note/login" component={Login}/>
                                 <Route path="/note/signup" component={Signup}/>
                                 <Route path="/note/password_reset/:id" component={PasswordReset}/>
+                                <Route path="/note/readers/:readerId/activations/:activationLinkId"
+                                       component={Activation}/>
                                 <Route path="/notes/:id/subscribe" component={SubscribeNote}/>
                                 <Route path="/notes/:id" component={Note}/>
                                 <Route path="/notes" component={Notes}/>
