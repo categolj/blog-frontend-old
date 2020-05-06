@@ -10,7 +10,7 @@ import {ErrorAlert, InfoAlert, SuccessAlert} from "pivotal-ui/react/alerts";
 import {Link} from "react-router-dom";
 import {Welcome} from "./Welcome";
 import {Input} from "pivotal-ui/react/inputs";
-import inMemoryTokenRepository from "./InMemoryTokenRepository";
+import tokenRepository from "./LocalStorageTokenRepository";
 
 export class SubscribeNote extends React.Component {
     state = {
@@ -47,7 +47,7 @@ export class SubscribeNote extends React.Component {
     async loginAndSubscribe({email, password}) {
         this.setState({errorMessage: null});
         const token = await noteService.login(email, password);
-        inMemoryTokenRepository.save(token);
+        tokenRepository.save(token);
         this.token = token;
         await this.subscribe();
     }
