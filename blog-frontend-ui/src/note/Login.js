@@ -75,8 +75,11 @@ export class Login extends React.Component {
                     },
                     useLocalStorage: {
                         inline: true,
+                        initialValue: true,
+                        optional: true,
+                        optionalText: "",
                         labelPosition: 'after',
-                        label: 'トークンをLocalStorageに保存する(デフォルトはインメモリ)',
+                        label: 'トークンをブラウザに保存する。(保存しない場合は、ページをリロードすると再ログインが必要になります)',
                         children: <Checkbox/>
                     },
                 }
@@ -91,7 +94,7 @@ export class Login extends React.Component {
                             <Grid>
                                 <FlexCol>{fields.useLocalStorage}</FlexCol>
                                 <FlexCol>
-                                    <DefaultButton type="submit">Login</DefaultButton>
+                                    <DefaultButton type="submit" disabled={!canSubmit()}>Login</DefaultButton>
                                 </FlexCol>
                             </Grid>
                         </div>
@@ -116,7 +119,7 @@ export class Login extends React.Component {
                             <Grid>
                                 <FlexCol>{fields.email}</FlexCol>
                                 <FlexCol>
-                                    <DefaultButton type="submit">Send Reset Link</DefaultButton>
+                                    <DefaultButton type="submit" disabled={!canSubmit()}>Send Reset Link</DefaultButton>
                                 </FlexCol>
                             </Grid>
                         </div>
