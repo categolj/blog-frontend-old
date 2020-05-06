@@ -79,7 +79,8 @@ export class Login extends React.Component {
                         optional: true,
                         optionalText: "",
                         labelPosition: 'after',
-                        label: 'トークンをブラウザに保存する。(保存しない場合は、ページをリロードすると再ログインが必要になります)',
+                        label: 'トークンをブラウザに保存する',
+                        tooltip: 'トークンをLocalStorageに保存します。保存しない場合は、ページをリロードする度に再ログインが必要になります。',
                         children: <Checkbox/>
                     },
                 }
