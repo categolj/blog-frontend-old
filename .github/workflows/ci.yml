@@ -48,8 +48,8 @@ jobs:
         rm -f pack-*.tgz
         ./pack build making/blog-frontend:${VERSION} \
           -p blog-frontend-server/target/blog-frontend-server-*.jar  \
-          --builder cloudfoundry/cnb:bionic \
-          --publish
+          --builder gcr.io/paketo-buildpacks/builder:base
+        docker push making/blog-frontend:${VERSION}
     - uses: azure/k8s-set-context@v1
       if: github.ref == 'refs/heads/master'
       with:
