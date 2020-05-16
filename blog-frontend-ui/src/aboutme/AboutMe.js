@@ -36,10 +36,10 @@ export class AboutMe extends React.Component {
                 <h3>Education</h3>
                 <dl>
                     <dt>Apr 2007 - Mar 2009</dt>
-                    <dd>MS, Macho-Informatics at <a href={'https://www.i.u-tokyo.ac.jp/'}>The University of Tokyo</a>
+                    <dd>MS, Mechano-Informatics at <a href={'https://www.i.u-tokyo.ac.jp/'}>The University of Tokyo</a>
                     </dd>
                     <dt>Apr 2003 - Mar 2007</dt>
-                    <dd>BS, Macho-Informatics at <a href={'https://www.u-tokyo.ac.jp/'}>The University of Tokyo</a></dd>
+                    <dd>BS, Mechano-Informatics at <a href={'https://www.u-tokyo.ac.jp/'}>The University of Tokyo</a></dd>
                 </dl>
             </Media>
         </Panel>);
