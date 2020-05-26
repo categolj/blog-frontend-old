@@ -27,6 +27,16 @@
     margin-bottom: -15px;
     margin-left: 5px;
     margin-right: 10px;
+    width: 75%;
+}
+
+#google_translate_element {
+    margin-left: 15px;
+    padding-top: 15px;
+}
+
+.goog-te-gadget-simple {
+    border: 1px solid #DFE5E8;
 }
 
 div .pui-back-to-top, div .pui-back-to-top:hover {
@@ -35,6 +45,9 @@ div .pui-back-to-top, div .pui-back-to-top:hover {
 
 
 @media (min-width: 700px) {
+    .searchbox {
+        width: 525px;
+    }
     .nav-tab.can-be-invisible {
         display: inline-block;
     }
