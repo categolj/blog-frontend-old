@@ -27,7 +27,7 @@
     margin-bottom: -15px;
     margin-left: 5px;
     margin-right: 10px;
-    width: 75%;
+    width: 70%;
 }
 
 #google_translate_element {
@@ -46,7 +46,7 @@ div .pui-back-to-top, div .pui-back-to-top:hover {
 
 @media (min-width: 700px) {
     .searchbox {
-        width: 525px;
+        width: 490px;
     }
     .nav-tab.can-be-invisible {
         display: inline-block;
