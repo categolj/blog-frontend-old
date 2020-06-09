@@ -68,6 +68,10 @@ export class Block extends React.Component {
                         </td>
                     </tr>
                     <tr>
+                        <th>Java</th>
+                        <td>{info.java.version} ({info.java.vendor})</td>
+                    </tr>
+                    <tr>
                         <th>Spring Framework</th>
                         <td>{info.maven.versions['spring-framework']}</td>
                     </tr>
