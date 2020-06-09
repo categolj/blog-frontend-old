@@ -11,6 +11,10 @@ export class Block extends React.Component {
                 build: {
                     version: 'Loading ...'
                 },
+                java: {
+                    version: 'Loading ...',
+                    vendor: 'Loading ...'
+                },
                 maven: {
                     versions: {}
                 },
