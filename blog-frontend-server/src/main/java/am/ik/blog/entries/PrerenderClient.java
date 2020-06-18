@@ -1,4 +1,4 @@
-package am.ik.blog;
+package am.ik.blog.entries;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;

@@ -1,5 +1,6 @@
-package am.ik.blog;
+package am.ik.blog.entries;
 
+import am.ik.blog.entries.PrerenderClient;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import is.tagomor.woothee.Classifier;
@@ -32,7 +33,7 @@ public class BlogHandler {
         this.prerenderCounter = Counter.builder("prerender").register(meterRegistry);
     }
 
-    RouterFunction<ServerResponse> routes() {
+    public RouterFunction<ServerResponse> routes() {
         return RouterFunctions.route()
             .route(forwardToPrerender(), this::prerender)
             .GET("/", this::render)

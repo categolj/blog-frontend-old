@@ -1,4 +1,4 @@
-package am.ik.blog;
+package am.ik.blog.entries;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

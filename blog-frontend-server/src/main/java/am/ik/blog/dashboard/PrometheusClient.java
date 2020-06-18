@@ -1,4 +1,4 @@
-package am.ik.blog;
+package am.ik.blog.dashboard;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Component;

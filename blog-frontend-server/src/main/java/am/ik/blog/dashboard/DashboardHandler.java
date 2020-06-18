@@ -1,4 +1,4 @@
-package am.ik.blog;
+package am.ik.blog.dashboard;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ public class DashboardHandler {
         this.prometheusClient = prometheusClient;
     }
 
-    RouterFunction<ServerResponse> routes() {
+    public RouterFunction<ServerResponse> routes() {
         return RouterFunctions.route()
             .GET("/dashboard/sli", this::sli)
             .GET("/dashboard/error_budget", this::errorBudget)

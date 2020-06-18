@@ -1,5 +1,7 @@
 package am.ik.blog;
 
+import am.ik.blog.dashboard.DashboardHandler;
+import am.ik.blog.entries.BlogHandler;
 import io.micrometer.core.instrument.config.MeterFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
