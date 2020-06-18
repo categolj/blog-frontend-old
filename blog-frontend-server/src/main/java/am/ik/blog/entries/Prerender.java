@@ -1,29 +1,28 @@
 package am.ik.blog.entries;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.context.properties.ConstructorBinding;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @ConfigurationProperties(prefix = "prerender")
-@Component
+@ConstructorBinding
 public class Prerender {
 
-    private String url = "http://localhost:3000";
+    private final String url;
 
-    private String token = "dummy";
+    private final String token;
 
-    public String getUrl() {
+	public Prerender(@DefaultValue("http://localhost:3000") String url, @DefaultValue("dummy") String token) {
+		this.url = url;
+		this.token = token;
+	}
+
+
+	public String getUrl() {
         return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getToken() {
         return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 }

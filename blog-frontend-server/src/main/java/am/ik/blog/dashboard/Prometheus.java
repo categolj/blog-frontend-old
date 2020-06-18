@@ -1,19 +1,19 @@
 package am.ik.blog.dashboard;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.context.properties.ConstructorBinding;
 
 @ConfigurationProperties(prefix = "prometheus")
-@Component
+@ConstructorBinding
 public class Prometheus {
 
-    private String url;
+    private final String url;
 
-    public String getUrl() {
+	public Prometheus(String url) {
+		this.url = url;
+	}
+
+	public String getUrl() {
         return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }
