@@ -40,7 +40,7 @@ spec:
         - name: SPRING_PROFILES_ACTIVE
           value: kubernetes
         - name: PROMETHEUS_URL
-          value: https://prometheus-generous-bear-lx.apps.pcfone.io/
+          value: https://prometheus.cf.maki.lol
         - name: JAVA_OPTS
           value: " -XX:ReservedCodeCacheSize=32M -Xss512k -Duser.timezone=Asia/Tokyo -Duser.language=ja -Duser.country=JP"
         - name: BPL_JVM_THREAD_COUNT
