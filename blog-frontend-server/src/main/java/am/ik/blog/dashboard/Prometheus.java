@@ -7,13 +7,13 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @ConstructorBinding
 public class Prometheus {
 
-    private final String url;
+	private final String url;
 
 	public Prometheus(String url) {
 		this.url = url;
 	}
 
 	public String getUrl() {
-        return url;
-    }
+		return url;
+	}
 }

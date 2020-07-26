@@ -8,9 +8,9 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 @ConstructorBinding
 public class Prerender {
 
-    private final String url;
+	private final String url;
 
-    private final String token;
+	private final String token;
 
 	public Prerender(@DefaultValue("http://localhost:3000") String url, @DefaultValue("dummy") String token) {
 		this.url = url;
@@ -19,10 +19,10 @@ public class Prerender {
 
 
 	public String getUrl() {
-        return url;
-    }
+		return url;
+	}
 
-    public String getToken() {
-        return token;
-    }
+	public String getToken() {
+		return token;
+	}
 }
