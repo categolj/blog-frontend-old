@@ -160,6 +160,6 @@ export class Entry extends React.Component {
     }
 
     static cleanTitle(title) {
-        return title.replace(/[┗┝L]/g, '');
+        return title.replace(/^L/, '@@').replace(/[┗┝L]/g, '').replace(/^@@/, 'L');
     }
 }
