@@ -7,12 +7,18 @@ export class GitHub extends React.Component {
     };
 
     async componentDidMount() {
-        const items = await fetch('https://api.github.com/search/repositories?q=user:making&sort=updated&order=desc')
-            .then(data => data.json())
-            .then(json => json.items.slice(0, 10));
-        this.setState({
-            items: items
-        });
+        try {
+            const items = await fetch('https://api.github.com/search/repositories?q=user:making&sort=updated&order=desc')
+                .then(data => data.json())
+                .then(json => json.items.slice(0, 10));
+            this.setState({
+                items: items
+            });
+        } catch (e) {
+            this.setState({
+                items: []
+            });
+        }
     }
 
     render() {
