@@ -8,8 +8,8 @@ import {GitHub} from "./GitHub";
 export function Home({renderedContent}) {
     return (<Panel>
         <h2>Home</h2>
-        <SeriesList/>
         <LatestEntries renderedContent={renderedContent}/>
+        <SeriesList/>
         <GitHub/>
         <Presentations/>
     </Panel>);
