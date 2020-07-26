@@ -58,17 +58,24 @@ export class Entry extends React.Component {
     }
 
     async componentDidMount() {
-        const rsocket = await rsocketFactory.getRSocket();
-        const response = await rsocket.requestResponse({
-            metadata: rsocketFactory.routingMetadata(`entries.${this.props.match.params.id}`)
-        });
-        try {
+        const renderedContent = this.props.renderedContent.get();
+        if (renderedContent && renderedContent.content) {
             this.setState({
-                entry: response.data
+                entry: renderedContent
             });
-        } catch (e) {
-            console.error({e});
-            this.setState({error: e});
+        } else {
+            const rsocket = await rsocketFactory.getRSocket();
+            const response = await rsocket.requestResponse({
+                metadata: rsocketFactory.routingMetadata(`entries.${this.props.match.params.id}`)
+            });
+            try {
+                this.setState({
+                    entry: response.data
+                });
+            } catch (e) {
+                console.error({e});
+                this.setState({error: e});
+            }
         }
         this.highlight();
         await this.loadLikes(this.props.match.params.id);

@@ -27,6 +27,10 @@ import {PasswordReset} from "./note/PasswordReset";
 import {Activation} from "./note/Activation";
 
 class App extends Component {
+
+    constructor(props) {
+        super(props);
+    }
     render() {
         return (
             <BrowserRouter>
@@ -45,10 +49,14 @@ class App extends Component {
                             <NavTab to="/info" className={"nav-tab can-be-invisible"}>{`Info`}</NavTab>
                             <NavTab to="/dashboard" className={"nav-tab can-be-invisible"}>{`Dashboard`}</NavTab>
                             <Switch>
-                                <Route exact path="/" component={Home}/>
-                                <Route path="/index.html" component={Entries}/>
+                                <Route exact path="/" render={() => <Home
+                                    renderedContent={this.props.renderedContent}/>}/>
+                                <Route path="/index.html" render={() => <Home
+                                    renderedContent={this.props.renderedContent}/>}/>
                                 <Route exact path="/entries" component={Entries}/>
-                                <Route path="/entries/:id" component={Entry}/>
+                                <Route path="/entries/:id" render={({match}) => <Entry
+                                    match={match}
+                                    renderedContent={this.props.renderedContent}/>}/>
                                 <Route exact path="/categories" component={Categories}/>
                                 <Route path="/categories/:id/entries" component={ByCategory}/>
                                 <Route exact path="/tags" component={Tags}/>

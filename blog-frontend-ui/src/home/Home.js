@@ -5,11 +5,11 @@ import {SeriesList} from "../series/SeriesList";
 import {Presentations} from "./Presentations";
 import {GitHub} from "./GitHub";
 
-export function Home() {
+export function Home({renderedContent}) {
     return (<Panel>
         <h2>Home</h2>
         <SeriesList/>
-        <LatestEntries/>
+        <LatestEntries renderedContent={renderedContent}/>
         <GitHub/>
         <Presentations/>
     </Panel>);

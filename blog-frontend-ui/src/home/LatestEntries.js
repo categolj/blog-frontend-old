@@ -16,18 +16,25 @@ export class LatestEntries extends React.Component {
     }
 
     async componentDidMount() {
-        try {
-            const rsocket = await rsocketFactory.getRSocket();
-            const response = await rsocket.requestResponse({
-                data: {size: 10},
-                metadata: rsocketFactory.routingMetadata('entries')
-            });
+        const renderedContent = this.props.renderedContent.get();
+        if (renderedContent && renderedContent.pageable) {
             this.setState({
-                entries: response.data
+                entries: renderedContent
             });
-        } catch (e) {
-            console.error({e});
-            this.setState({error: e});
+        } else {
+            try {
+                const rsocket = await rsocketFactory.getRSocket();
+                const response = await rsocket.requestResponse({
+                    data: {size: 10},
+                    metadata: rsocketFactory.routingMetadata('entries')
+                });
+                this.setState({
+                    entries: response.data
+                });
+            } catch (e) {
+                console.error({e});
+                this.setState({error: e});
+            }
         }
     }
 

@@ -31,6 +31,18 @@
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="root"></div>
 <script>
+    function RenderedContent() {
+        let initialized = false;
+        this.get = () => {
+            if (initialized) {
+                return {};
+            } else {
+                initialized = true;
+                return {/*rendered*/};
+            }
+        };
+    }
+
     function googleTranslateElementInit() {
         new google.translate.TranslateElement({
             pageLanguage: 'ja',
