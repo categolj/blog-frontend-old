@@ -56,7 +56,7 @@ spec:
         - name: SPRING_SLEUTH_SAMPLER_RATE
           value: "30"
         - name: PRERENDER_URL
-          value: https://service.prerender.io
+          value: http://prerender.prerender.svc.cluster.local:3000
         - name: PRERENDER_TOKEN
           valueFrom:
             secretKeyRef:
