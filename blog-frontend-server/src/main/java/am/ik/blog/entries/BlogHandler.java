@@ -77,7 +77,7 @@ public class BlogHandler {
 		return req -> {
 			final String path = req.path();
 			if ("/".equals(path) || path.startsWith("/entries") || path.startsWith("/series") || path.startsWith("/tags") || path.startsWith("/categories")) {
-				return isPrerenderedMethod(req) && !isPrerenderedRequest(req) && (isDebugPrerender(req) || isGoogle(req));
+				return isPrerenderedMethod(req) && !isPrerenderedRequest(req) && isGoogle(req);
 			}
 			return false;
 		};
@@ -90,10 +90,6 @@ public class BlogHandler {
 	private static boolean isPrerenderedMethod(ServerRequest req) {
 		final HttpMethod method = req.method();
 		return method == HttpMethod.GET || method == HttpMethod.HEAD;
-	}
-
-	private static boolean isDebugPrerender(ServerRequest req) {
-		return req.queryParam("prerender").isPresent();
 	}
 
 	private static boolean isGoogle(ServerRequest req) {
