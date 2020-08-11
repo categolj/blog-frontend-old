@@ -77,19 +77,23 @@ public class BlogHandler {
 		return req -> {
 			final String path = req.path();
 			if ("/".equals(path) || path.startsWith("/entries") || path.startsWith("/series") || path.startsWith("/tags") || path.startsWith("/categories")) {
-				return isPrerenderedMethod(req) && !isPrerenderedRequest(req) && isGoogle(req);
+				return isPrerenderedMethod(req) && isNotPrerenderedRequest(req) && isPrerenderedUser(req);
 			}
 			return false;
 		};
 	}
 
-	private static boolean isPrerenderedRequest(ServerRequest req) {
-		return !req.headers().header("X-Prerender").isEmpty();
+	private static boolean isNotPrerenderedRequest(ServerRequest req) {
+		return req.headers().header("X-Prerender").isEmpty();
 	}
 
 	private static boolean isPrerenderedMethod(ServerRequest req) {
 		final HttpMethod method = req.method();
 		return method == HttpMethod.GET || method == HttpMethod.HEAD;
+	}
+
+	private static boolean isPrerenderedUser(ServerRequest req) {
+		return isGoogle(req) || isTwitter(req);
 	}
 
 	private static boolean isGoogle(ServerRequest req) {
@@ -99,6 +103,11 @@ public class BlogHandler {
 		}
 		final String userAgent = req.headers().header(USER_AGENT).get(0);
 		return Google.challenge(userAgent, new HashMap<>());
+	}
+
+	private static boolean isTwitter(ServerRequest req) {
+		final String userAgent = req.headers().header(USER_AGENT).get(0);
+		return userAgent != null && userAgent.startsWith("Twitterbot");
 	}
 
 	private static boolean isHuman(ServerRequest req) {
