@@ -31,10 +31,13 @@ public class BlogHandler {
 
 	private final PrerenderClient prerenderClient;
 
+	private final MeterRegistry meterRegistry;
+
 	private final Counter prerenderCounter;
 
-	public BlogHandler(PrerenderClient prerenderClient, MeterRegistry meterRegistry) {
+	public BlogHandler(PrerenderClient prerenderClient, MeterRegistry meterRegistry1, MeterRegistry meterRegistry) {
 		this.prerenderClient = prerenderClient;
+		this.meterRegistry = meterRegistry1;
 		this.prerenderCounter = Counter.builder("prerender").register(meterRegistry);
 	}
 
@@ -42,6 +45,7 @@ public class BlogHandler {
 		return RouterFunctions.route()
 				.route(forwardToPrerender(), this::prerender)
 				.GET("/", this::render)
+				.GET("/entries/{entryId}", this::renderEntry)
 				.GET("/entries/**", this::render)
 				.GET("/series/**", this::render)
 				.GET("/tags/**", this::render)
@@ -52,6 +56,17 @@ public class BlogHandler {
 				.GET("/info", this::render)
 				.GET("/dashboard", this::render)
 				.build();
+	}
+
+	@NonNull
+	private Mono<ServerResponse> renderEntry(ServerRequest req) {
+		if (isBrowser(req)) {
+			final String entryId = req.pathVariable("entryId");
+			this.meterRegistry
+					.counter("entry.read", "entry_id", entryId)
+					.increment();
+		}
+		return this.render(req);
 	}
 
 	@NonNull
@@ -83,6 +98,11 @@ public class BlogHandler {
 		};
 	}
 
+	private static boolean isBrowser(ServerRequest req) {
+		final String userAgent = req.headers().firstHeader(USER_AGENT);
+		return userAgent != null && !userAgent.toLowerCase().contains("bot") && isNotPrerenderedRequest(req) && Classifier.tryBrowser(userAgent, new HashMap<>(6, 1.0f));
+	}
+
 	private static boolean isNotPrerenderedRequest(ServerRequest req) {
 		return req.headers().header("X-Prerender").isEmpty();
 	}
@@ -101,17 +121,17 @@ public class BlogHandler {
 		if (!headers.isEmpty() && headers.get(0).startsWith("https://translate.googleusercontent.com")) {
 			return true;
 		}
-		final String userAgent = req.headers().header(USER_AGENT).get(0);
-		return Google.challenge(userAgent, new HashMap<>());
+		final String userAgent = req.headers().firstHeader(USER_AGENT);
+		return userAgent != null && Google.challenge(userAgent, new HashMap<>(6, 1.0f));
 	}
 
 	private static boolean isTwitter(ServerRequest req) {
-		final String userAgent = req.headers().header(USER_AGENT).get(0);
+		final String userAgent = req.headers().firstHeader(USER_AGENT);
 		return userAgent != null && userAgent.startsWith("Twitterbot");
 	}
 
 	private static boolean isHuman(ServerRequest req) {
-		final String userAgent = req.headers().header(USER_AGENT).get(0);
+		final String userAgent = req.headers().firstHeader(USER_AGENT);
 		final Map<String, String> result = Classifier.parse(userAgent);
 		final String category = result.get("category");
 		return "pc".equals(category) || "smartphone".equals(category) || "mobilephone".equals(category);
