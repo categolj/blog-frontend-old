@@ -1,4 +1,4 @@
-package am.ik.blog.dashboard;
+package am.ik.blog.prometheus;
 
 import java.time.Duration;
 import java.time.Instant;

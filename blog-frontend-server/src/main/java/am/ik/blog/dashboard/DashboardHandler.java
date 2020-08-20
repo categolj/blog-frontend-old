@@ -2,6 +2,7 @@ package am.ik.blog.dashboard;
 
 import java.time.Duration;
 
+import am.ik.blog.prometheus.PrometheusClient;
 import com.fasterxml.jackson.databind.JsonNode;
 import reactor.core.publisher.Mono;
 

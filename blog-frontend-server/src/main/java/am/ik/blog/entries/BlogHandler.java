@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import am.ik.blog.prometheus.PrometheusClient;
+import com.fasterxml.jackson.databind.JsonNode;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import is.tagomor.woothee.Classifier;
@@ -31,12 +33,15 @@ public class BlogHandler {
 
 	private final PrerenderClient prerenderClient;
 
+	private final PrometheusClient prometheusClient;
+
 	private final MeterRegistry meterRegistry;
 
 	private final Counter prerenderCounter;
 
-	public BlogHandler(PrerenderClient prerenderClient, MeterRegistry meterRegistry1, MeterRegistry meterRegistry) {
+	public BlogHandler(PrerenderClient prerenderClient, PrometheusClient prometheusClient, MeterRegistry meterRegistry1, MeterRegistry meterRegistry) {
 		this.prerenderClient = prerenderClient;
+		this.prometheusClient = prometheusClient;
 		this.meterRegistry = meterRegistry1;
 		this.prerenderCounter = Counter.builder("prerender").register(meterRegistry);
 	}
@@ -45,6 +50,8 @@ public class BlogHandler {
 		return RouterFunctions.route()
 				.route(forwardToPrerender(), this::prerender)
 				.GET("/", this::render)
+				.GET("/entries/{entryId}/read_count", this::readCount)
+				.GET("/entries/read_count", this::readCountAll)
 				.GET("/entries/{entryId}", this::renderEntry)
 				.GET("/entries/**", this::render)
 				.GET("/series/**", this::render)
@@ -86,6 +93,19 @@ public class BlogHandler {
 	@NonNull
 	private Mono<ServerResponse> render(ServerRequest req) {
 		return ServerResponse.ok().bodyValue(new ClassPathResource("META-INF/resources/index.html"));
+	}
+
+	@NonNull
+	private Mono<ServerResponse> readCount(ServerRequest req) {
+		final String entryId = req.pathVariable("entryId");
+		final Mono<JsonNode> body = this.prometheusClient.queryRange(String.format("sum(rate(entry_read_total{entry_id=\"%s\"}[3h]))", entryId), Duration.ofDays(3));
+		return ServerResponse.ok().body(body, JsonNode.class);
+	}
+
+	@NonNull
+	private Mono<ServerResponse> readCountAll(ServerRequest req) {
+		final Mono<JsonNode> body = this.prometheusClient.queryRange("sum(rate(entry_read_total[3h]))", Duration.ofDays(3));
+		return ServerResponse.ok().body(body, JsonNode.class);
 	}
 
 	private static RequestPredicate forwardToPrerender() {

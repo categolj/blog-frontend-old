@@ -11,6 +11,8 @@ import {BackToTop} from 'pivotal-ui/react/back-to-top';
 import {DefaultButton} from 'pivotal-ui/react/buttons';
 import rsocketFactory from '../RSocketFactory';
 import likeService from "./LikeService";
+import readCountService from "./ReadCountService";
+import Sparkline from '../components/Sparkline';
 
 import 'pivotal-ui/css/code';
 import hljs from 'highlight.js/lib/highlight';
@@ -45,7 +47,8 @@ export class Entry extends React.Component {
             likes: {
                 exists: true,
                 count: 0
-            }
+            },
+            readCounts: []
         };
         this.ref = React.createRef();
     }
@@ -80,6 +83,20 @@ export class Entry extends React.Component {
             }
         }
         this.highlight();
+        try {
+            const result = await readCountService.readCountyById(this.props.match.params.id);
+            const readCounts = result.data.result[0];
+            this.setState({
+                readCounts: readCounts.values.map(x => {
+                    return {
+                        t: new Date(x[0] * 1000).toLocaleString(),
+                        '3h avg': x[1] * 60 * 60 * 3
+                    }
+                })
+            });
+        } catch (e) {
+            console.error(e);
+        }
         await this.loadLikes(this.props.match.params.id);
     }
 
@@ -109,12 +126,14 @@ export class Entry extends React.Component {
             return <NoMatch/>;
         }
         const category = entry.frontMatter.categories.map(x => x.name);
-        const tags = entry.frontMatter.tags.map(x => <span key={x.name}><Tag name={x.name}/>&nbsp;</span>);
+        const tags = entry.frontMatter.tags.map(x => <span key={x.name}><Tag
+            name={x.name}/>&nbsp;</span>);
         const isLoaded = !!entry.frontMatter.title;
         const fallbackUrl = `https://github.com/making/blog.ik.am/blob/master/content/${Entry.format(this.props.match.params.id)}.md`;
         return <Panel loading={!isLoaded}>{(isLoaded ? <div>
             <h2>
-                <Link to={`/entries/${entry.entryId}`}>{`${Entry.cleanTitle(entry.frontMatter.title)}`}</Link>
+                <Link
+                    to={`/entries/${entry.entryId}`}>{`${Entry.cleanTitle(entry.frontMatter.title)}`}</Link>
             </h2>
             <Category category={category}/>
             <br/>
@@ -122,7 +141,8 @@ export class Entry extends React.Component {
             {tags.length > 0 && <br/>}
             {Entry.entryDate(entry)}&nbsp;&nbsp;
             {!Entry.isIgnoreUpdateDate(entry) &&
-            <span className={"visible-inline-on-wide"}>🗓 Created at {entry.created.date}</span>}&nbsp;
+            <span
+                className={"visible-inline-on-wide"}>🗓 Created at {entry.created.date}</span>}&nbsp;
             <span className={"visible-inline-on-wide"}>
                 {`{`}✒️️&nbsp;<a
                 href={`https://github.com/making/blog.ik.am/edit/master/content/${Entry.format(entry.entryId)}.md`}>Edit</a>&nbsp;
@@ -131,6 +151,11 @@ export class Entry extends React.Component {
                 🗑&nbsp;<a
                 href={`https://github.com/making/blog.ik.am/delete/master/content/${Entry.format(entry.entryId)}.md`}>Delete</a>{`}`}
             </span>
+            <Sparkline data={this.state.readCounts}
+                       width={155}
+                       height={30}
+                       xKey='t'
+                       yKey='3h avg'/>
             <Divider/>
             <p ref={this.ref} dangerouslySetInnerHTML={Entry.content(entry)}>
             </p>
@@ -140,7 +165,8 @@ export class Entry extends React.Component {
             <BackToTop/>
         </div> : <React.Fragment>
             <h2>Loading...</h2>
-            <p>If the content doesn't load, go to <a href={fallbackUrl}>{fallbackUrl}</a> instead.</p>
+            <p>If the content doesn't load, go to <a
+                href={fallbackUrl}>{fallbackUrl}</a> instead.</p>
         </React.Fragment>)}
         </Panel>;
     }
@@ -162,9 +188,11 @@ export class Entry extends React.Component {
 
     static entryDate(entry) {
         if (Entry.isIgnoreUpdateDate(entry)) {
-            return <span>🗓 <span className={"visible-inline-on-wide"}>Created at </span>{entry.created.date}</span>;
+            return <span>🗓 <span
+                className={"visible-inline-on-wide"}>Created at </span>{entry.created.date}</span>;
         } else {
-            return <span>🗓 <span className={"visible-inline-on-wide"}>Updated at </span>{entry.updated.date}</span>;
+            return <span>🗓 <span
+                className={"visible-inline-on-wide"}>Updated at </span>{entry.updated.date}</span>;
         }
     }
 

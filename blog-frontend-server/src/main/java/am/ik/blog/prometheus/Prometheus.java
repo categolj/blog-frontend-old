@@ -1,4 +1,4 @@
-package am.ik.blog.dashboard;
+package am.ik.blog.prometheus;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
