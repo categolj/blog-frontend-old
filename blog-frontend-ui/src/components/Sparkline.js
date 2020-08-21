@@ -8,7 +8,7 @@ export default function Sparkline({width, height, data, xKey, yKey}) {
         <XAxis dataKey={xKey} domain={['dataMin', 'dataMax']}
                hide={true}
                interval='preserveStartEnd'/>
-        <Line type='basis' dataKey={yKey} stroke='#82ca9d' strokeWidth={3}
+        <Line type='basis' dataKey={yKey} stroke='#ffc700' strokeWidth={3}
               dot={false} isAnimationActive={false}/>
         <Tooltip/>
     </LineChart>);

@@ -28,8 +28,8 @@ export function Home({renderedContent}) {
         <Presentations/>
         <h3 id="access-rate">Access Rate</h3>
         <Sparkline data={readCounts}
-                   width={640}
-                   height={120}
+                   width={320}
+                   height={60}
                    xKey='t'
                    yKey='3h avg'/>
     </Panel>);
