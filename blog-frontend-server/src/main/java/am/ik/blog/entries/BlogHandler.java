@@ -67,12 +67,13 @@ public class BlogHandler {
 
 	@NonNull
 	private Mono<ServerResponse> renderEntry(ServerRequest req) {
-		if (isBrowser(req)) {
-			final String entryId = req.pathVariable("entryId");
-			this.meterRegistry
-					.counter("entry.read", "entry_id", entryId)
-					.increment();
-		}
+		final boolean browser = isBrowser(req);
+		final String entryId = req.pathVariable("entryId");
+		this.meterRegistry
+				.counter("entry.read",
+						"entry_id", entryId,
+						"browser", String.valueOf(browser))
+				.increment();
 		return this.render(req);
 	}
 
