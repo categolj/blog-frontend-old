@@ -67,13 +67,16 @@ public class BlogHandler {
 
 	@NonNull
 	private Mono<ServerResponse> renderEntry(ServerRequest req) {
-		final boolean browser = isBrowser(req);
-		final String entryId = req.pathVariable("entryId");
-		this.meterRegistry
-				.counter("entry.read",
-						"entry_id", entryId,
-						"browser", String.valueOf(browser))
-				.increment();
+		final String userAgent = req.headers().firstHeader(USER_AGENT);
+		if (!"Go-http-client/1.1".equals(userAgent) && !userAgent.startsWith("Prometheus")) {
+			final boolean browser = isBrowser(req);
+			final String entryId = req.pathVariable("entryId");
+			this.meterRegistry
+					.counter("entry.read",
+							"entry_id", entryId,
+							"browser", String.valueOf(browser))
+					.increment();
+		}
 		return this.render(req);
 	}
 
