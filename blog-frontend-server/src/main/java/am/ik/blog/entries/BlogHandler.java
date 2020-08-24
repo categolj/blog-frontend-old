@@ -102,13 +102,13 @@ public class BlogHandler {
 	@NonNull
 	private Mono<ServerResponse> readCount(ServerRequest req) {
 		final String entryId = req.pathVariable("entryId");
-		final Mono<JsonNode> body = this.prometheusClient.queryRange(String.format("sum(rate(entry_read_total{entry_id=\"%s\"}[3h]))", entryId), Duration.ofDays(3));
+		final Mono<JsonNode> body = this.prometheusClient.queryRange(String.format("sum(rate(entry_read_total{entry_id=\"%s\"}[3h]))", entryId), Duration.ofDays(7));
 		return ServerResponse.ok().body(body, JsonNode.class);
 	}
 
 	@NonNull
 	private Mono<ServerResponse> readCountAll(ServerRequest req) {
-		final Mono<JsonNode> body = this.prometheusClient.queryRange("sum(rate(entry_read_total[3h]))", Duration.ofDays(3));
+		final Mono<JsonNode> body = this.prometheusClient.queryRange("sum(rate(entry_read_total[3h]))", Duration.ofDays(7));
 		return ServerResponse.ok().body(body, JsonNode.class);
 	}
 
