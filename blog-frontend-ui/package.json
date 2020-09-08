@@ -5,7 +5,7 @@
   "dependencies": {
     "davi-js": "^6.4.1",
     "highlight.js": "^9.18.1",
-    "marked": "^1.1.0",
+    "marked": "^1.1.1",
     "pivotal-ui": "^19.2.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
