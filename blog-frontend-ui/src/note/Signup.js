@@ -23,7 +23,7 @@ export class Signup extends React.Component {
         await noteService.createReader(email, password);
         this.setState({
             successMessage: (<p>入力されたメールアドレスに確認メールを送りました。メールに記載されたリンクをクリックして下さい。<br/>
-                <code>noreply@sendgrid.net</code>から<code>【はじめるSpring Boot 2】アカウントアクティベーションリンク通知</code>という件名のメールです。<br/>
+                <code>noreply@ik.am</code>から<code>【はじめるSpring Boot 2】アカウントアクティベーションリンク通知</code>という件名のメールです。<br/>
                 受信までに時間がかかる場合があります。届いていない場合は、お手数ですが迷惑メールボックスを確認して下さい。<br/>
                 アクティベーション完了後は、<Link to={`/note/login`}>こちら</Link>からログインしてください。</p>)
         });
