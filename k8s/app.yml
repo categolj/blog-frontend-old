@@ -131,14 +131,3 @@ spec:
                      values:
                      - blog-frontend
                topologyKey: "kubernetes.io/hostname"
----
-apiVersion: policy/v1beta1
-kind: PodDisruptionBudget
-metadata:
-  name: blog-frontend
-  namespace: blog
-spec:
-  minAvailable: 1
-  selector:
-    matchLabels:
-      app: blog-frontend
