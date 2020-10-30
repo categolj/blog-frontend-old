@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "davi-js": "^6.4.1",
-    "highlight.js": "^9.18.1",
+    "highlight.js": "^10.3.2",
     "marked": "^1.1.0",
     "pivotal-ui": "^19.2.5",
     "react": "^16.8.6",
