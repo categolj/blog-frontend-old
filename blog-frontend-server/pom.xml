@@ -14,7 +14,7 @@
     <properties>
         <java.version>1.8</java.version>
         <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
-		<wavefront.version>2.0.1-SNAPSHOT</wavefront.version>
+		<wavefront.version>2.1.0-SNAPSHOT</wavefront.version>
     </properties>
 
     <dependencies>
