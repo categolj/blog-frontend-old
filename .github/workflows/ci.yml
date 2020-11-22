@@ -31,7 +31,7 @@ jobs:
         REACT_APP_BLOG_UI: https://blog.ik.am
       run: |
         set -e
-        BOOT_VERSION=$(grep '<version>' pom.xml | head -n 1 | sed -e 's|<version>||g' -e 's|</version>||g' -e 's|<.*>||g' -e 's| ||g')
+        BOOT_VERSION=$(grep '<version>' pom.xml | head -n 1 | sed -e 's|<version>||g' -e 's|</version>||g' -e 's|<.*>||g' -e 's| ||g' | tr '[A-Z]' '[a-z]')
         ./mvnw -V package -DskipTests -Dspring-boot.version=${BOOT_VERSION}
     - name: pack build
       if: github.ref == 'refs/heads/master'
