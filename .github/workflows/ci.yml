@@ -43,7 +43,7 @@ jobs:
       run: |
         set -e
         docker login ${DOCKER_REGISTRY} -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
-        VERSION=$(grep '<version>' pom.xml | head -n 2 | tail -n 1 | sed -e 's|<version>||g' -e 's|</version>||g' -e 's| ||g')
+        VERSION=$(grep '<version>' pom.xml | head -n 2 | tail -n 1 | sed -e 's|<version>||g' -e 's|</version>||g' -e 's| ||g' | tr '[A-Z]' '[a-z]')
         IMAGE_NAME=${DOCKER_REGISTRY}:${VERSION}
         wget -q https://github.com/buildpacks/pack/releases/download/v${PACK_VERSION}/pack-v${PACK_VERSION}-linux.tgz
         tar xzf pack-*.tgz
