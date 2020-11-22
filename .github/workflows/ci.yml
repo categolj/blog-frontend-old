@@ -39,11 +39,12 @@ jobs:
         PACK_VERSION: 0.14.1
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
       run: |
         set -e
-        docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+        docker login ${DOCKER_REGISTRY} -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
         VERSION=$(grep '<version>' pom.xml | head -n 2 | tail -n 1 | sed -e 's|<version>||g' -e 's|</version>||g' -e 's| ||g')
-        IMAGE_NAME=making/blog-frontend:${VERSION}
+        IMAGE_NAME=${DOCKER_REGISTRY}:${VERSION}
         wget -q https://github.com/buildpacks/pack/releases/download/v${PACK_VERSION}/pack-v${PACK_VERSION}-linux.tgz
         tar xzf pack-*.tgz
         rm -f pack-*.tgz
@@ -66,14 +67,15 @@ jobs:
     - name: pack build lab
       if: github.ref == 'refs/heads/master'
       env:
-        PACK_VERSION: 0.14.1
+        PACK_VERSION: 0.15.0
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
       run: |
         set -e
-        docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+        docker login ${DOCKER_REGISTRY} -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
         VERSION=$(grep '<version>' pom.xml | head -n 2 | tail -n 1 | sed -e 's|<version>||g' -e 's|</version>||g' -e 's| ||g')
-        IMAGE_NAME=making/blog-frontend:${VERSION}-lab
+        IMAGE_NAME=${DOCKER_REGISTRY}:${VERSION}-lab
         wget -q https://github.com/buildpacks/pack/releases/download/v${PACK_VERSION}/pack-v${PACK_VERSION}-linux.tgz
         tar xzf pack-*.tgz
         rm -f pack-*.tgz

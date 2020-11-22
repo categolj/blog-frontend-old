@@ -8,4 +8,4 @@ spec:
       containers:
       #@overlay/match by="name"
       - name: blog-frontend
-        image: making/blog-frontend:5.0.0-SNAPSHOT-lab
+        image: ghcr.io/categolj/blog-frontend:5.0.0-snapshot-lab
