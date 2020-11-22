@@ -11,7 +11,7 @@ ytt \
   -f k8s/httpproxy.yml \
   -f k8s/pdb.yml \
   -f k8s/secret-frontend.yml \
-  -f k8s/overlays/scale-to-one.yml \
   -f k8s/overlays/lab-image.yml \
   -f k8s/overlays/maki-lol.yml \
+  -f k8s/overlays/disable-wavefront.yml \
   | kbld -f - | kubectl ${cmd} -f - $@
