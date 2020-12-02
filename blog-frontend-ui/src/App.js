@@ -25,6 +25,7 @@ import {Note} from "./note/Note";
 import {SubscribeNote} from "./note/SubscribeNote";
 import {PasswordReset} from "./note/PasswordReset";
 import {Activation} from "./note/Activation";
+import {Analyzer} from "./analyzer/Analyzer";
 
 export default function App({renderedContent}) {
     return (
@@ -40,6 +41,8 @@ export default function App({renderedContent}) {
                         <NavTab to="/categories">{`Categories`}</NavTab>
                         <NavTab to="/tags">{`Tags`}</NavTab>
                         <NavTab exact to="/notes">{`Note`}</NavTab>
+                        <NavTab to="/analyzer"
+                                className={"nav-tab can-be-invisible"}>{`Analyzer`}</NavTab>
                         <NavTab to="/aboutme"
                                 className={"nav-tab can-be-invisible"}>{`About`}</NavTab>
                         <NavTab to="/info"
@@ -60,6 +63,7 @@ export default function App({renderedContent}) {
                             <Route exact path="/tags" component={Tags}/>
                             <Route path="/tags/:id/entries" component={ByTag}/>
                             <Route path="/aboutme" component={AboutMe}/>
+                            <Route path="/analyzer" component={Analyzer}/>
                             <Route path="/note/login" component={Login}/>
                             <Route path="/note/signup" component={Signup}/>
                             <Route path="/note/password_reset/:id"
