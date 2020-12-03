@@ -7,6 +7,7 @@ import {Input} from 'pivotal-ui/react/inputs';
 import {FlexCol, Grid} from 'pivotal-ui/react/flex-grids';
 import {DefaultButton} from 'pivotal-ui/react/buttons';
 import {Icon} from 'pivotal-ui/react/iconography';
+import {Tab, Tabs} from 'pivotal-ui/react/tabs';
 
 export class EventViewer extends React.Component {
     state = {
@@ -43,44 +44,60 @@ export class EventViewer extends React.Component {
                     </li>
                 </ul>
                 Requires Spring Boot 2.4.0 + and following configurations
-                in <code>application.properties</code>
-                <pre><code>
-    management.endpoints.web.exposure.include=startup<br/>
-    management.endpoints.web.cors.allowed-origins=https://blog.ik.am<br/>
-    management.endpoints.web.cors.allowed-methods=POST
-    </code></pre>
-                and
                 <pre><code>{`    public static void main(String[] args) {
         new SpringApplicationBuilder(YourMainClass.class)
-            .applicationStartup(new BufferingApplicationStartup(2048))
+            .applicationStartup(new BufferingApplicationStartup(2048)) // <-- Here
             .run(args);
     }`}</code></pre> in <code>YourMainClass.java</code>.
-                <Form {...{
-                    onSubmit: ({initial, current}) => this.viewEvents(current),
-                    onSubmitError: e => this.handleError(e),
-                    fields: {
-                        url: {
-                            children: <Input
-                                placeholder="http://localhost:8080/actuator/startup"/>
-                        },
-                    }
-                }}>
-                    {({fields, canSubmit, onSubmit}) => {
-                        return (
-                            <div>
-                                <Grid>
-                                    <FlexCol>{fields.url}</FlexCol>
-                                    <FlexCol>
-                                        <DefaultButton
-                                            type="submit">View Events</DefaultButton>
-                                    </FlexCol>
-                                </Grid>
-                            </div>
-                        );
-                    }}
-                </Form>
+
+                <Tabs defaultActiveKey={1}>
+                    <Tab eventKey={1} title="Online Viewer">
+                        Allow CROS form this tool
+                        in <code>application.properties</code> as follows
+                        <pre><code>
+                        management.endpoints.web.exposure.include=startup<br/>
+                        management.endpoints.web.cors.allowed-origins=https://blog.ik.am<br/>
+                        management.endpoints.web.cors.allowed-methods=POST
+                        </code></pre>
+                        <br/>
+                        <Form {...{
+                            onSubmit: ({initial, current}) => this.loadEvents(current),
+                            onSubmitError: e => this.handleError(e),
+                            fields: {
+                                url: {
+                                    children: <Input
+                                        placeholder="http://localhost:8080/actuator/startup"/>
+                                },
+                            }
+                        }}>
+                            {({fields, canSubmit, onSubmit}) => {
+                                return (
+                                    <div>
+                                        <Grid>
+                                            <FlexCol>{fields.url}</FlexCol>
+                                            <FlexCol>
+                                                <DefaultButton
+                                                    type="submit">View
+                                                    Events</DefaultButton>
+                                            </FlexCol>
+                                        </Grid>
+                                    </div>
+                                );
+                            }}
+                        </Form>
+                    </Tab>
+                    <Tab eventKey={2} title="Offline Viewer">
+                        Paste the result of the following command
+                        <pre><code>curl -XPOST http://localhost:8080/actuator/startup</code></pre>
+                        <br/>
+                        <textarea placeholder="Paste JSON"
+                                  onChange={event => this.parseEvents(JSON.parse(event.target.value))}></textarea>
+                    </Tab>
+                </Tabs>
                 <p>
                     The number of events is <strong>{filteredEvents.length}</strong>.
+                    &nbsp;<DefaultButton small
+                                         onClick={() => this.setState({events: []})}>Reset</DefaultButton>
                 </p>
                 <Table className="pui-table--tr-hover">
                     <Thead>
@@ -192,7 +209,7 @@ export class EventViewer extends React.Component {
         });
     }
 
-    async viewEvents(values) {
+    async loadEvents(values) {
         let url = values.url || 'http://localhost:8080/actuator/startup';
         if (!url.startsWith('http')) {
             url = 'http://' + url;
@@ -207,7 +224,16 @@ export class EventViewer extends React.Component {
                 x.duration = this.durationToSeconds(x.duration);
                 return x;
             })
-        })
+        });
+    }
+
+    parseEvents(data) {
+        this.setState({
+            events: data.timeline.events.map(x => {
+                x.duration = this.durationToSeconds(x.duration);
+                return x;
+            })
+        });
     }
 
     handleError(e) {
