@@ -17,7 +17,8 @@ export class Analyzer extends React.Component {
             duration: -1,
             endTime: -1,
             eventName: -1,
-        }
+        },
+        filterEventName: 'all',
     };
 
     async componentDidMount() {
@@ -25,6 +26,9 @@ export class Analyzer extends React.Component {
 
 
     render() {
+        const eventNames = Array.from(new Set(this.state.events.map(event => event.startupStep.name)));
+        const filteredEvents = (this.state.events && this.state.events
+            .filter(event => this.state.filterEventName === 'all' || this.state.filterEventName === event.startupStep.name)) || [];
         return (<Panel>
                 <h2 id="analyzer" className={"home"}>Spring Boot Startup Analyzer</h2>
                 <ul>
@@ -74,6 +78,9 @@ export class Analyzer extends React.Component {
                         );
                     }}
                 </Form>
+                <p>
+                    The number of events is <strong>{filteredEvents.length}</strong>.
+                </p>
                 <Table className="pui-table--tr-hover">
                     <Thead>
                         <Tr>
@@ -94,17 +101,27 @@ export class Analyzer extends React.Component {
                                 Time
                                 <Icon className="float-right"
                                       src={this.sortIcon('endTime')}/></Th>
-                            <Th style={{width: '15%'}}
-                                onClick={() => this.sortBy('eventName', x => x.startupStep.name)}>Event
-                                Name
-                                <Icon className="float-right"
-                                      src={this.sortIcon('eventName')}/></Th>
+                            <Th style={{width: '15%'}}>Event
+                                <span
+                                    onClick={() => this.sortBy('eventName', x => x.startupStep.name)}>
+                                    Name
+                                    <Icon className="float-right"
+                                          src={this.sortIcon('eventName')}/>
+                                </span>
+                                <br/>
+                                <select
+                                    onChange={event => this.setFilterEventName(event.target.value)}>
+                                    <option value="all">all</option>
+                                    {eventNames.map(name => <option key={name}
+                                                                    value={name}>{name}</option>)}
+                                </select>
+                            </Th>
                             <th>Tags</th>
                         </Tr>
                     </Thead>
                     <Tbody>
                         {
-                            this.state.events && this.state.events.map(event =>
+                            filteredEvents.map(event =>
                                 <Tr key={event.startupStep.id}
                                     id={`event-${event.startupStep.id}`}>
                                     <Td>{event.startupStep.id}</Td>
@@ -118,7 +135,8 @@ export class Analyzer extends React.Component {
                                         <dl>
                                             {event.startupStep.tags.map(tag =>
                                                 <React.Fragment key={tag.key}>
-                                                    <dt><strong>{tag.key}</strong></dt>
+                                                    <dt><strong>{tag.key}</strong>
+                                                    </dt>
                                                     <dd>
                                                         <pre><code>{tag.value}</code></pre>
                                                     </dd>
@@ -164,6 +182,12 @@ export class Analyzer extends React.Component {
             sortOrder: sortOrder,
             events: events,
             sortColumn: name,
+        });
+    }
+
+    setFilterEventName(eventName) {
+        this.setState({
+            filterEventName: eventName
         });
     }
 
