@@ -25,6 +25,19 @@ export class EventViewer extends React.Component {
     async componentDidMount() {
     }
 
+    reset() {
+        this.setState({
+            events: [],
+            sortColumn: null,
+            sortOrder: {
+                startTime: -1,
+                duration: -1,
+                endTime: -1,
+                eventName: -1,
+            },
+            filterEventName: 'all',
+        });
+    }
 
     render() {
         const eventNames = Array.from(new Set(this.state.events.map(event => event.startupStep.name)));
@@ -97,7 +110,7 @@ export class EventViewer extends React.Component {
                 <p>
                     The number of events is <strong>{filteredEvents.length}</strong>.
                     &nbsp;<DefaultButton small
-                                         onClick={() => this.setState({events: []})}>Reset</DefaultButton>
+                                         onClick={() => this.reset()}>Reset</DefaultButton>
                 </p>
                 <Table className="pui-table--tr-hover">
                     <Thead>
