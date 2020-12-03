@@ -37,7 +37,7 @@ export class Analyzer extends React.Component {
                         API Document</a>
                     </li>
                 </ul>
-                Requires Spring Boot 2.4 .0 + and following configurations
+                Requires Spring Boot 2.4.0 + and following configurations
                 in <code>application.properties</code>
                 <pre><code>
     management.endpoints.web.exposure.include=startup<br/>

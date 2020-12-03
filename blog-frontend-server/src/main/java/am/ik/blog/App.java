@@ -5,9 +5,10 @@ import am.ik.blog.entries.BlogHandler;
 import io.micrometer.core.instrument.config.MeterFilter;
 import reactor.netty.http.client.HttpClient;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.metrics.buffering.BufferingApplicationStartup;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
@@ -19,7 +20,9 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 public class App {
 
 	public static void main(String[] args) {
-		SpringApplication.run(App.class, args);
+		new SpringApplicationBuilder(App.class)
+				.applicationStartup(new BufferingApplicationStartup(2048))
+				.run(args);
 	}
 
 	@Bean
