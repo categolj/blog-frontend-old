@@ -65,7 +65,7 @@ export class EventViewer extends React.Component {
 
                 <Tabs defaultActiveKey={1}>
                     <Tab eventKey={1} title="Online Viewer">
-                        Allow CROS form this tool
+                        Allow CORS form this tool
                         in <code>application.properties</code> as follows
                         <pre><code>
                         management.endpoints.web.exposure.include=startup<br/>
