@@ -59,7 +59,7 @@ public class BlogHandler {
 				.GET("/categories/**", this::render)
 				.GET("/notes/**", this::render)
 				.GET("/note/**", this::render)
-				.GET("/analyzer", this::render)
+				.GET("/eventviewer", this::render)
 				.GET("/aboutme", this::render)
 				.GET("/info", this::render)
 				.GET("/dashboard", this::render)

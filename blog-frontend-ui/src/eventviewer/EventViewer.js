@@ -8,7 +8,7 @@ import {FlexCol, Grid} from 'pivotal-ui/react/flex-grids';
 import {DefaultButton} from 'pivotal-ui/react/buttons';
 import {Icon} from 'pivotal-ui/react/iconography';
 
-export class Analyzer extends React.Component {
+export class EventViewer extends React.Component {
     state = {
         events: [],
         sortColumn: null,
@@ -30,7 +30,8 @@ export class Analyzer extends React.Component {
         const filteredEvents = (this.state.events && this.state.events
             .filter(event => this.state.filterEventName === 'all' || this.state.filterEventName === event.startupStep.name)) || [];
         return (<Panel>
-                <h2 id="analyzer" className={"home"}>Spring Boot Startup Analyzer</h2>
+                <h2 id="eventviewer" className={"home"}>Spring Boot Startup Event
+                    Viewer</h2>
                 <ul>
                     <li>
                         <a href={"https://docs.spring.io/spring-framework/docs/5.3.x/reference/html/core.html#context-functionality-startup"}>
@@ -55,7 +56,7 @@ export class Analyzer extends React.Component {
             .run(args);
     }`}</code></pre> in <code>YourMainClass.java</code>.
                 <Form {...{
-                    onSubmit: ({initial, current}) => this.analyze(current),
+                    onSubmit: ({initial, current}) => this.viewEvents(current),
                     onSubmitError: e => this.handleError(e),
                     fields: {
                         url: {
@@ -71,7 +72,7 @@ export class Analyzer extends React.Component {
                                     <FlexCol>{fields.url}</FlexCol>
                                     <FlexCol>
                                         <DefaultButton
-                                            type="submit">Analyze</DefaultButton>
+                                            type="submit">View Events</DefaultButton>
                                     </FlexCol>
                                 </Grid>
                             </div>
@@ -191,7 +192,7 @@ export class Analyzer extends React.Component {
         });
     }
 
-    async analyze(values) {
+    async viewEvents(values) {
         let url = values.url || 'http://localhost:8080/actuator/startup';
         if (!url.startsWith('http')) {
             url = 'http://' + url;
