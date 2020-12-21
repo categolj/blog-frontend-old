@@ -2502,13 +2502,6 @@ buffer@^4.3.0:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
-buffer@^5.0.6:
-  version "5.4.3"
-  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.4.3.tgz#3fbc9c69eb713d323e3fc1a895eee0710c072115"
-  dependencies:
-    base64-js "^1.0.2"
-    ieee754 "^1.1.4"
-
 builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
@@ -3015,7 +3008,7 @@ core-js-pure@^3.0.0:
   version "3.6.4"
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.6.4.tgz#4bf1ba866e25814f149d4e9aaa08c36173506e3a"
 
-core-js@^2.4.0, core-js@^2.4.1:
+core-js@^2.4.0:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
 
@@ -3031,6 +3024,11 @@ core-js@^3.0.1:
 core-js@^3.5.0:
   version "3.6.4"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.4.tgz#440a83536b458114b9cb2ac1580ba377dc470647"
+
+core-js@^3.6.4:
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.8.1.tgz#f51523668ac8a294d1285c3b9db44025fda66d47"
+  integrity sha512-9Id2xHY1W7m8hCl8NkhQn5CufmF/WuR30BTRewvCXc1aZd3kMECwNZ69ndLbekKfakw9Rf2Xyc+QR6E7Gg+obg==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -3942,12 +3940,6 @@ encodeurl@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.2.tgz#ad3ff4c86ec2d029322f5a02c3a9a606c95b3f59"
 
-encoding@^0.1.11:
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/encoding/-/encoding-0.1.12.tgz#538b66f3ee62cd1ab51ec323829d1f9480c74beb"
-  dependencies:
-    iconv-lite "~0.4.13"
-
 end-of-stream@^1.0.0, end-of-stream@^1.1.0:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/end-of-stream/-/end-of-stream-1.4.1.tgz#ed29634d19baba463b6ce6b80a37213eab71ec43"
@@ -4492,13 +4484,14 @@ fbjs@3.0.0:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
-fbjs@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-1.0.0.tgz#52c215e0883a3c86af2a7a776ed51525ae8e0a5a"
+fbjs@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-2.0.0.tgz#01fb812138d7e31831ed3e374afe27b9169ef442"
+  integrity sha512-8XA8ny9ifxrAWlyhAbexXcs3rRMtxWcs3M0lctLfB49jRDHiaxj+Mo0XxbwE7nKZYzgCFoq64FS+WFd4IycPPQ==
   dependencies:
-    core-js "^2.4.1"
+    core-js "^3.6.4"
+    cross-fetch "^3.0.4"
     fbjs-css-vars "^1.0.0"
-    isomorphic-fetch "^2.1.1"
     loose-envify "^1.0.0"
     object-assign "^4.1.0"
     promise "^7.1.1"
@@ -5236,7 +5229,7 @@ hyphenate-style-name@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.3.tgz#097bb7fa0b8f1a9cf0bd5c734cf95899981a9b48"
 
-iconv-lite@0.4, iconv-lite@0.4.24, iconv-lite@^0.4.24, iconv-lite@^0.4.4, iconv-lite@~0.4.13:
+iconv-lite@0.4, iconv-lite@0.4.24, iconv-lite@^0.4.24, iconv-lite@^0.4.4:
   version "0.4.24"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
   dependencies:
@@ -5664,7 +5657,7 @@ is-root@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/is-root/-/is-root-2.1.0.tgz#809e18129cf1129644302a4f8544035d51984a9c"
 
-is-stream@^1.0.1, is-stream@^1.1.0:
+is-stream@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/is-stream/-/is-stream-1.1.0.tgz#12d4a3dd4e68e0b79ceb8dbc84173ae80d91ca44"
 
@@ -5725,13 +5718,6 @@ isobject@^2.0.0:
 isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
-
-isomorphic-fetch@^2.1.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
-  dependencies:
-    node-fetch "^1.0.1"
-    whatwg-fetch ">=0.10.0"
 
 isstream@~0.1.2:
   version "0.1.2"
@@ -7076,13 +7062,6 @@ node-fetch@2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
-
-node-fetch@^1.0.1:
-  version "1.7.3"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
-  dependencies:
-    encoding "^0.1.11"
-    is-stream "^1.0.1"
 
 node-forge@0.9.0:
   version "0.9.0"
@@ -9362,36 +9341,39 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
-rsocket-core@^0.0.19:
-  version "0.0.19"
-  resolved "https://registry.yarnpkg.com/rsocket-core/-/rsocket-core-0.0.19.tgz#0b4fb1bb1f4c86f747426c310ed1557cdd3145d1"
+rsocket-core@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/rsocket-core/-/rsocket-core-0.0.22.tgz#8b999bca5c0f6de84ed8eaa0d914ed7a12c2ae24"
+  integrity sha512-HtRLrILfGDWx8daC+jBQclI2C5N4zjr8YSSRJ71fhuCegPP0T8xznU1+llLpYTxhwynrWihWwk+7+rmUf0zF2A==
   dependencies:
-    fbjs "^1.0.0"
-    rsocket-flowable "^0.0.14"
-    rsocket-types "^0.0.16"
+    fbjs "^2.0.0"
+    rsocket-flowable "^0.0.22"
+    rsocket-types "^0.0.22"
 
-rsocket-flowable@^0.0.14:
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/rsocket-flowable/-/rsocket-flowable-0.0.14.tgz#5195dbd2972a98afe4a4ee082904fbc5890bc630"
+rsocket-flowable@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/rsocket-flowable/-/rsocket-flowable-0.0.22.tgz#0f572edd3c5fadec99cd89fe098d96c81439b99e"
+  integrity sha512-sjmvZVN10kdwHJ/XT1tbuXh6yz90IesXhMI4Wc0wlSAQ+NIIQGTeXre21t5jLYFQX/OEKgN5D2vTFLX7aYwYQA==
   dependencies:
-    fbjs "^1.0.0"
+    fbjs "^2.0.0"
 
-rsocket-types@^0.0.16:
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/rsocket-types/-/rsocket-types-0.0.16.tgz#2113dcf8e25478d6764f1e3e84ad4a97d16a6fde"
+rsocket-types@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/rsocket-types/-/rsocket-types-0.0.22.tgz#9e77516cc51a822e8124f6071085e9c789fde909"
+  integrity sha512-6fNTdRH2RIWlnW5m7x+MCdUjPv7NW1Z2icZx7S5cJcYyQOMpVGQVtqeOV084MmiEEaXtYpTT8kdqDHs7rH2ixA==
   dependencies:
-    buffer "^5.0.6"
-    fbjs "^1.0.0"
-    rsocket-flowable "^0.0.14"
+    fbjs "^2.0.0"
+    rsocket-flowable "^0.0.22"
 
-rsocket-websocket-client@^0.0.19:
-  version "0.0.19"
-  resolved "https://registry.yarnpkg.com/rsocket-websocket-client/-/rsocket-websocket-client-0.0.19.tgz#6cb7f7e798266b25ebebc3dc52c7f1d0c8a62d3a"
+rsocket-websocket-client@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/rsocket-websocket-client/-/rsocket-websocket-client-0.0.22.tgz#5cb8d4dfe6c08671350ea7871d450f6bb96bf7e3"
+  integrity sha512-MthKoC2bDUC1lR1UXKqkieDyM2+r1qJ9ChnQp2VPJDEaz2bVfvQtVN+nqAzuGaEmfBltWG8W0RwUzuSxnIeUvA==
   dependencies:
-    fbjs "^1.0.0"
-    rsocket-core "^0.0.19"
-    rsocket-flowable "^0.0.14"
-    rsocket-types "^0.0.16"
+    fbjs "^2.0.0"
+    rsocket-core "^0.0.22"
+    rsocket-flowable "^0.0.22"
+    rsocket-types "^0.0.22"
 
 rsvp@^4.8.4:
   version "4.8.5"
@@ -10790,7 +10772,7 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3, whatwg-encoding@^1.0.5:
   dependencies:
     iconv-lite "0.4.24"
 
-whatwg-fetch@>=0.10.0, whatwg-fetch@^3.0.0:
+whatwg-fetch@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
 
