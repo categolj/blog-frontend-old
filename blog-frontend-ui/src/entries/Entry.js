@@ -160,6 +160,7 @@ export class Entry extends React.Component {
             <p ref={this.ref} dangerouslySetInnerHTML={Entry.content(entry)}>
             </p>
             <Divider/>
+            <a href="https://www.buymeacoffee.com/makingx"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a beer&emoji=🍺&slug=makingx&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
             <DefaultButton onClick={() => this.postLikes(entry.entryId)}
                            disabled={this.state.likes.exists}>{`💚 ${this.state.likes.count}`}</DefaultButton>
             <BackToTop/>
