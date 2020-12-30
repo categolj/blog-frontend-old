@@ -160,7 +160,7 @@ export class Entry extends React.Component {
             </p>
             <Divider/>
             <p>
-                記事の内容が役に立ったら、僕にビールを買ってください :)
+                記事の内容が役に立ったら、僕にビールを奢ってください :)
                 <br/>
                 <a href="https://www.buymeacoffee.com/makingx"><img
                     src="https://img.buymeacoffee.com/button-api/?text=Buy me a beer&emoji=🍺&slug=makingx&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
