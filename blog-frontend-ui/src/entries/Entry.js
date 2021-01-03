@@ -9,7 +9,6 @@ import {Divider} from 'pivotal-ui/react/dividers';
 import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
 import rsocketFactory from '../RSocketFactory';
-import likeService from "./LikeService";
 import readCountService from "./ReadCountService";
 import Sparkline from '../components/Sparkline';
 
@@ -42,10 +41,6 @@ export class Entry extends React.Component {
                     updated: {},
                     created: {},
                 }
-            },
-            likes: {
-                exists: true,
-                count: 0
             },
             readCounts: []
         };
@@ -96,20 +91,6 @@ export class Entry extends React.Component {
         } catch (e) {
             console.error(e);
         }
-        await this.loadLikes(this.props.match.params.id);
-    }
-
-    async loadLikes(entryId) {
-        const likes = await likeService.loadLikes(entryId);
-        this.setState({likes});
-    }
-
-    async postLikes(entryId) {
-        const current = this.state.likes;
-        current.exists = true;
-        this.setState({likes: current});
-        await likeService.postLikes(entryId);
-        await this.loadLikes(entryId);
     }
 
     componentDidUpdate() {
