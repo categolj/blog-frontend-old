@@ -44,6 +44,10 @@ div .pui-back-to-top, div .pui-back-to-top:hover {
 }
 
 
+.utterances {
+    max-width: 100%;
+}
+
 @media (min-width: 700px) {
     .searchbox {
         width: 490px;

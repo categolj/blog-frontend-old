@@ -45,6 +45,7 @@ export class Entry extends React.Component {
             readCounts: []
         };
         this.ref = React.createRef();
+        this.commentBox = React.createRef();
     }
 
     highlight() {
@@ -54,6 +55,17 @@ export class Entry extends React.Component {
                 hljs.highlightBlock(node);
             });
         }
+    }
+
+    buildCommentBox() {
+        const scriptEl = document.createElement("script");
+        scriptEl.setAttribute("src", "https://utteranc.es/client.js");
+        scriptEl.setAttribute("crossorigin", "anonymous");
+        scriptEl.setAttribute("async", true);
+        scriptEl.setAttribute("repo", "making/blog.ik.am");
+        scriptEl.setAttribute("issue-term", "pathname");
+        scriptEl.setAttribute("theme", "github-light");
+        this.commentBox.current.appendChild(scriptEl);
     }
 
     async componentDidMount() {
@@ -77,6 +89,7 @@ export class Entry extends React.Component {
             }
         }
         this.highlight();
+        this.buildCommentBox();
         try {
             const result = await readCountService.readCountyById(this.props.match.params.id);
             const readCounts = result.data.result[0];
@@ -147,6 +160,8 @@ export class Entry extends React.Component {
                     src="https://img.buymeacoffee.com/button-api/?text=Buy me a beer&emoji=🍺&slug=makingx&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
                     alt="buy me a beer"/></a>
             </p>
+            <Divider/>
+            <div ref={this.commentBox} className="comment-box"/>
             <BackToTop/>
         </div> : <React.Fragment>
             <h2>Loading...</h2>
