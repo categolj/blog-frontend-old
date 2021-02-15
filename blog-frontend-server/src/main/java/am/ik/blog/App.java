@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.server.adapter.ForwardedHeaderTransformer;
 
 @SpringBootApplication
 @ConfigurationPropertiesScan
@@ -46,6 +47,11 @@ public class App {
 	public WebClient.Builder webClientBuilder() {
 		return WebClient.builder()
 				.clientConnector(new ReactorClientHttpConnector(HttpClient.create().tcpConfiguration(builder -> builder.metrics(true))));
+	}
+
+	@Bean
+	public ForwardedHeaderTransformer forwardedHeaderTransformer() {
+		return new ForwardedHeaderTransformer();
 	}
 }
 
