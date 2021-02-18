@@ -117,7 +117,7 @@ jobs:
         EOF
         cat values-dev.yml
     - name: update config
-      if: github.ref == 'refs/heads/rsocket'
+      if: github.ref == 'refs/heads/master'
       env:
         REPOSITORY: making/config
         GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
