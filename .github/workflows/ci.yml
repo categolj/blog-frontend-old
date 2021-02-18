@@ -46,7 +46,7 @@ jobs:
     - name: pack build
       if: github.ref == 'refs/heads/master'
       env:
-        PACK_VERSION: 0.14.1
+        PACK_VERSION: 0.17.0
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
@@ -87,7 +87,7 @@ jobs:
     - name: pack build lab
       if: github.ref == 'refs/heads/master'
       env:
-        PACK_VERSION: 0.15.0
+        PACK_VERSION: 0.17.0
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
