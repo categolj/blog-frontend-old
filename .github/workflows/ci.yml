@@ -65,6 +65,16 @@ jobs:
           -p blog-frontend-server/target/blog-frontend-server-*.jar  \
           --builder gcr.io/paketo-buildpacks/builder:base
         docker push ${IMAGE_NAME}
+        docker pull ${IMAGE_NAME}
+        cat <<EOF > values-prod.yml
+        #@data/values
+        #@overlay/match-child-defaults missing_ok=True
+        ---
+        git_repo: https://github.com/categolj/blog-frontend
+        git_commit: $(git rev-parse HEAD)
+        image_digest: $(docker inspect --format='{{index .RepoDigests 0}}' ${IMAGE_NAME} | awk -F '@' '{print $2}')
+        EOF
+        cat values-prod.yml
     - name: mvn package lab
       if: github.ref == 'refs/heads/master'
       env:
@@ -97,7 +107,7 @@ jobs:
           --builder gcr.io/paketo-buildpacks/builder:base
         docker push ${IMAGE_NAME}
         docker pull ${IMAGE_NAME}
-        cat <<EOF > values.yml
+        cat <<EOF > values-dev.yml
         #@data/values
         #@overlay/match-child-defaults missing_ok=True
         ---
@@ -105,7 +115,7 @@ jobs:
         git_commit: $(git rev-parse HEAD)
         image_digest: $(docker inspect --format='{{index .RepoDigests 0}}' ${IMAGE_NAME} | awk -F '@' '{print $2}')
         EOF
-        cat values.yml
+        cat values-dev.yml
     - name: update config
       if: github.ref == 'refs/heads/rsocket'
       env:
@@ -136,7 +146,7 @@ jobs:
         cd $(echo ${REPOSITORY} | awk -F '/' '{print $2}')
 
         # Update dev directly
-        cp ../values.yml home-lab/grape/app/${APP_NAME}/dev/values.yml
+        cp ../values-dev.yml home-lab/grape/app/${APP_NAME}/dev/values.yml
         git diff
         git add -A
         git commit -m "${COMMIT_MESSAGE}"
@@ -147,7 +157,7 @@ jobs:
         BRANCH_NAME="update-${APP_NAME}-prod-${GIT_REV}"
         COMMIT_MESSAGE="[Prod] Bump to categolj/${APP_NAME}@${GIT_REV}"
         git checkout -b ${BRANCH_NAME}
-        cp ../values.yml home-lab/grape/app/${APP_NAME}/prod/values.yml
+        cp ../values-prod.yml home-lab/grape/app/${APP_NAME}/prod/values.yml
         git diff
         git add -A
         git commit -m "${COMMIT_MESSAGE}"
