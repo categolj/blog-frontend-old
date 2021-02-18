@@ -78,7 +78,7 @@ jobs:
     - name: mvn package lab
       if: github.ref == 'refs/heads/master'
       env:
-        REACT_APP_BLOG_API: https://blog-frontend.lab.maki.lol
+        REACT_APP_BLOG_API: https://blog-api.lab.maki.lol
         REACT_APP_BLOG_UI: https://blog.lab.maki.lol
       run: |
         set -e
