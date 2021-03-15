@@ -37,7 +37,7 @@ jobs:
     - name: mvn package
       if: github.ref == 'refs/heads/master'
       env:
-        REACT_APP_BLOG_API: https://blog-rsocket.ik.am
+        REACT_APP_BLOG_API: https://blog-api.ik.am
         REACT_APP_BLOG_UI: https://blog.ik.am
       run: |
         set -e
