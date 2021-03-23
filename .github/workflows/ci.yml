@@ -43,6 +43,26 @@ jobs:
         set -e
         BOOT_VERSION=$(grep '<version>' pom.xml | head -n 1 | sed -e 's|<version>||g' -e 's|</version>||g' -e 's|<.*>||g' -e 's| ||g')
         ./mvnw -V package -DskipTests -Dspring-boot.version=${BOOT_VERSION}
+    - name: mvn deploy
+      if: github.ref == 'refs/heads/rsocket'
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: |
+        set -e
+        cat > settings.xml <<EOF
+        <settings>
+          <servers>
+            <server>
+               <id>github</id>
+               <username>${DOCKER_USERNAME}</username>
+               <password>${DOCKER_PASSWORD}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
+        sed -i 's|</project>|<distributionManagement><repository><id>github</id><name>github</name><url>https://maven.pkg.github.com/categolj/blog-frontend</url></repository></distributionManagement></project>|' pom.xml
+        ./mvnw -V deploy -s settings.xml -DskipTests=true -DserverId=github
     - name: pack build
       if: github.ref == 'refs/heads/master'
       env:
