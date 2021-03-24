@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import {Container, LineChart} from "davi-js";
+import urlProvider from "../urlProvider";
 
 export class SLI extends Component {
-    ui = `${process.env.REACT_APP_BLOG_UI}`;
+    ui = `${urlProvider.BLOG_UI}`;
 
     constructor(props) {
         super(props);
@@ -37,8 +38,9 @@ export class SLI extends Component {
     }
 
     render() {
-        return <Container title={{text: "Uptime SLI / ErrorBudget (SLO = 95% for last 7 days)"}}
-                          loading={this.state.loading}>
+        return <Container
+            title={{text: "Uptime SLI / ErrorBudget (SLO = 95% for last 7 days)"}}
+            loading={this.state.loading}>
             <LineChart
                 isPromQL={true}
                 zoomEnabled={true}

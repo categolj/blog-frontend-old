@@ -1,10 +1,11 @@
 import React from "react";
 import {Panel} from 'pivotal-ui/react/panels';
 import {Block} from "./Block";
+import urlProvider from "../urlProvider";
 
 export function Info() {
-    const ui = `${process.env.REACT_APP_BLOG_UI}/actuator/info`;
-    const api = `${process.env.REACT_APP_BLOG_API}/actuator/info`;
+    const ui = `${urlProvider.BLOG_UI}/actuator/info`;
+    const api = `${urlProvider.BLOG_API}/actuator/info`;
     return (
         <Panel>
             <h2>Build Info</h2>

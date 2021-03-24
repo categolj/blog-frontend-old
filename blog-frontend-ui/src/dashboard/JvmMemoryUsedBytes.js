@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import {Container, LineChart} from "davi-js";
+import urlProvider from "../urlProvider";
 
 export class JvmMemoryUsedBytes extends Component {
-    ui = `${process.env.REACT_APP_BLOG_UI}`;
+    ui = `${urlProvider.BLOG_UI}`;
 
     constructor(props) {
         super(props);
