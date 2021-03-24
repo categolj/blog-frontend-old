@@ -58,7 +58,7 @@ jobs:
         sed -i 's|</project>|<distributionManagement><repository><id>sonatype-snapshots</id><name>sonatype-snapshots</name><url>https://oss.sonatype.org/content/repositories/snapshots</url></repository></distributionManagement></project>|' pom.xml
         ./mvnw -V deploy -s settings.xml -DskipTests=true -DserverId=sonatype-snapshots -Dspring-boot.version=${BOOT_VERSION}
     - name: pack build
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/deprecated'
       env:
         PACK_VERSION: 0.18.0
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -91,7 +91,7 @@ jobs:
         EOF
         cat values.yml
     - name: update config
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/deprecated'
       env:
         REPOSITORY: making/config
         GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
