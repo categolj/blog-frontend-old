@@ -39,8 +39,8 @@ jobs:
       env:
         REACT_APP_BLOG_API: auto
         REACT_APP_BLOG_UI: auto
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+        SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
       run: |
         set -e
         BOOT_VERSION=$(grep '<version>' pom.xml | head -n 1 | sed -e 's|<version>||g' -e 's|</version>||g' -e 's|<.*>||g' -e 's| ||g')
@@ -48,15 +48,15 @@ jobs:
         <settings>
           <servers>
             <server>
-               <id>github</id>
-               <username>${DOCKER_USERNAME}</username>
-               <password>${DOCKER_PASSWORD}</password>
+               <id>sonatype-snapshots</id>
+               <username>${SONATYPE_USERNAME}</username>
+               <password>${SONATYPE_PASSWORD}</password>
             </server>
           </servers>
         </settings>
         EOF
-        sed -i 's|</project>|<distributionManagement><repository><id>github</id><name>github</name><url>https://maven.pkg.github.com/categolj/blog-frontend</url></repository></distributionManagement></project>|' pom.xml
-        ./mvnw -V deploy -s settings.xml -DskipTests=true -DserverId=github -Dspring-boot.version=${BOOT_VERSION}
+        sed -i 's|</project>|<distributionManagement><repository><id>sonatype-snapshots</id><name>sonatype-snapshots</name><url>https://oss.sonatype.org/content/repositories/snapshots</url></repository></distributionManagement></project>|' pom.xml
+        ./mvnw -V deploy -s settings.xml -DskipTests=true -DserverId=sonatype-snapshots -Dspring-boot.version=${BOOT_VERSION}
     - name: pack build
       if: github.ref == 'refs/heads/master'
       env:
