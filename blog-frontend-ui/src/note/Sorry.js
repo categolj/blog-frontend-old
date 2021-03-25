@@ -4,10 +4,6 @@ import {WarningAlert} from "pivotal-ui/react/alerts";
 import 'pivotal-ui/css/ellipsis';
 
 export class Sorry extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <React.Fragment>
@@ -19,5 +15,4 @@ export class Sorry extends React.Component {
                 <br/>
             </React.Fragment>);
     }
-
 }
