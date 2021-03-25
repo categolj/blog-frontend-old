@@ -11,6 +11,7 @@ import {Link, Redirect} from "react-router-dom";
 import noteService from "./NoteService";
 import inMemoryTokenRepository from "./InMemoryTokenRepository";
 import localStorageTokenRepository from "./LocalStorageTokenRepository";
+import {Sorry} from "./Sorry";
 
 export class Login extends React.Component {
     state = {
@@ -57,6 +58,7 @@ export class Login extends React.Component {
                 <SuccessAlert withIcon>{this.state.successMessage}</SuccessAlert>
                 <br/>
             </React.Fragment>}
+            <Sorry></Sorry>
             <p>
                 当システムに登録済みのEmailアドレスをパスワード入力し、ログインして下さい。<br/>
                 <strong>note.comのアカウントではありません</strong>。"はじめるSpring Boot2"を読むには、<a

@@ -6,6 +6,7 @@ import noteService from "./NoteService";
 import {TokenAwareComponent} from "./TokenAwareComponent";
 import {Link} from "react-router-dom";
 import {Welcome} from "./Welcome";
+import {Sorry} from "./Sorry";
 
 export class Notes extends TokenAwareComponent {
     async componentDidMount() {
@@ -17,6 +18,7 @@ export class Notes extends TokenAwareComponent {
             {this.redirect()}
             <h2 id="notes" className={"home"}>Notes</h2>
             <Welcome/>
+            <Sorry></Sorry>
             <p>
                 {`(*) ... ✅の場合は記事が購読状態です。⛔の場合は購読状態になっていません。`}
                 note.comで記事を購入済みの場合は<a href={`https://note.com/makingx/m/m2dc6f318899c`}>note.com</a>の該当ページから購読化リンクをクリックしてください。
