@@ -149,6 +149,8 @@
                                       file="target/classes/application.properties" append="yes"/>
                                 <echo message="info.maven.versions.spring-security=${spring-security.version}${line.separator}"
                                       file="target/classes/application.properties" append="yes"/>
+                                <echo message="info.build.spring.boot.version=${spring-boot.version}${line.separator}"
+                                      file="target/classes/application.properties" append="yes"/>				    
                             </target>
                         </configuration>
                     </execution>
