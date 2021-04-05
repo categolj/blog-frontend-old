@@ -3,13 +3,11 @@ package am.ik.blog.entries;
 import java.net.URI;
 import java.time.Duration;
 
-import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.AsyncLoadingCache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reactor.cache.CacheMono;
 import reactor.core.publisher.Mono;
-import reactor.core.publisher.Signal;
 
 import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.http.HttpMethod;
@@ -25,12 +23,11 @@ public class PrerenderClient {
 
 	private final Prerender prerender;
 
-	private final Cache<String, ? super Signal<? extends String>> cache
-			= Caffeine.newBuilder()
+	private final AsyncLoadingCache<String, String> cache = Caffeine.newBuilder()
 			.maximumSize(100)
 			.expireAfterAccess(Duration.ofHours(1))
 			.removalListener((key, value, cause) -> log.info("Removing cache({}) because of {}", key, cause))
-			.build();
+			.buildAsync((key, __) -> PrerenderClient.this.prerender(HttpMethod.GET, key).toFuture());
 
 	public PrerenderClient(WebClient.Builder builder, Prerender prerender) {
 		this.webClient = builder.build();
@@ -42,8 +39,7 @@ public class PrerenderClient {
 		if (method == HttpMethod.HEAD) {
 			return this.prerender(method, url);
 		}
-		return CacheMono.lookup(this.cache.asMap(), url)
-				.onCacheMissResume(() -> this.prerender(method, url));
+		return Mono.fromFuture(this.cache.get(url));
 	}
 
 	private Mono<String> prerender(HttpMethod method, String url) {

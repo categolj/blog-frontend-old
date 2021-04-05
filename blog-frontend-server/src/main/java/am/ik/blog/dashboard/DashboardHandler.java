@@ -53,7 +53,7 @@ public class DashboardHandler {
 	private Mono<ServerResponse> jvmMemoryUsedBytes(ServerRequest req) {
 		final String instance = req.queryParam("application").map(s -> s.replace(',', '|')).orElse("null");
 		final Duration duration = Duration.ofDays(1);
-		final String promql = String.format("sum(jvm_memory_used_bytes{app=\"%s\"}) by (instance_id, area)", instance);
+		final String promql = String.format("sum(jvm_memory_used_bytes{app=\"%s\", kubernetes_namespace!=\"blog-dev\"}) by (kubernetes_pod_name, area)", instance);
 		final Mono<JsonNode> result = this.prometheusClient.queryRange(promql, duration);
 		return ServerResponse.ok()
 				.header("Access-Control-Allow-Origin", "*")

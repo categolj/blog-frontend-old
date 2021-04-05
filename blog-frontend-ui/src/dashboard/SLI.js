@@ -25,7 +25,7 @@ export class SLI extends Component {
 
     loadFromServer() {
         this.setState({loading: true});
-        fetch(`${this.ui}/dashboard/sli?instance=https://blog.ik.am,https://blog-api.ik.am/actuator/health,https://note.ik.am/actuator/health`)
+        fetch(`${this.ui}/dashboard/sli?instance=https://blog.ik.am,https://blog-api.ik.am/actuator/health,https://note.ik.am/actuator/health,https://note.dev.ik.am/actuator/health`)
             .then(result => result.json())
             .then(response => {
                 this.setState({

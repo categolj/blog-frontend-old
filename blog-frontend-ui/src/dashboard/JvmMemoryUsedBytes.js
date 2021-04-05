@@ -47,7 +47,7 @@ export class JvmMemoryUsedBytes extends Component {
                 data={this.state.data}
                 promQLSeriesKey={d => {
                     const metrics = d.metric;
-                    return `${metrics.instance_id}/${metrics.area}`;
+                    return `${metrics.kubernetes_pod_name}/${metrics.area}`;
                 }}
                 xAxisTooltipFormat={x => `${new Date(x).toLocaleString()}`}
                 yAxisTooltipFormat={toMegaByte}
