@@ -58,7 +58,7 @@ jobs:
         </settings>
         EOF
         sed -i 's|</project>|<distributionManagement><repository><id>sonatype-snapshots</id><name>sonatype-snapshots</name><url>https://oss.sonatype.org/content/repositories/snapshots</url></repository></distributionManagement></project>|' pom.xml
-        ./mvnw -V -X deploy -s settings.xml -P native,mostly-static -DskipTests=true -DserverId=sonatype-snapshots -Dspring-boot.version=${BOOT_VERSION}
+        ./mvnw -V -X package -s settings.xml -P native,mostly-static -DskipTests=true -Dspring-boot.version=${BOOT_VERSION}
         ./mvnw -V deploy:deploy-file -f blog-frontend-server -DskipTests -Pnative -s settings.xml -DrepositoryId=sonatype-snapshots -Durl=https://oss.sonatype.org/content/repositories/snapshots
     - name: pack build
       if: github.ref == 'refs/heads/deprecated'
