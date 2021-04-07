@@ -21,9 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-java@v1
+    - uses: ayltai/setup-graalvm@v1
       with:
-        java-version: '11.x'
+        java-version: 11
+        graalvm-version: 21.0.0.2
+        native-image: true
     - uses: actions/cache@v1
       with:
         path: ~/.m2/repository
@@ -43,7 +45,7 @@ jobs:
         SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
       run: |
         set -e
-        BOOT_VERSION=$(grep '<version>' pom.xml | head -n 1 | sed -e 's|<version>||g' -e 's|</version>||g' -e 's|<.*>||g' -e 's| ||g')
+        BOOT_VERSION=$(grep '<version>' pom.xml | head -n 1 | sed -e 's|<version>||g' -e 's|</version>||g' -e 's|<.*>||g' | xargs echo)
         cat > settings.xml <<EOF
         <settings>
           <servers>
@@ -57,6 +59,7 @@ jobs:
         EOF
         sed -i 's|</project>|<distributionManagement><repository><id>sonatype-snapshots</id><name>sonatype-snapshots</name><url>https://oss.sonatype.org/content/repositories/snapshots</url></repository></distributionManagement></project>|' pom.xml
         ./mvnw -V deploy -s settings.xml -DskipTests=true -DserverId=sonatype-snapshots -Dspring-boot.version=${BOOT_VERSION}
+        # ./mvnw -V deploy:deploy-file -f blog-frontend-server -DskipTests -Pnative -s settings.xml -DrepositoryId=sonatype-snapshots -Durl=https://oss.sonatype.org/content/repositories/snapshots
     - name: pack build
       if: github.ref == 'refs/heads/deprecated'
       env:

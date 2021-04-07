@@ -1,0 +1,395 @@
+[
+  {
+    "name": "com.github.benmanes.caffeine.cache.BLCHeader$DrainStatusRef",
+    "fields": [
+      {
+        "name": "drainStatus",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FD",
+    "fields": [
+      {
+        "name": "key",
+        "allowUnsafeAccess": true
+      },
+      {
+        "name": "value",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FDA",
+    "fields": [
+      {
+        "name": "accessTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FDAR",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FDAW",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FDR",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FDW",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FS",
+    "fields": [
+      {
+        "name": "key",
+        "allowUnsafeAccess": true
+      },
+      {
+        "name": "value",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FSA",
+    "fields": [
+      {
+        "name": "accessTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FSAR",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FSAW",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FSR",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FSW",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FW",
+    "fields": [
+      {
+        "name": "key",
+        "allowUnsafeAccess": true
+      },
+      {
+        "name": "value",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FWA",
+    "fields": [
+      {
+        "name": "accessTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FWAR",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FWAW",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FWR",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.FWW",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PD",
+    "fields": [
+      {
+        "name": "key",
+        "allowUnsafeAccess": true
+      },
+      {
+        "name": "value",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PDA",
+    "fields": [
+      {
+        "name": "accessTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PDAR",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PDAW",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PDR",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PDW",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PS",
+    "fields": [
+      {
+        "name": "key",
+        "allowUnsafeAccess": true
+      },
+      {
+        "name": "value",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PSA",
+    "fields": [
+      {
+        "name": "accessTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PSAR",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PSAW",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PSR",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PSW",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PW",
+    "fields": [
+      {
+        "name": "key",
+        "allowUnsafeAccess": true
+      },
+      {
+        "name": "value",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PWA",
+    "fields": [
+      {
+        "name": "accessTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PWAR",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PWAW",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PWR",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.PWW",
+    "fields": [
+      {
+        "name": "writeTime",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.BBHeader$ReadAndWriteCounterRef",
+    "fields": [
+      {
+        "name": "writeCounter",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.BBHeader$ReadCounterRef",
+    "fields": [
+      {
+        "name": "readCounter",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "java.lang.Thread",
+    "fields": [
+      {
+        "name": "threadLocalRandomProbe",
+        "allowUnsafeAccess": true
+      }
+    ]
+  },
+  {
+    "name": "com.github.benmanes.caffeine.cache.StripedBuffer",
+    "fields": [
+      {
+        "name": "tableBusy",
+        "allowUnsafeAccess": true
+      }
+    ]
+  }
+]
