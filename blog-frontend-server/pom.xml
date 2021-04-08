@@ -213,7 +213,7 @@
 					<plugin>
 						<groupId>org.graalvm.nativeimage</groupId>
 						<artifactId>native-image-maven-plugin</artifactId>
-						<version>21.0.0</version>
+						<version>21.0.0.2</version>
 						<configuration>
 							<buildArgs>${native-image-args}</buildArgs>
 							<imageName>${project.artifactId}</imageName>
