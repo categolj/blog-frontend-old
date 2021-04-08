@@ -203,11 +203,13 @@
 			<id>mostly-static</id>
 			<properties>
 				<native-image-args>-H:+StaticExecutableWithDynamicLibC</native-image-args>
-				<jar-classifier>exec</jar-classifier>
 			</properties>
 		</profile>
 		<profile>
 			<id>native</id>
+			<properties>
+				<jar-classifier>exec</jar-classifier>
+			</properties>
 			<build>
 				<plugins>
 					<plugin>
