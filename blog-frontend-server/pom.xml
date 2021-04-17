@@ -218,7 +218,7 @@
 						<version>21.0.0.2</version>
 						<configuration>
 							<buildArgs>${native-image-args}</buildArgs>
-							<imageName>${project.artifactId}</imageName>
+							<imageName>${start-class}</imageName>
 							<outputDirectory>${project.build.directory}</outputDirectory>
 						</configuration>
 						<executions>
@@ -243,12 +243,12 @@
 								</goals>
 								<configuration>
 									<target>
-										<echo message="web: ./${project.artifactId}"
+										<echo message="web: ./${start-class}"
 											  file="${project.build.directory}/Procfile"/>
 										<zip destfile="${project.build.directory}/${project.artifactId}-${project.version}.zip">
 											<zipfileset dir="${project.build.directory}"
 														filemode="755"
-														includes="${project.artifactId}"/>
+														includes="${start-class}"/>
 											<fileset dir="${project.build.directory}"
 													 includes="Procfile"/>
 										</zip>
