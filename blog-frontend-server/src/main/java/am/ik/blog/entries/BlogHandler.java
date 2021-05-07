@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import am.ik.blog.prometheus.PrometheusClient;
+import am.ik.blog.translation.TranslationClient;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -30,6 +31,7 @@ import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 @Controller
 public class BlogHandler {
+	private final TranslationClient translationClient;
 
 	private final PrerenderClient prerenderClient;
 
@@ -39,7 +41,8 @@ public class BlogHandler {
 
 	private final Counter prerenderCounter;
 
-	public BlogHandler(PrerenderClient prerenderClient, PrometheusClient prometheusClient, MeterRegistry meterRegistry1, MeterRegistry meterRegistry) {
+	public BlogHandler(TranslationClient translationClient, PrerenderClient prerenderClient, PrometheusClient prometheusClient, MeterRegistry meterRegistry1, MeterRegistry meterRegistry) {
+		this.translationClient = translationClient;
 		this.prerenderClient = prerenderClient;
 		this.prometheusClient = prometheusClient;
 		this.meterRegistry = meterRegistry1;
@@ -52,8 +55,10 @@ public class BlogHandler {
 				.GET("/", this::render)
 				.GET("/entries/{entryId}/read_count", this::readCount)
 				.GET("/entries/read_count", this::readCountAll)
+				.GET("/entries/{entryId}/{language}", this::renderEntryForTranslation)
 				.GET("/entries/{entryId}", this::renderEntry)
 				.GET("/entries/**", this::render)
+				.GET("/translations/{entryId}", this::translateEntry)
 				.GET("/series/**", this::render)
 				.GET("/tags/**", this::render)
 				.GET("/categories/**", this::render)
@@ -66,8 +71,7 @@ public class BlogHandler {
 				.build();
 	}
 
-	@NonNull
-	private Mono<ServerResponse> renderEntry(ServerRequest req) {
+	private void countUp(ServerRequest req, String language) {
 		final String userAgent = req.headers().firstHeader(USER_AGENT);
 		if (!"Go-http-client/1.1".equals(userAgent) && !userAgent.startsWith("Prometheus")) {
 			final boolean browser = isBrowser(req);
@@ -75,10 +79,34 @@ public class BlogHandler {
 			this.meterRegistry
 					.counter("entry.read",
 							"entry_id", entryId,
-							"browser", String.valueOf(browser))
+							"browser", String.valueOf(browser),
+							"language", language)
 					.increment();
 		}
+	}
+
+	@NonNull
+	private Mono<ServerResponse> renderEntry(ServerRequest req) {
+		this.countUp(req, "ja");
 		return this.render(req);
+	}
+
+	@NonNull
+	private Mono<ServerResponse> renderEntryForTranslation(ServerRequest req) {
+		return this.render(req);
+	}
+
+	@NonNull
+	private Mono<ServerResponse> translateEntry(ServerRequest req) {
+		final String entryId = req.pathVariable("entryId");
+		final String language = req.queryParam("language").orElse("en");
+		this.countUp(req, language);
+		return this.translationClient.translate(Long.parseLong(entryId), language)
+				.flatMap(body -> ServerResponse.ok()
+						.contentType(MediaType.APPLICATION_JSON)
+						.bodyValue(body))
+				.switchIfEmpty(ServerResponse.notFound()
+						.build());
 	}
 
 	@NonNull

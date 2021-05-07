@@ -5,6 +5,7 @@ import am.ik.blog.entries.BlogHandler;
 import am.ik.blog.entries.Prerender;
 import am.ik.blog.entries.PrerenderClient;
 import am.ik.blog.prometheus.Prometheus;
+import am.ik.blog.translation.TranslationApi;
 import com.github.benmanes.caffeine.cache.AsyncCacheLoader;
 import io.micrometer.core.instrument.config.MeterFilter;
 import reactor.netty.http.client.HttpClient;
@@ -28,7 +29,7 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.server.adapter.ForwardedHeaderTransformer;
 
 @SpringBootApplication
-@EnableConfigurationProperties({ Prometheus.class, Prerender.class })
+@EnableConfigurationProperties({ BlogApi.class, TranslationApi.class, Prometheus.class, Prerender.class })
 @NativeHint(
 		options = { "--enable-http" },
 		types = {

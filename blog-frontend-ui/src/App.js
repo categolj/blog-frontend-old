@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter, Link, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Link, Route, Switch, withRouter} from "react-router-dom";
 import {Tags} from "./tags/Tags";
 import {Categories} from "./categories/Categories";
 import {Entries} from "./entries/Entries";
@@ -28,6 +28,7 @@ import {Activation} from "./note/Activation";
 import {EventViewer} from "./eventviewer/EventViewer";
 
 export default function App({renderedContent}) {
+    const EntryWithRouter = withRouter(Entry);
     return (
         <BrowserRouter>
             <div>
@@ -55,9 +56,12 @@ export default function App({renderedContent}) {
                             <Route path="/index.html" render={() => <Home
                                 renderedContent={renderedContent}/>}/>
                             <Route exact path="/entries" component={Entries}/>
+                            <Route path="/entries/:id/:language"
+                                   render={({match}) => <EntryWithRouter match={match}
+                                                                         renderedContent={renderedContent}/>}/>
                             <Route path="/entries/:id"
                                    render={({match}) => <Entry match={match}
-                                                               renderedContent={renderedContent}/>}/>
+                                                                         renderedContent={renderedContent}/>}/>
                             <Route exact path="/categories" component={Categories}/>
                             <Route path="/categories/:id/entries" component={ByCategory}/>
                             <Route exact path="/tags" component={Tags}/>

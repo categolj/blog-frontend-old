@@ -8,8 +8,12 @@ import {UnexpectedError} from "../components/UnexpectedError";
 import {Divider} from 'pivotal-ui/react/dividers';
 import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
+import {DefaultButton} from 'pivotal-ui/react/buttons';
+import {Icon} from 'pivotal-ui/react/iconography';
+
 import rsocketFactory from '../RSocketFactory';
 import readCountService from "./ReadCountService";
+import translationService from "./TranslationService";
 import Sparkline from '../components/Sparkline';
 
 import 'pivotal-ui/css/code';
@@ -45,6 +49,9 @@ export class Entry extends React.Component {
             readCounts: []
         };
         this.ref = React.createRef();
+        this.entryId = this.props.match.params.id;
+        this.language = this.props.match.params.language;
+        console.log(this.props);
     }
 
     highlight() {
@@ -57,15 +64,26 @@ export class Entry extends React.Component {
     }
 
     async componentDidMount() {
+        console.log(this);
         const renderedContent = this.props.renderedContent.get();
         if (renderedContent && renderedContent.content) {
             this.setState({
                 entry: renderedContent
             });
+        } else if (this.language) {
+            const entry = await translationService.translate(this.entryId, this.language);
+            try {
+                this.setState({
+                    entry: entry
+                });
+            } catch (e) {
+                console.error({e});
+                this.setState({error: e});
+            }
         } else {
             const rsocket = await rsocketFactory.getRSocket();
             const response = await rsocket.requestResponse({
-                metadata: rsocketFactory.routingMetadata(`entries.${this.props.match.params.id}`)
+                metadata: rsocketFactory.routingMetadata(`entries.${this.entryId}`)
             });
             try {
                 this.setState({
@@ -78,7 +96,7 @@ export class Entry extends React.Component {
         }
         this.highlight();
         try {
-            const result = await readCountService.readCountyById(this.props.match.params.id);
+            const result = await readCountService.readCountyById(this.entryId);
             const readCounts = result.data.result[0];
             this.setState({
                 readCounts: readCounts.values.map(x => {
@@ -109,7 +127,7 @@ export class Entry extends React.Component {
         const tags = entry.frontMatter.tags.map(x => <span key={x.name}><Tag
             name={x.name}/>&nbsp;</span>);
         const isLoaded = !!entry.frontMatter.title;
-        const fallbackUrl = `https://github.com/making/blog.ik.am/blob/master/content/${Entry.format(this.props.match.params.id)}.md`;
+        const fallbackUrl = `https://github.com/making/blog.ik.am/blob/master/content/${Entry.format(this.entryId)}.md`;
         return <Panel loading={!isLoaded}>{(isLoaded ? <div>
             <h2>
                 <Link
@@ -131,6 +149,22 @@ export class Entry extends React.Component {
                 🗑&nbsp;<a
                 href={`https://github.com/making/blog.ik.am/delete/master/content/${Entry.format(entry.entryId)}.md`}>Delete</a>{`}`}
             </span>
+            <br/>
+            {this.language ?
+                <Link
+                    to={`/entries/${entry.entryId}`}><DefaultButton
+                    icon={<Icon src="arrow_forward"/>} iconPosition="right" small>
+                    {`Show original page`}
+                </DefaultButton>
+                </Link>
+                :
+                <Link
+                    to={`/entries/${entry.entryId}/en`}><DefaultButton
+                    icon={<Icon src="arrow_forward"/>} iconPosition="right" small>
+                    {`📖Translate into English`}
+                </DefaultButton>
+                </Link>
+            }
             <Sparkline data={this.state.readCounts}
                        width={155}
                        height={30}
@@ -141,7 +175,7 @@ export class Entry extends React.Component {
             </p>
             <Divider/>
             <p>
-                記事の内容が役に立ったら、僕にビールを奢ってください :)
+                {this.language ? "Buy me a beer if you like this article" : "記事の内容が役に立ったら、僕にビールを奢ってください"} :)
                 <br/>
                 <a href="https://www.buymeacoffee.com/makingx"><img
                     src="https://img.buymeacoffee.com/button-api/?text=Buy me a beer&emoji=🍺&slug=makingx&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
