@@ -8,10 +8,11 @@ export function Info() {
     return (
         <Panel>
             <h2>Build Info</h2>
-            <Block header={"UI"} url={ui}/>
-            <Block header={"API"} url={'/proxy/blog-api/actuator/info'}/>
-            <Block header={"TRASLATION"} url={'/proxy/blog-translation/actuator/info'}/>
-            <Block header={"NOTE"} url={'https://note.dev.ik.am/actuator/info'}/>
+            <Block header={"Blog UI"} url={ui}/>
+            <Block header={"Entry API"} url={'/proxy/blog-api/actuator/info'}/>
+            <Block header={"Translation API"}
+                   url={'/proxy/blog-translation/actuator/info'}/>
+            <Block header={"Note API"} url={'https://note.dev.ik.am/actuator/info'}/>
         </Panel>
     );
 }
