@@ -1,5 +1,6 @@
 package am.ik.blog;
 
+import am.ik.blog.actuator.ActuatorHandler;
 import am.ik.blog.dashboard.DashboardHandler;
 import am.ik.blog.entries.BlogHandler;
 import am.ik.blog.entries.Prerender;
@@ -68,9 +69,11 @@ public class App {
 	@Bean
 	public RouterFunction<?> routes(
 			DashboardHandler dashboardHandler,
-			BlogHandler blogHandler) {
+			BlogHandler blogHandler,
+			ActuatorHandler actuatorHandler) {
 		return dashboardHandler.routes()
-				.and(blogHandler.routes());
+				.and(blogHandler.routes())
+				.and(actuatorHandler.routes());
 	}
 
 	@Bean
@@ -78,7 +81,7 @@ public class App {
 		return registry -> registry.config() //
 				.meterFilter(MeterFilter.deny(id -> {
 					String uri = id.getTag("uri");
-					return uri != null && uri.startsWith("/actuator");
+					return uri != null && (uri.startsWith("/actuator") || uri.startsWith("/proxy"));
 				}));
 	}
 
