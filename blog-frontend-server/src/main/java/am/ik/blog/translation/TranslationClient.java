@@ -27,8 +27,14 @@ public class TranslationClient {
 		this.webClient = builder.build();
 	}
 
+
 	public Mono<JsonNode> translate(Long entryId, String language) {
-		return this.webClient.get()
+		final Mono<ObjectNode> entryMono = this.webClient.get()
+				.uri(this.blogApi.getUrl(), b -> b.path("/entries/{entryId}").build(entryId))
+				.accept(MediaType.APPLICATION_JSON)
+				.retrieve()
+				.bodyToMono(ObjectNode.class);
+		final Mono<JsonNode> translationMono = this.webClient.get()
 				.uri(this.translationApi.getUrl(),
 						b -> b
 								.path("/translations/{entryId}/latest")
@@ -37,8 +43,10 @@ public class TranslationClient {
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.bodyToMono(JsonNode.class)
-				.onErrorResume(TranslationClient::isNotFound, __ -> this.autoTranslation(entryId, language))
-				.flatMap(translation -> this.mergeEntry(entryId, translation))
+				.onErrorResume(TranslationClient::isNotFound, __ -> this.autoTranslation(entryId, language));
+		return entryMono
+				.zipWith(translationMono)
+				.map(tpl -> mergeEntry(tpl.getT1(), tpl.getT2()))
 				.onErrorMap(WebClientResponseException.class, TranslationClient::toResponseStatusException);
 	}
 
@@ -55,24 +63,17 @@ public class TranslationClient {
 				.onErrorMap(WebClientResponseException.class, TranslationClient::toResponseStatusException);
 	}
 
-	Mono<JsonNode> mergeEntry(Long entryId, JsonNode translation) {
-		final Mono<ObjectNode> entryMono = this.webClient.get()
-				.uri(this.blogApi.getUrl(), b -> b.path("/entries/{entryId}").build(entryId))
-				.accept(MediaType.APPLICATION_JSON)
-				.retrieve()
-				.bodyToMono(ObjectNode.class);
-		return entryMono.map(entry -> {
-			final String title = translation.get("title").asText();
-			final String content = translation.get("content").asText();
-			final String language = translation.get("language").asText();
-			final String translatedAt = translation.get("createdAt").asText();
-			final ObjectNode frontMatter = (ObjectNode) entry.get("frontMatter");
-			return entry
-					.put("content", content)
-					.put("language", language)
-					.put("translatedAt", translatedAt)
-					.set("frontMatter", frontMatter.put("title", title));
-		});
+	static JsonNode mergeEntry(ObjectNode entry, JsonNode translation) {
+		final String title = translation.get("title").asText();
+		final String content = translation.get("content").asText();
+		final String language = translation.get("language").asText();
+		final String translatedAt = translation.get("createdAt").asText();
+		final ObjectNode frontMatter = (ObjectNode) entry.get("frontMatter");
+		return entry
+				.put("content", content)
+				.put("language", language)
+				.put("translatedAt", translatedAt)
+				.set("frontMatter", frontMatter.put("title", title));
 	}
 
 	static boolean isNotFound(Throwable e) {
