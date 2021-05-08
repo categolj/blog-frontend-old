@@ -153,7 +153,7 @@ public class BlogHandler {
 
 	private static boolean isBrowser(ServerRequest req) {
 		final String userAgent = req.headers().firstHeader(USER_AGENT);
-		return userAgent != null && !userAgent.toLowerCase().contains("bot") && isNotPrerenderedRequest(req) && Classifier.tryBrowser(userAgent, new HashMap<>(6, 1.0f));
+		return userAgent != null && !userAgent.toLowerCase().contains("bot") && !userAgent.toLowerCase().contains("headless") && isNotPrerenderedRequest(req) && Classifier.tryBrowser(userAgent, new HashMap<>(6, 1.0f));
 	}
 
 	private static boolean isNotPrerenderedRequest(ServerRequest req) {
