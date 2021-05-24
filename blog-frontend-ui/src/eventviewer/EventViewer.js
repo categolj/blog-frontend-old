@@ -69,7 +69,7 @@ export class EventViewer extends React.Component {
                         in <code>application.properties</code> as follows
                         <pre><code>
                         management.endpoints.web.exposure.include=startup<br/>
-                        management.endpoints.web.cors.allowed-origins=https://blog.ik.am<br/>
+                        management.endpoints.web.cors.allowed-origins={location.origin}<br/>
                         management.endpoints.web.cors.allowed-methods=POST
                         </code></pre>
                         <br/>
