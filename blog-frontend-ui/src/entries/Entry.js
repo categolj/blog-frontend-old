@@ -51,7 +51,6 @@ export class Entry extends React.Component {
         this.ref = React.createRef();
         this.entryId = this.props.match.params.id;
         this.language = this.props.match.params.language;
-        console.log(this.props);
     }
 
     highlight() {
@@ -64,7 +63,6 @@ export class Entry extends React.Component {
     }
 
     async componentDidMount() {
-        console.log(this);
         const renderedContent = this.props.renderedContent.get();
         if (renderedContent && renderedContent.content) {
             this.setState({
