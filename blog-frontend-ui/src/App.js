@@ -16,7 +16,6 @@ import './App.css';
 import {Home} from "./home/Home";
 import {Links} from "./components/Links";
 import {Series} from "./series/Series";
-import {Dashboard} from "./dashboard/Dashboard";
 import {Login} from './note/Login';
 import {Signup} from "./note/Signup";
 import {AboutMe} from "./aboutme/AboutMe";
