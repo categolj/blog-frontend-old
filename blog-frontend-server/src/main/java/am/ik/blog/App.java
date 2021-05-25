@@ -40,7 +40,8 @@ import org.springframework.web.server.adapter.ForwardedHeaderTransformer;
 						typeNames = {
 								"com.github.benmanes.caffeine.cache.SSLMSA",
 								"com.github.benmanes.caffeine.cache.PSAMW",
-								"am.ik.blog.entries.PrerenderClientImpl$PrerenderAsyncCacheLoader"
+								"am.ik.blog.entries.PrerenderClientImpl$PrerenderAsyncCacheLoader",
+								"io.micrometer.prometheus.rsocket.PrometheusRSocketClient"
 						}),
 				@TypeHint(typeNames = {
 						"org.springframework.cloud.sleuth.autoconfig.zipkin2.ZipkinActiveMqSenderConfiguration",
