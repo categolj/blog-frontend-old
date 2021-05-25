@@ -79,7 +79,6 @@ export default function App({renderedContent}) {
                             <Route path="/notes/:id" component={Note}/>
                             <Route path="/notes" component={Notes}/>
                             <Route exact path="/info" component={Info}/>
-                            <Route exact path="/dashboard" component={Dashboard}/>
                             <Route path="/series/:id/entries" component={Series}/>
                             <Route component={NoMatch}/>
                         </Switch>
