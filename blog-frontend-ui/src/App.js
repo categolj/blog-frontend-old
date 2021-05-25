@@ -32,7 +32,7 @@ export default function App({renderedContent}) {
     return (
         <BrowserRouter>
             <div>
-                <h1>{`📝`} <Link to="/">BLOG.IK.AM</Link></h1>
+                <h1>{`📝`} <Link to="/">IK.AM</Link></h1>
                 <Header/>
                 <SearchBox/>
                 <section id={"main"}>
