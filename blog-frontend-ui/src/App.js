@@ -48,8 +48,6 @@ export default function App({renderedContent}) {
                                 className={"nav-tab can-be-invisible"}>{`About`}</NavTab>
                         <NavTab to="/info"
                                 className={"nav-tab can-be-invisible"}>{`Info`}</NavTab>
-                        <NavTab to="/dashboard"
-                                className={"nav-tab can-be-invisible"}>{`Dashboard`}</NavTab>
                         <Switch>
                             <Route exact path="/" render={() => <Home
                                 renderedContent={renderedContent}/>}/>
