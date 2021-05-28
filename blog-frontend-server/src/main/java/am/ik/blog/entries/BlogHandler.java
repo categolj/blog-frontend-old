@@ -1,17 +1,21 @@
 package am.ik.blog.entries;
 
 import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import am.ik.blog.counter.CounterClient;
+import am.ik.blog.counter.CounterClient.Count;
 import am.ik.blog.prometheus.PrometheusClient;
 import am.ik.blog.translation.TranslationClient;
-import com.fasterxml.jackson.databind.JsonNode;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import is.tagomor.woothee.Classifier;
 import is.tagomor.woothee.crawler.Google;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import org.springframework.core.io.ClassPathResource;
@@ -33,6 +37,8 @@ import static org.springframework.http.HttpHeaders.USER_AGENT;
 public class BlogHandler {
 	private final TranslationClient translationClient;
 
+	private final CounterClient counterClient;
+
 	private final PrerenderClient prerenderClient;
 
 	private final PrometheusClient prometheusClient;
@@ -41,8 +47,9 @@ public class BlogHandler {
 
 	private final Counter prerenderCounter;
 
-	public BlogHandler(TranslationClient translationClient, PrerenderClient prerenderClient, PrometheusClient prometheusClient, MeterRegistry meterRegistry1, MeterRegistry meterRegistry) {
+	public BlogHandler(TranslationClient translationClient, CounterClient counterClient, PrerenderClient prerenderClient, PrometheusClient prometheusClient, MeterRegistry meterRegistry1, MeterRegistry meterRegistry) {
 		this.translationClient = translationClient;
+		this.counterClient = counterClient;
 		this.prerenderClient = prerenderClient;
 		this.prometheusClient = prometheusClient;
 		this.meterRegistry = meterRegistry1;
@@ -82,6 +89,8 @@ public class BlogHandler {
 							"browser", String.valueOf(browser),
 							"language", language)
 					.increment();
+			this.counterClient.increment(Long.parseLong(entryId), browser)
+					.subscribe();
 		}
 	}
 
@@ -131,14 +140,18 @@ public class BlogHandler {
 	@NonNull
 	private Mono<ServerResponse> readCount(ServerRequest req) {
 		final String entryId = req.pathVariable("entryId");
-		final Mono<JsonNode> body = this.prometheusClient.queryRange(String.format("sum(rate(entry_read_total{entry_id=\"%s\"}[3h]))", entryId), Duration.ofDays(7));
-		return ServerResponse.ok().body(body, JsonNode.class);
+		final Instant to = Instant.now();
+		final Instant from = to.minus(7, ChronoUnit.DAYS);
+		final Flux<Count> body = this.counterClient.reportForEntry(Long.parseLong(entryId), from, to);
+		return ServerResponse.ok().body(body, Count.class);
 	}
 
 	@NonNull
 	private Mono<ServerResponse> readCountAll(ServerRequest req) {
-		final Mono<JsonNode> body = this.prometheusClient.queryRange("sum(rate(entry_read_total[3h]))", Duration.ofDays(7));
-		return ServerResponse.ok().body(body, JsonNode.class);
+		final Instant to = Instant.now();
+		final Instant from = to.minus(7, ChronoUnit.DAYS);
+		final Flux<Count> body = this.counterClient.reportAll(from, to);
+		return ServerResponse.ok().body(body, Count.class);
 	}
 
 	private static RequestPredicate forwardToPrerender() {

@@ -95,14 +95,14 @@ export class Entry extends React.Component {
         this.highlight();
         try {
             const result = await readCountService.readCountyById(this.entryId);
-            const readCounts = result.data.result[0];
+            const readCounts = result.map(x => {
+                return {
+                    timestamp: new Date(x.timestamp).toLocaleString(),
+                    count: x.count
+                }
+            });
             this.setState({
-                readCounts: readCounts.values.map(x => {
-                    return {
-                        t: new Date(x[0] * 1000).toLocaleString(),
-                        '3h avg': x[1] * 60 * 60 * 3
-                    }
-                })
+                readCounts: readCounts
             });
         } catch (e) {
             console.error(e);
@@ -166,8 +166,8 @@ export class Entry extends React.Component {
             <Sparkline data={this.state.readCounts}
                        width={155}
                        height={30}
-                       xKey='t'
-                       yKey='3h avg'/>
+                       xKey='timestamp'
+                       yKey='count'/>
             <Divider/>
             <p ref={this.ref} dangerouslySetInnerHTML={Entry.content(entry)}>
             </p>

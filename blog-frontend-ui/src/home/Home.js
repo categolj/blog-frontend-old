@@ -12,13 +12,12 @@ export function Home({renderedContent}) {
     useEffect(() => {
         readCountService.readCountAll()
             .then(result =>
-                setReadCounts(result.data.result[0].values
-                    .map(x => {
-                        return {
-                            t: new Date(x[0] * 1000).toLocaleString(),
-                            '3h avg': x[1] * 60 * 60 * 3
-                        }
-                    })));
+                setReadCounts(result.map(x => {
+                    return {
+                        timestamp: new Date(x.timestamp).toLocaleString(),
+                        count: x.count
+                    }
+                })));
     }, []);
     return (<Panel>
         <h2>Home</h2>
@@ -30,7 +29,7 @@ export function Home({renderedContent}) {
         <Sparkline data={readCounts}
                    width={320}
                    height={60}
-                   xKey='t'
-                   yKey='3h avg'/>
+                   xKey='timestamp'
+                   yKey='count'/>
     </Panel>);
 }

@@ -3,6 +3,8 @@ package am.ik.blog;
 import java.util.LinkedHashSet;
 
 import am.ik.blog.actuator.ActuatorHandler;
+import am.ik.blog.counter.CounterApi;
+import am.ik.blog.counter.CounterClient.Count;
 import am.ik.blog.dashboard.DashboardHandler;
 import am.ik.blog.entries.BlogHandler;
 import am.ik.blog.entries.Prerender;
@@ -32,11 +34,11 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.server.adapter.ForwardedHeaderTransformer;
 
 @SpringBootApplication
-@EnableConfigurationProperties({ BlogApi.class, TranslationApi.class, Prometheus.class, Prerender.class })
+@EnableConfigurationProperties({ BlogApi.class, TranslationApi.class, CounterApi.class, Prometheus.class, Prerender.class })
 @NativeHint(
 		options = { "--enable-http" },
 		types = {
-				@TypeHint(types = { AsyncCacheLoader.class, LinkedHashSet.class },
+				@TypeHint(types = { AsyncCacheLoader.class, LinkedHashSet.class, Count.class },
 						typeNames = {
 								"com.github.benmanes.caffeine.cache.SSLMSA",
 								"com.github.benmanes.caffeine.cache.PSAMW",

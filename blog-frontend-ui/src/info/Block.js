@@ -51,47 +51,53 @@ export class Block extends React.Component {
             <div>
                 <h3><a href={this.url}>{header}</a></h3>
                 <table className="table">
-                    <thead>
-                    <tr>
-                        <th>Version</th>
-                        <td>{info.build.version}</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th>Build Time</th>
-                        <td>{info.build.time}</td>
-                    </tr>
-                    <tr>
-                        <th>Source Code</th>
-                        <td>{info.git.commit.message.short} (<a href={info.git.remote.origin.url
-                            .replace('git@github.com:', 'https://github.com/')
-                            .replace('.git', '') + `/tree/${rev}`}
-                                                                target={'_blank'}
-                                                                rel={'noopener noreferrer'}><code>{rev}</code></a>)
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Java</th>
-                        <td>{info.java.version} ({info.java.vendor})</td>
-                    </tr>
-                    <tr>
-                        <th>Spring Framework</th>
-                        <td>{info.maven.versions['spring-framework']}</td>
-                    </tr>
-                    <tr>
-                        <th>Spring Boot</th>
-                        <td>{info.maven.versions['spring-boot']}</td>
-                    </tr>
-                    <tr>
-                        <th>Spring Cloud</th>
-                        <td>{info.maven.versions['spring-cloud']}</td>
-                    </tr>
-                    <tr>
-                        <th>Spring Security</th>
-                        <td>{info.maven.versions['spring-security']}</td>
-                    </tr>
-                    </tbody>
+                    {info.build && <React.Fragment>
+                        <tr>
+                            <th>Version</th>
+                            <td>{info.build.version}</td>
+                        </tr>
+                        <tr>
+                            <th>Build Time</th>
+                            <td>{info.build.time}</td>
+                        </tr>
+                    </React.Fragment>}
+                    {info.git && <React.Fragment>
+                        <tr>
+                            <th>Source Code</th>
+                            <td>{info.git.commit.message.short} (<a
+                                href={info.git.remote.origin.url
+                                    .replace('git@github.com:', 'https://github.com/')
+                                    .replace('.git', '') + `/tree/${rev}`}
+                                target={'_blank'}
+                                rel={'noopener noreferrer'}><code>{rev}</code></a>)
+                            </td>
+                        </tr>
+                    </React.Fragment>}
+                    {info.java && <React.Fragment>
+                        <tr>
+                            <th>Java</th>
+                            <td>{info.java.version} ({info.java.vendor})</td>
+                        </tr>
+                    </React.Fragment>}
+                    {info.maven && info.maven.versions && <React.Fragment>
+                        <tr>
+                            <th>Spring Framework</th>
+                            <td>{info.maven.versions['spring-framework']}</td>
+                        </tr>
+                        <tr>
+                            <th>Spring Boot</th>
+                            <td>{info.maven.versions['spring-boot']}</td>
+                        </tr>
+                        <tr>
+                            <th>Spring Cloud</th>
+                            <td>{info.maven.versions['spring-cloud']}</td>
+                        </tr>
+                        <tr>
+                            <th>Spring Security</th>
+                            <td>{info.maven.versions['spring-security']}</td>
+                        </tr>
+                    </React.Fragment>
+                    }
                 </table>
             </div>);
     }
