@@ -4,9 +4,12 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -20,6 +23,8 @@ public class CounterClient {
 	private final CounterApi counterApi;
 
 	private final WebClient webClient;
+
+	private final Logger log = LoggerFactory.getLogger(CounterClient.class);
 
 	public CounterClient(CounterApi counterApi, WebClient.Builder builder) {
 		this.counterApi = counterApi;
@@ -39,7 +44,8 @@ public class CounterClient {
 				.header("ce-type", this.counterApi.getEventType())
 				.header("ce-specversion", "1.0")
 				.bodyValue(body)
-				.exchangeToMono(ClientResponse::releaseBody);
+				.exchangeToMono(ClientResponse::releaseBody)
+				.onErrorResume(this.resume());
 	}
 
 	public Flux<Count> reportAll(Instant from, Instant to) {
@@ -50,7 +56,8 @@ public class CounterClient {
 								.queryParam("to", to)
 								.build())
 				.retrieve()
-				.bodyToFlux(Count.class);
+				.bodyToFlux(Count.class)
+				.onErrorResume(this.resume());
 	}
 
 	public Flux<Count> reportForEntry(long entryId, Instant from, Instant to) {
@@ -62,7 +69,15 @@ public class CounterClient {
 								.queryParam("entryId", entryId)
 								.build())
 				.retrieve()
-				.bodyToFlux(Count.class);
+				.bodyToFlux(Count.class)
+				.onErrorResume(this.resume());
+	}
+
+	<T> Function<Throwable, Mono<T>> resume() {
+		return e -> {
+			log.warn("failed to call Counter API", e);
+			return Mono.empty();
+		};
 	}
 
 	public static class Count {
