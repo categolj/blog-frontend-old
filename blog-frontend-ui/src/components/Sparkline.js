@@ -4,7 +4,7 @@ import {Loading} from "./Loading";
 
 export default function Sparkline({width, height, data, xKey, yKey, yKey2}) {
     if (data === null || data.length === 0) {
-        return <Loading/>;
+        return <div><Loading/></div>;
     }
     return (<LineChart width={width || 240}
                        height={height || 120}
