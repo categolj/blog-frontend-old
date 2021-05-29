@@ -141,7 +141,7 @@ public class BlogHandler {
 	private Mono<ServerResponse> readCount(ServerRequest req) {
 		final String entryId = req.pathVariable("entryId");
 		final Instant to = Instant.now();
-		final Instant from = to.minus(7, ChronoUnit.DAYS);
+		final Instant from = to.minus(3, ChronoUnit.DAYS);
 		final Flux<Count> body = this.counterClient.reportForEntry(Long.parseLong(entryId), from, to);
 		return ServerResponse.ok().body(body, Count.class);
 	}
@@ -149,7 +149,7 @@ public class BlogHandler {
 	@NonNull
 	private Mono<ServerResponse> readCountAll(ServerRequest req) {
 		final Instant to = Instant.now();
-		final Instant from = to.minus(7, ChronoUnit.DAYS);
+		final Instant from = to.minus(3, ChronoUnit.DAYS);
 		final Flux<Count> body = this.counterClient.reportAll(from, to);
 		return ServerResponse.ok().body(body, Count.class);
 	}
