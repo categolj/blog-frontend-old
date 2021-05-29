@@ -173,13 +173,6 @@ export class Entry extends React.Component {
             <p ref={this.ref} dangerouslySetInnerHTML={Entry.content(entry)}>
             </p>
             <Divider/>
-            <p>
-                {this.language ? "Buy me a beer if you like this article" : "記事の内容が役に立ったら、僕にビールを奢ってください"} :)
-                <br/>
-                <a href="https://www.buymeacoffee.com/makingx"><img
-                    src="https://img.buymeacoffee.com/button-api/?text=Buy me a beer&emoji=🍺&slug=makingx&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
-                    alt="buy me a beer"/></a>
-            </p>
             <TwitterShareButton url={`https://ik.am/entries/${entry.entryId}`}
                                 title={`${entry.frontMatter.title} - IK.AM`}>
                 <TwitterIcon size={32} round={true}/>
