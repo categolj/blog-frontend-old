@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
@@ -57,6 +58,18 @@ public class CounterClient {
 								.build())
 				.retrieve()
 				.bodyToFlux(Count.class)
+				.onErrorResume(this.resume());
+	}
+
+	public Flux<JsonNode> reportByBrowser(Instant from, Instant to) {
+		return this.webClient.get()
+				.uri(this.counterApi.getUrl(),
+						b -> b.pathSegment(this.counterApi.getEventSource(), "browser")
+								.queryParam("from", from)
+								.queryParam("to", to)
+								.build())
+				.retrieve()
+				.bodyToFlux(JsonNode.class)
 				.onErrorResume(this.resume());
 	}
 

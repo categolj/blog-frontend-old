@@ -15,7 +15,8 @@ export function Home({renderedContent}) {
                 setReadCounts(result.map(x => {
                     return {
                         timestamp: new Date(x.timestamp).toLocaleString(),
-                        count: x.count
+                        browser: (x.browser || 0),
+                        total: (x.browser || 0) + (x.nonBrowser || 0)
                     }
                 })));
     }, []);
@@ -30,6 +31,7 @@ export function Home({renderedContent}) {
                    width={320}
                    height={60}
                    xKey='timestamp'
-                   yKey='count'/>
+                   yKey='total'
+                   yKey2='browser'/>
     </Panel>);
 }

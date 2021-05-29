@@ -11,6 +11,7 @@ import am.ik.blog.counter.CounterClient;
 import am.ik.blog.counter.CounterClient.Count;
 import am.ik.blog.prometheus.PrometheusClient;
 import am.ik.blog.translation.TranslationClient;
+import com.fasterxml.jackson.databind.JsonNode;
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import is.tagomor.woothee.Classifier;
@@ -150,8 +151,8 @@ public class BlogHandler {
 	private Mono<ServerResponse> readCountAll(ServerRequest req) {
 		final Instant to = Instant.now();
 		final Instant from = to.minus(3, ChronoUnit.DAYS);
-		final Flux<Count> body = this.counterClient.reportAll(from, to);
-		return ServerResponse.ok().body(body, Count.class);
+		final Flux<JsonNode> body = this.counterClient.reportByBrowser(from, to);
+		return ServerResponse.ok().body(body, JsonNode.class);
 	}
 
 	private static RequestPredicate forwardToPrerender() {
