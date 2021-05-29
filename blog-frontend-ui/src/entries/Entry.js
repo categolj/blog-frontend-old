@@ -10,6 +10,7 @@ import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
 import {DefaultButton} from 'pivotal-ui/react/buttons';
 import {Icon} from 'pivotal-ui/react/iconography';
+import {TwitterIcon, TwitterShareButton} from "react-share";
 
 import rsocketFactory from '../RSocketFactory';
 import readCountService from "./ReadCountService";
@@ -179,6 +180,10 @@ export class Entry extends React.Component {
                     src="https://img.buymeacoffee.com/button-api/?text=Buy me a beer&emoji=🍺&slug=makingx&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
                     alt="buy me a beer"/></a>
             </p>
+            <TwitterShareButton url={`https://ik.am/entries/${entry.entryId}`}
+                                title={`${entry.frontMatter.title} - IK.AM`}>
+                <TwitterIcon size={32} round={true}/>
+            </TwitterShareButton>
             <BackToTop/>
         </div> : <React.Fragment>
             <h2>Loading...</h2>
