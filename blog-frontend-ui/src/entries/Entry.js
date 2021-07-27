@@ -10,7 +10,14 @@ import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
 import {DefaultButton} from 'pivotal-ui/react/buttons';
 import {Icon} from 'pivotal-ui/react/iconography';
-import {TwitterIcon, TwitterShareButton} from "react-share";
+import {
+    FacebookIcon,
+    FacebookShareButton,
+    LineIcon,
+    LineShareButton,
+    TwitterIcon,
+    TwitterShareButton
+} from "react-share";
 
 import rsocketFactory from '../RSocketFactory';
 import readCountService from "./ReadCountService";
@@ -176,7 +183,15 @@ export class Entry extends React.Component {
             <TwitterShareButton url={`https://ik.am/entries/${entry.entryId}`}
                                 title={`${entry.frontMatter.title} - IK.AM`}>
                 <TwitterIcon size={32} round={true}/>
-            </TwitterShareButton>
+            </TwitterShareButton>&nbsp;
+            <FacebookShareButton url={`https://ik.am/entries/${entry.entryId}`}
+                                 title={`${entry.frontMatter.title} - IK.AM`}>
+                <FacebookIcon size={32} round={true}/>
+            </FacebookShareButton>&nbsp;
+            <LineShareButton url={`https://ik.am/entries/${entry.entryId}`}
+                             title={`${entry.frontMatter.title} - IK.AM`}>
+                <LineIcon size={32} round={true}/>
+            </LineShareButton>&nbsp;
             <BackToTop/>
         </div> : <React.Fragment>
             <h2>Loading...</h2>
