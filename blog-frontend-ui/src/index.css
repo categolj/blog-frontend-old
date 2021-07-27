@@ -40,18 +40,24 @@ footer {
 }
 
 blockquote {
+    font-size: smaller;
     color: #464646;
-    font-style: italic;
-    border: 1px dotted #a9a9a9;
+    font-style: inherit;
+    border: 1px dashed #a9a9a9;
     border-radius: 5px;
     margin: 5px 0;
-    max-width: 90%
+    max-width: 90%;
+    background-color: ghostwhite;
 }
 
 blockquote p {
     margin: 10px;
     white-space: nowrap;
     overflow-x: auto;
+}
+
+blockquote pre {
+    margin: 10px;
 }
 
 p code {
@@ -127,12 +133,15 @@ h3#presentations:before {
 h3#latest-entries:before {
     content: "📣 "
 }
+
 h3#github:before {
     content: "🐙 "
 }
+
 h3#access-rate:before {
     content: "📈 "
 }
+
 h3 + ul {
     margin-top: 0px;
 }
