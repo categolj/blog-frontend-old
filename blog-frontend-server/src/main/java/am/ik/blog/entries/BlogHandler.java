@@ -81,7 +81,7 @@ public class BlogHandler {
 
 	private void countUp(ServerRequest req, String language) {
 		final String userAgent = req.headers().firstHeader(USER_AGENT);
-		if (!"Go-http-client/1.1".equals(userAgent) && !userAgent.startsWith("Prometheus")) {
+		if (!userAgent.startsWith("Go-http-client") && !userAgent.startsWith("Prometheus")) {
 			final boolean browser = isBrowser(req);
 			final String entryId = req.pathVariable("entryId");
 			this.meterRegistry
