@@ -143,8 +143,8 @@ public class BlogHandler {
 		final String entryId = req.pathVariable("entryId");
 		final Instant to = Instant.now();
 		final Instant from = to.minus(7, ChronoUnit.DAYS);
-		final Flux<Count> body = this.counterClient.reportForEntryByBrowser(Long.parseLong(entryId), from, to);
-		return ServerResponse.ok().body(body, Count.class);
+		final Flux<JsonNode> body = this.counterClient.reportForEntryByBrowser(Long.parseLong(entryId), from, to);
+		return ServerResponse.ok().body(body, JsonNode.class);
 	}
 
 	@NonNull

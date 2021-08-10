@@ -86,7 +86,7 @@ public class CounterClient {
 				.onErrorResume(this.resume());
 	}
 
-	public Flux<Count> reportForEntryByBrowser(long entryId, Instant from, Instant to) {
+	public Flux<JsonNode> reportForEntryByBrowser(long entryId, Instant from, Instant to) {
 		return this.webClient.get()
 				.uri(this.counterApi.getUrl(),
 						b -> b.pathSegment(this.counterApi.getEventSource(), "browser")
@@ -95,7 +95,7 @@ public class CounterClient {
 								.queryParam("entryId", entryId)
 								.build())
 				.retrieve()
-				.bodyToFlux(Count.class)
+				.bodyToFlux(JsonNode.class)
 				.onErrorResume(this.resume());
 	}
 
