@@ -106,7 +106,8 @@ export class Entry extends React.Component {
             const readCounts = result.map(x => {
                 return {
                     timestamp: new Date(x.timestamp).toLocaleString(),
-                    count: x.count
+                    browser: (x.browser || 0),
+                    total: (x.browser || 0) + (x.nonBrowser || 0)
                 }
             });
             this.setState({
