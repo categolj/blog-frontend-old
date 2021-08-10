@@ -86,6 +86,19 @@ public class CounterClient {
 				.onErrorResume(this.resume());
 	}
 
+	public Flux<Count> reportForEntryByBrowser(long entryId, Instant from, Instant to) {
+		return this.webClient.get()
+				.uri(this.counterApi.getUrl(),
+						b -> b.pathSegment(this.counterApi.getEventSource(), "browser")
+								.queryParam("from", from)
+								.queryParam("to", to)
+								.queryParam("entryId", entryId)
+								.build())
+				.retrieve()
+				.bodyToFlux(Count.class)
+				.onErrorResume(this.resume());
+	}
+
 	<T> Function<Throwable, Mono<T>> resume() {
 		return e -> {
 			log.warn("failed to call Counter API", e);

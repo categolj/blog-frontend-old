@@ -31,7 +31,6 @@ export function Home({renderedContent}) {
                    width={320}
                    height={60}
                    xKey='timestamp'
-                   yKey='total'
-                   yKey2='browser'/>
+                   yKey='browser'/>
     </Panel>);
 }
