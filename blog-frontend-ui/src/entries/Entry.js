@@ -175,7 +175,7 @@ export class Entry extends React.Component {
                        width={155}
                        height={30}
                        xKey='timestamp'
-                       yKey='browser'/>
+                       yKey='count'/>
             <Divider/>
             <p ref={this.ref} dangerouslySetInnerHTML={Entry.content(entry)}>
             </p>
