@@ -10238,10 +10238,10 @@ recharts-scale@^0.4.4:
   dependencies:
     decimal.js-light "^2.4.1"
 
-recharts@^2.0.9:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/recharts/-/recharts-2.0.9.tgz#048068eb01383291104548388712026948275f70"
-  integrity sha512-JNsXE80PuF3hugUCE7JqDOMSvu5xQLxtjOaqFKKZI2pCJ1PVJzhwDv4TWk0nO4AvADbeWzYEHbg8C5Hcrh42UA==
+recharts@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/recharts/-/recharts-2.1.1.tgz#704f89a7aa7772ba522d0713b17d1275b8965d4a"
+  integrity sha512-slV1RDbLPxyA3/63bjvtdrTXOuFnO6cdh/XlEu1XaM/PigPwBK2NZrVarjcirlAd7fkUzFIgKQjCxC+Hk1ymGQ==
   dependencies:
     "@types/d3-scale" "^3.0.0"
     "@types/d3-shape" "^2.0.0"
