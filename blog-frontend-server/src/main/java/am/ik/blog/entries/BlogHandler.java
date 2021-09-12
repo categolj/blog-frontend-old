@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import am.ik.blog.counter.CounterClient;
-import am.ik.blog.counter.CounterClient.Count;
 import am.ik.blog.prometheus.PrometheusClient;
 import am.ik.blog.translation.TranslationClient;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -194,7 +193,7 @@ public class BlogHandler {
 
 	private static boolean isTwitter(ServerRequest req) {
 		final String userAgent = req.headers().firstHeader(USER_AGENT);
-		return userAgent != null && userAgent.startsWith("Twitterbot");
+		return userAgent != null && userAgent.toLowerCase().startsWith("twitterbot");
 	}
 
 	private static boolean isHuman(ServerRequest req) {
