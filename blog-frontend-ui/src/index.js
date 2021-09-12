@@ -6,10 +6,12 @@ import 'pivotal-ui/css/iconography';
 
 import './index.css';
 import App from './App';
+import {HelmetProvider} from 'react-helmet-async';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App
-    renderedContent={new window.RenderedContent()}/>, document.getElementById('root'));
+ReactDOM.hydrate(<HelmetProvider>
+    <App renderedContent={new window.RenderedContent()}/>
+</HelmetProvider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

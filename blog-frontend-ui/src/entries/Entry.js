@@ -18,6 +18,7 @@ import {
     TwitterIcon,
     TwitterShareButton
 } from "react-share";
+import {Helmet} from 'react-helmet-async';
 
 import rsocketFactory from '../RSocketFactory';
 import readCountService from "./ReadCountService";
@@ -52,7 +53,8 @@ export class Entry extends React.Component {
                     tags: [],
                     updated: {},
                     created: {},
-                }
+                },
+                content: ''
             },
             readCounts: []
         };
@@ -135,7 +137,20 @@ export class Entry extends React.Component {
             name={x.name}/>&nbsp;</span>);
         const isLoaded = !!entry.frontMatter.title;
         const fallbackUrl = `https://github.com/making/blog.ik.am/blob/master/content/${Entry.format(this.entryId)}.md`;
+        const externalUrl = `https://ik.am/entries/${entry.entryId}`;
+        const description = entry.content.substring(0, 200) + '...';
+        const entryTitle = `${entry.frontMatter.title} - IK.AM`;
         return <Panel loading={!isLoaded}>{(isLoaded ? <div>
+            <Helmet prioritizeSeoTags>
+                <meta property="og:title" content={entryTitle}/>
+                <meta property="og:type" content="article"/>
+                <meta property="og:description" content={description}/>
+                <meta property="og:url" content={externalUrl}/>
+                <meta property="twitter:title" content={entryTitle}/>
+                <meta property="twitter:description" content={description}/>
+                <meta property="twitter:url" content={externalUrl}/>
+                <title>{entryTitle}</title>
+            </Helmet>
             <h2>
                 <Link
                     to={`/entries/${entry.entryId}`}>{`${Entry.cleanTitle(entry.frontMatter.title)}`}</Link>
@@ -182,15 +197,15 @@ export class Entry extends React.Component {
             </p>
             <Divider/>
             <TwitterShareButton url={`https://ik.am/entries/${entry.entryId}`}
-                                title={`${entry.frontMatter.title} - IK.AM`}>
+                                title={entryTitle}>
                 <TwitterIcon size={32} round={true}/>
             </TwitterShareButton>&nbsp;
             <FacebookShareButton url={`https://ik.am/entries/${entry.entryId}`}
-                                 title={`${entry.frontMatter.title} - IK.AM`}>
+                                 title={entryTitle}>
                 <FacebookIcon size={32} round={true}/>
             </FacebookShareButton>&nbsp;
             <LineShareButton url={`https://ik.am/entries/${entry.entryId}`}
-                             title={`${entry.frontMatter.title} - IK.AM`}>
+                             title={entryTitle}>
                 <LineIcon size={32} round={true}/>
             </LineShareButton>&nbsp;
             <BackToTop/>

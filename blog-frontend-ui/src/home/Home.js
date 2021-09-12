@@ -6,6 +6,7 @@ import {Presentations} from "./Presentations";
 import {GitHub} from "./GitHub";
 import readCountService from "../entries/ReadCountService";
 import Sparkline from "../components/Sparkline";
+import {Helmet} from "react-helmet-async";
 
 export function Home({renderedContent}) {
     const [readCounts, setReadCounts] = useState([]);
@@ -21,6 +22,15 @@ export function Home({renderedContent}) {
                 })));
     }, []);
     return (<Panel>
+        <Helmet prioritizeSeoTags>
+            <meta property="og:title" content="IK.AM"/>
+            <meta property="og:type" content="blog"/>
+            <meta property="og:description" content="@making's tech note"/>
+            <meta property="og:url" content="https://ik.am"/>
+            <meta property="twitter:title" content="IK.AM"/>
+            <meta property="twitter:description" content="@making's tech note"/>
+            <meta property="twitter:url" content="https://ik.am"/>
+        </Helmet>
         <h2>Home</h2>
         <LatestEntries renderedContent={renderedContent}/>
         <SeriesList/>

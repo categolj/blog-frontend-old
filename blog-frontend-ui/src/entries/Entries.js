@@ -8,6 +8,7 @@ import {Panel} from 'pivotal-ui/react/panels';
 import {BackToTop} from 'pivotal-ui/react/back-to-top';
 import {Entry} from "./Entry";
 import rsocketFactory from '../RSocketFactory';
+import {Helmet} from "react-helmet-async";
 
 export class Entries extends React.Component {
     constructor(props) {
@@ -79,8 +80,10 @@ export class Entries extends React.Component {
             .map(entry => {
                 const categories = entry.frontMatter.categories.map(x => x.name);
                 return <li key={entry.entryId}>
-                    <span className={"visible-inline-on-wide"}><Category category={categories}/>&nbsp;</span>
-                    <Link to={`/entries/${entry.entryId}`}>{Entry.cleanTitle(entry.frontMatter.title)}</Link>&nbsp;
+                    <span className={"visible-inline-on-wide"}><Category
+                        category={categories}/>&nbsp;</span>
+                    <Link
+                        to={`/entries/${entry.entryId}`}>{Entry.cleanTitle(entry.frontMatter.title)}</Link>&nbsp;
                     <br className="invisible-inline-on-wide"/>
                     {Entry.entryDate(entry)}
                 </li>;
@@ -89,7 +92,18 @@ export class Entries extends React.Component {
         const page = this.page();
         const onSelect = this.props.onSelect || this.onSelect.bind(this);
         return (<Panel loading={!isLoaded}>
-            <h2>Entries {this.props.label ? <span>({this.props.label}: {this.props.info})</span> : <span/>}</h2>
+            <Helmet prioritizeSeoTags>
+                <meta property="og:title" content="IK.AM"/>
+                <meta property="og:type" content="blog"/>
+                <meta property="og:description" content="@making's tech note"/>
+                <meta property="og:url" content="https://ik.am/entries"/>
+                <meta property="twitter:title" content="IK.AM"/>
+                <meta property="twitter:description" content="@making's tech note"/>
+                <meta property="twitter:url" content="https://ik.am/entries"/>
+                <title>Entries - IK.AM</title>
+            </Helmet>
+            <h2>Entries {this.props.label ?
+                <span>({this.props.label}: {this.props.info})</span> : <span/>}</h2>
             <ul className="entries">
                 {isLoaded ? entries : <Loading/>}
             </ul>
