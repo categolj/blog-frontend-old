@@ -193,12 +193,12 @@ public class BlogHandler {
 
 	private static boolean isTwitter(ServerRequest req) {
 		final String userAgent = req.headers().firstHeader(USER_AGENT);
-		return userAgent != null && userAgent.startsWith("Twitterbot");
+		return userAgent != null && userAgent.startsWith("Twitter");
 	}
 
 	private static boolean isSlack(ServerRequest req) {
 		final String userAgent = req.headers().firstHeader(USER_AGENT);
-		return userAgent != null && userAgent.startsWith("Slackbot");
+		return userAgent != null && userAgent.startsWith("Slack");
 	}
 
 	private static boolean isHatena(ServerRequest req) {
