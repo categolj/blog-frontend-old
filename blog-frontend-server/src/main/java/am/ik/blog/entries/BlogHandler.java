@@ -179,7 +179,7 @@ public class BlogHandler {
 	}
 
 	private static boolean isPrerenderedUser(ServerRequest req) {
-		return isGoogle(req) || isTwitter(req);
+		return isGoogle(req) || isTwitter(req) || isHatena(req);
 	}
 
 	private static boolean isGoogle(ServerRequest req) {
@@ -193,7 +193,12 @@ public class BlogHandler {
 
 	private static boolean isTwitter(ServerRequest req) {
 		final String userAgent = req.headers().firstHeader(USER_AGENT);
-		return userAgent != null && userAgent.toLowerCase().startsWith("twitterbot");
+		return userAgent != null && userAgent.startsWith("TwitterBot");
+	}
+
+	private static boolean isHatena(ServerRequest req) {
+		final String userAgent = req.headers().firstHeader(USER_AGENT);
+		return userAgent != null && userAgent.startsWith("Hatena");
 	}
 
 	private static boolean isHuman(ServerRequest req) {
