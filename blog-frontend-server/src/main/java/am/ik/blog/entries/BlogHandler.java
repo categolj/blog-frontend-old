@@ -203,7 +203,7 @@ public class BlogHandler {
 
 	private static boolean isHatena(ServerRequest req) {
 		final String userAgent = req.headers().firstHeader(USER_AGENT);
-		return userAgent != null && userAgent.startsWith("Hatena");
+		return userAgent != null && !userAgent.startsWith("Hatena::Russia") && userAgent.startsWith("Hatena");
 	}
 
 	private static boolean isHuman(ServerRequest req) {
