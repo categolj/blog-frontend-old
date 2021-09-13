@@ -9,7 +9,7 @@ class RSocketFactory {
 
     _initClient() {
         this.client = new RSocketClient({
-            transport: new RSocketWebSocketClient({url: `${urlProvider.BLOG_UI.replace('http', 'ws')}/rsocket`}),
+            transport: new RSocketWebSocketClient({url: `${urlProvider.BLOG_UI.replace('http', 'ws').replace("-frontend", "-api")}/rsocket`}),
             serializers: {
                 data: JsonSerializer,
                 metadata: IdentitySerializer
