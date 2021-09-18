@@ -43,8 +43,7 @@ import org.springframework.web.server.adapter.ForwardedHeaderTransformer;
 								"am.ik.blog.entries.PrerenderClient$PrerenderAsyncCacheLoader",
 								"org.springframework.cloud.sleuth.autoconfig.zipkin2.ZipkinActiveMqSenderConfiguration",
 								"org.springframework.cloud.sleuth.autoconfig.zipkin2.ZipkinRabbitSenderConfiguration",
-								"org.springframework.cloud.sleuth.autoconfig.zipkin2.ZipkinKafkaSenderConfiguration",
-								"io.micrometer.prometheus.rsocket.PrometheusRSocketClient"
+								"org.springframework.cloud.sleuth.autoconfig.zipkin2.ZipkinKafkaSenderConfiguration"
 						})
 		},
 		aotProxies = {
