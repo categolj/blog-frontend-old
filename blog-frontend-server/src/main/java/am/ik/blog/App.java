@@ -15,18 +15,16 @@ import com.github.benmanes.caffeine.cache.AsyncCacheLoader;
 import io.micrometer.core.instrument.config.MeterFilter;
 import reactor.netty.http.client.HttpClient;
 
-import org.springframework.aop.SpringProxy;
-import org.springframework.aop.framework.Advised;
 import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.metrics.buffering.BufferingApplicationStartup;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.DecoratingProxy;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
+import org.springframework.nativex.hint.AotProxyHint;
 import org.springframework.nativex.hint.NativeHint;
-import org.springframework.nativex.hint.ProxyHint;
+import org.springframework.nativex.hint.ProxyBits;
 import org.springframework.nativex.hint.ResourceHint;
 import org.springframework.nativex.hint.TypeHint;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -42,18 +40,15 @@ import org.springframework.web.server.adapter.ForwardedHeaderTransformer;
 						typeNames = {
 								"com.github.benmanes.caffeine.cache.SSLMSA",
 								"com.github.benmanes.caffeine.cache.PSAMW",
-								"am.ik.blog.entries.PrerenderClientImpl$PrerenderAsyncCacheLoader",
+								"am.ik.blog.entries.PrerenderClient$PrerenderAsyncCacheLoader",
+								"org.springframework.cloud.sleuth.autoconfig.zipkin2.ZipkinActiveMqSenderConfiguration",
+								"org.springframework.cloud.sleuth.autoconfig.zipkin2.ZipkinRabbitSenderConfiguration",
+								"org.springframework.cloud.sleuth.autoconfig.zipkin2.ZipkinKafkaSenderConfiguration",
 								"io.micrometer.prometheus.rsocket.PrometheusRSocketClient"
-						}),
-				@TypeHint(typeNames = {
-						"org.springframework.cloud.sleuth.autoconfig.zipkin2.ZipkinActiveMqSenderConfiguration",
-						"org.springframework.cloud.sleuth.autoconfig.zipkin2.ZipkinRabbitSenderConfiguration",
-						"org.springframework.cloud.sleuth.autoconfig.zipkin2.ZipkinKafkaSenderConfiguration",
-						"org.springframework.cloud.sleuth.autoconfig.zipkin2.ZipkinRestTemplateSenderConfiguration"
-				})
+						})
 		},
-		proxies = {
-				@ProxyHint(types = { PrerenderClient.class, SpringProxy.class, Advised.class, DecoratingProxy.class })
+		aotProxies = {
+				@AotProxyHint(targetClass = PrerenderClient.class, proxyFeatures = ProxyBits.IS_STATIC)
 		},
 		resources = {
 				@ResourceHint(patterns = {
