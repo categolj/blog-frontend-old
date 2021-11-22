@@ -47,6 +47,7 @@ export class Block extends React.Component {
         const info = this.state.info;
         const rev = info.git.commit.id.abbrev;
         const header = this.header;
+        const javaVersion = info.java.jvm ? `${info.java.jvm.version} / ${info.java.jvm.name}` : info.java.version;
         return (
             <div>
                 <h3><a href={this.url}>{header}</a></h3>
@@ -76,7 +77,7 @@ export class Block extends React.Component {
                     {info.java && <React.Fragment>
                         <tr>
                             <th>Java</th>
-                            <td>{info.java.version} ({info.java.vendor})</td>
+                            <td>{javaVersion} ({info.java.vendor})</td>
                         </tr>
                     </React.Fragment>}
                     {info.maven && info.maven.versions && <React.Fragment>
