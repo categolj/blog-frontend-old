@@ -12,7 +12,7 @@ function sumSince(result, date) {
     return result.filter((x) => x.browser > 0 &&
         new Date(x.timestamp).getTime() >= date.getTime())
         .map(x => x.browser)
-        .reduce((x, y) => x + y);
+        .reduce((x, y) => x + y, 0);
 }
 
 function resetHMS(date) {
