@@ -16,11 +16,10 @@
 		<java.version>1.8</java.version>
 		<spring-cloud.version>2020.0.4</spring-cloud.version>
 		<wavefront.version>2.2.0</wavefront.version>
-		<spring-native.version>0.10.3</spring-native.version>
+		<spring-native.version>0.10.6</spring-native.version>
 		<start-class>am.ik.blog.App</start-class>
 		<native-image-args></native-image-args>
 		<jar-classifier></jar-classifier>
-		<log4j2.version>2.17.0</log4j2.version>
 	</properties>
 
 	<dependencies>
