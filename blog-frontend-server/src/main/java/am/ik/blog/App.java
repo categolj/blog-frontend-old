@@ -20,6 +20,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.metrics.buffering.BufferingApplicationStartup;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.info.JavaInfo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.nativex.hint.AotProxyHint;
@@ -31,12 +32,27 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.server.adapter.ForwardedHeaderTransformer;
 
+import static org.springframework.nativex.hint.TypeAccess.DECLARED_CONSTRUCTORS;
+import static org.springframework.nativex.hint.TypeAccess.DECLARED_FIELDS;
+import static org.springframework.nativex.hint.TypeAccess.DECLARED_METHODS;
+import static org.springframework.nativex.hint.TypeAccess.PUBLIC_CONSTRUCTORS;
+import static org.springframework.nativex.hint.TypeAccess.PUBLIC_FIELDS;
+import static org.springframework.nativex.hint.TypeAccess.PUBLIC_METHODS;
+
 @SpringBootApplication
 @EnableConfigurationProperties({ BlogApi.class, TranslationApi.class, CounterApi.class, Prometheus.class, Prerender.class })
 @NativeHint(
 		options = { "--enable-http" },
 		types = {
-				@TypeHint(types = { AsyncCacheLoader.class, LinkedHashSet.class, Count.class },
+				@TypeHint(
+						types = {
+								AsyncCacheLoader.class,
+								LinkedHashSet.class,
+								Count.class,
+								JavaInfo.class,
+								JavaInfo.JavaRuntimeEnvironmentInfo.class,
+								JavaInfo.JavaVirtualMachineInfo.class
+						},
 						typeNames = {
 								"com.github.benmanes.caffeine.cache.SSLMSA",
 								"com.github.benmanes.caffeine.cache.PSAMW",
@@ -44,7 +60,9 @@ import org.springframework.web.server.adapter.ForwardedHeaderTransformer;
 								"org.springframework.cloud.sleuth.autoconfig.zipkin2.ZipkinActiveMqSenderConfiguration",
 								"org.springframework.cloud.sleuth.autoconfig.zipkin2.ZipkinRabbitSenderConfiguration",
 								"org.springframework.cloud.sleuth.autoconfig.zipkin2.ZipkinKafkaSenderConfiguration"
-						})
+						},
+						access = { DECLARED_FIELDS, DECLARED_METHODS, DECLARED_CONSTRUCTORS, PUBLIC_FIELDS, PUBLIC_METHODS, PUBLIC_CONSTRUCTORS }
+				)
 		},
 		aotProxies = {
 				@AotProxyHint(targetClass = PrerenderClient.class, proxyFeatures = ProxyBits.IS_STATIC)
