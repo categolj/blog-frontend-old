@@ -15,7 +15,7 @@ export function Info() {
             <Block header={"Counter API"}
                    url={'/proxy/blog-counter/actuator/info'}/>
             <Block header={"Note API"} url={'https://note.dev.ik.am/actuator/info'}/>
-            <Block header={"Gateway"} url={'https://ik.am/_management/info'}/>
+            {/*<Block header={"Gateway"} url={'https://ik.am/_management/info'}/>*/}
         </Panel>
     );
 }
