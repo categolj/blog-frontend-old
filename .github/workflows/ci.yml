@@ -90,7 +90,7 @@ jobs:
         EOF
         VERSION=$(grep '<version>' pom.xml | head -n 2 | tail -n 1 | sed -e 's|<version>||g' -e 's|</version>||g' | xargs echo)
         LATEST_SNAPSHOT=$(curl -s https://oss.sonatype.org/content/repositories/snapshots/am/ik/blog/${APP_NAME}/${VERSION}/maven-metadata.xml | grep value | uniq | sed -e 's|<value>||g' -e 's|</value>||g' -e 's|<.*>||g' | xargs echo)
-        IMAGE_NAME=${DOCKER_REGISTRY}:${VERSION}
+        IMAGE_NAME=ghcr.io/categolj/blog-frontend:${VERSION}
         echo ${GOOGLE_APPLICATION_CREDENTIALS_JSON} | base64 -d > key.json
         export GOOGLE_APPLICATION_CREDENTIALS=$PWD/key.json
         set -x
