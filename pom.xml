@@ -15,6 +15,9 @@
 	<version>5.0.0-SNAPSHOT</version>
 	<name>blog</name>
 	<description>Blank multi project for Spring Boot</description>
+	<properties>
+		<spring-boot.version>${project.parent.version}</spring-boot.version>
+	</properties>
 
 
 	<dependencyManagement>
