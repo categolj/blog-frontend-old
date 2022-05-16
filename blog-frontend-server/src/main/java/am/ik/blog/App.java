@@ -3,6 +3,7 @@ package am.ik.blog;
 import java.util.LinkedHashSet;
 
 import am.ik.blog.actuator.ActuatorHandler;
+import am.ik.blog.actuator.InfoHandler;
 import am.ik.blog.counter.CounterApi;
 import am.ik.blog.counter.CounterClient.Count;
 import am.ik.blog.dashboard.DashboardHandler;
@@ -88,10 +89,12 @@ public class App {
 	public RouterFunction<?> routes(
 			DashboardHandler dashboardHandler,
 			BlogHandler blogHandler,
-			ActuatorHandler actuatorHandler) {
+			ActuatorHandler actuatorHandler,
+			InfoHandler infoHandler) {
 		return dashboardHandler.routes()
 				.and(blogHandler.routes())
-				.and(actuatorHandler.routes());
+				.and(actuatorHandler.routes())
+				.and(infoHandler.routes());
 	}
 
 	@Bean
