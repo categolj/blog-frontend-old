@@ -73,7 +73,7 @@ public class BlogHandler {
 				.GET("/note/**", this::render)
 				.GET("/eventviewer", this::render)
 				.GET("/aboutme", this::render)
-				.GET("/info", this::render)
+				//.GET("/info", this::render)
 				.GET("/dashboard", this::render)
 				.build();
 	}
