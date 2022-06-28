@@ -16,7 +16,7 @@
 	<name>blog</name>
 	<description>Blank multi project for Spring Boot</description>
 	<properties>
-		<spring-boot.version>2.6.7</spring-boot.version>
+		<spring-boot.version>2.7.1</spring-boot.version>
 	</properties>
 
 
