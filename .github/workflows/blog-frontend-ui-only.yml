@@ -6,12 +6,14 @@ on:
     paths:
     - blog-frontend-ui/**
     - .github/workflows/dependabot.yml
+    - .github/workflows/blog-frontend-ui-only.yml
   pull_request:
     branches:
     - master
     paths:
     - blog-frontend-ui/**
     - .github/workflows/dependabot.yml
+    - .github/workflows/blog-frontend-ui-only.yml
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,7 +23,6 @@ jobs:
     - name: build-image
       if: github.ref == 'refs/heads/master'
       env:
-        APP_NAME: blog-frontend-server
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
