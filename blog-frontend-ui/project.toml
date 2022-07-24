@@ -1,0 +1,2 @@
+[build]
+exclude = [ "pom.xml", "target", "*.iml", "README.md" ]
